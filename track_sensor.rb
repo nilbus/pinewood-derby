@@ -83,9 +83,9 @@ private
     times_string.chomp.split(/ +/).each_slice(2) do |values|
       lane, time = values
       if !time
-        times << {:time => lane} # Single track mode
+        times << {:time => lane.to_f} # Single track mode
       else
-        times << {:lane => lane, :time => time} # Multi track mode
+        times << {:time => time.to_f, :lane => lane.to_i} # Multi track mode
       end
     end
 
