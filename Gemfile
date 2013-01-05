@@ -5,6 +5,7 @@ gem 'arel',      github: 'rails/arel'
 gem 'activerecord-deprecated_finders', github: 'rails/activerecord-deprecated_finders'
 gem 'unicorn-rails'
 gem 'pg'
+gem 'daemons-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
