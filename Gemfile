@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails',     path: '/Users/nilbus/Dropbox/git/rails'
 gem 'arel',      github: 'rails/arel'
 gem 'activerecord-deprecated_finders', github: 'rails/activerecord-deprecated_finders'
-
+gem 'unicorn-rails'
 gem 'pg'
 
 # Gems used only for assets and not required
@@ -30,9 +30,6 @@ gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano', group: :development
