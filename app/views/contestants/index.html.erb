@@ -1,0 +1,25 @@
+<h1>Listing contestants</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= content_tag_for(:tr, @contestants) do |contestant| %>
+      <td><%= contestant.name %></td>
+      <td><%= link_to 'Show', contestant %></td>
+      <td><%= link_to 'Edit', edit_contestant_path(contestant) %></td>
+      <td><%= link_to 'Destroy', contestant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Contestant', new_contestant_path %>

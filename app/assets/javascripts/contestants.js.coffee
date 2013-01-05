@@ -1,0 +1,1 @@
+$ -> $('#contestant_name').focus()
