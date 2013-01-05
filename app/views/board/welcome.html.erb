@@ -1,2 +1,8 @@
 <%= render 'forkme' %>
-<div class="url"><%= @url %></div>
+<div class="jumbotron">
+  <h2>It's race time...</h2>
+  <h1>dooo your best!</h1>
+  <%= link_to 'Watch the race', board_path, class: 'btn btn-large btn-success' %>
+  <p>Connect to this app from other devices<p>
+  <code><i class="icon-share"></i> <%= @url %></code>
+</div>
