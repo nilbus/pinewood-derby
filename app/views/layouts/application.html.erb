@@ -2,13 +2,49 @@
 <html>
 <head>
   <title>PinewoodDerby</title>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <!-- icon credit: http://www.areskub.com/ sieze icon set -->
 </head>
+
 <body>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <%= link_to 'PinewoodDerby', root_path, class: 'brand' %>
+        <div class="nav-collapse collapse pull-right">
+          <ul class="nav">
+            <li class="<%= 'active' if current_page?(root_path) %>"><%= link_to 'Welcome', root_path %></li>
+            <li class="<%= 'active' if current_page?(board_path) %>"><%= link_to 'Dashboard', board_path%></li>
+            <li class="<%= 'active' if current_page?(contestants_path) %>"><%= link_to 'Contestants', contestants_path%></li>
+            <li class="<%= 'active' if current_page?(races_path) %>"><%= link_to 'Races', races_path%></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+  </div>
 
-<%= yield %>
+  <div class="container">
 
+    <%= yield %>
+
+    <hr>
+    <footer>
+      <p class="chrome-frame-required alert alert-warning" style="display: none">
+        PinewoodDerby requires <a href="http://www.google.com/chromeframe" target="_blank">Google Chrome Frame</a> for Internet Explorer.
+        <br>
+        Please install Chrome Frame to escape the Twilight Zone.
+      </p>
+    </footer>
+  </div> <!-- /container -->
 </body>
 </html>

@@ -1,4 +1,4 @@
-class BoardController < ActionController::Base
+class BoardController < ApplicationController
   def welcome
     @url = BoardHelper.app_url(request)
   end

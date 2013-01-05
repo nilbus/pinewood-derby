@@ -82,6 +82,8 @@ GEM
   remote: https://rubygems.org/
   specs:
     atomic (1.0.1)
+    bootstrap-sass (2.2.1.1)
+      sass (~> 3.2)
     builder (3.1.4)
     coffee-script (2.2.0)
       coffee-script-source
@@ -137,6 +139,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-deprecated_finders!
   arel!
+  bootstrap-sass (~> 2.2.1.1)
   coffee-rails!
   jquery-rails
   pg

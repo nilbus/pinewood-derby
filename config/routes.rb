@@ -2,6 +2,9 @@ PinewoodDerby::Application.routes.draw do
   root to: 'board#welcome'
   get 'board' => 'board#status_board'
   get 'board/welcome' => 'board#welcome'
+  resources :login, only: [:new, :create]
+  resources :contestants
+  resources :races
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
