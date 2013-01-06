@@ -6,7 +6,8 @@ class TrackSensor
     initialize_new_devices
   end
 
-  # @return [String, nil] Line read, if any
+  # @return [Array<Hash>, nil] Race times, if any, in the format:
+  #   [{track: 2, time: 3.456}, {track: 1, time: 4.105}, ...]
   # @raise [IOError] if the device is not plugged in
   def race_results
     scan_for_device_changes do |failed_devices|
@@ -62,6 +63,7 @@ private
 
   def plugged_in?
     initialize_new_devices
+
     @devices.any?
   end
 
@@ -81,11 +83,11 @@ private
   def parse_times(times_string)
     times = []
     times_string.chomp.split(/ +/).each_slice(2) do |values|
-      lane, time = values
+      track, time = values
       if !time
-        times << {:time => lane.to_f} # Single track mode
+        times << {:time => track.to_f, :track => 1} # Single track mode
       else
-        times << {:time => time.to_f, :lane => lane.to_i} # Multi track mode
+        times << {:time => time.to_f, :track => track.to_i} # Multi track mode
       end
     end
 
