@@ -16,10 +16,6 @@ class SensorWatch
     Signal.kill('USR1', daemon_pid)
   end
 
-  def self.update_state
-    Signal.kill('USR2', daemon_pid)
-  end
-
   def initialize(options = {})
     @sensor         = options[:track_sensor] || TrackSensor.new
     @sensor_state   = options[:sensor_state] || SensorState
@@ -37,14 +33,7 @@ class SensorWatch
   end
 
   def tick
-    check_for_scores if active?
-
-    self
-  end
-
-  def update_state
-    check_for_scores # triggers an unplugged state change if unplugged
-    @sensor_state.update @state
+    update_state
 
     self
   end
@@ -69,6 +58,14 @@ private
   def clear_buffer
     while check_for_scores do
     end
+  end
+
+  def update_state
+    initial_state = @state
+    check_for_scores # triggers an unplugged state change if unplugged
+    @sensor_state.update @state unless @state == initial_state
+
+    self
   end
 
   def check_for_scores

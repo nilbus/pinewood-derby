@@ -24,9 +24,6 @@ sensor_watch = SensorWatch.new
 Signal.trap("USR1") do
   sensor_watch.start_race
 end
-Signal.trap("USR2") do
-  sensor_watch.output_state
-end
 
 while($running) do
   sensor_watch.tick
