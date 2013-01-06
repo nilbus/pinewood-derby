@@ -1,0 +1,2 @@
+class LatestScores < SingleValue
+end
