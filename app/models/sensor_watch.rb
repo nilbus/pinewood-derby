@@ -3,25 +3,31 @@
 # keep a persistent connection to the TrackSensor
 # and regularly probe the sensor for updates (tick).
 #
-# This class does not return state or scores directly;
-# instead it updates SensorState and LatestResults via #update.
-#
-# States:
-#   idle      - the sensor is on, and the start race trigger is deactivated
-#   active    - the start race trigger is activated; waiting for results
-#   unplugged - the sensor is reporting to be unplugged
+# SensorWatch does not return state or results directly;
+# instead it updates SensorState, Heat, and Run database records,
+# so Observers can take care of the updates.
 #
 class SensorWatch
   def self.start_race
-    Signal.kill('USR1', daemon_pid)
+    Process.kill('USR1', daemon_pid)
   end
 
   def initialize(options = {})
     @sensor         = options[:track_sensor] || TrackSensor.new
     @sensor_state   = options[:sensor_state] || SensorState
-    @latest_results = options[:latest_results] || LatestResults
+    @heat           = options[:heat]         || Heat
+    @run            = options[:run]          || Run
     @state = :idle
-    clear_buffer
+    if @heat.current.any?
+      start_race
+    else
+      clear_buffer
+    end
+  end
+
+  def log(message, level = :info)
+    Rails.logger.send level, message
+    Rails.logger.flush
   end
 
   def start_race
@@ -30,12 +36,20 @@ class SensorWatch
     @sensor.new_race
 
     self
+  rescue IOError
+    self.state = :unplugged
+
+    nil
   end
 
   def tick
     update_state
 
     self
+  end
+
+  def cancel_heat
+    :not_implemented
   end
 
   def quit
@@ -56,19 +70,17 @@ private
   end
 
   def clear_buffer
-    while check_for_scores do
+    while check_for_results do
     end
   end
 
   def update_state
     initial_state = @state
-    check_for_scores # triggers an unplugged state change if unplugged
+    check_for_results # triggers an unplugged state change if unplugged
     @sensor_state.update @state unless @state == initial_state
-
-    self
   end
 
-  def check_for_scores
+  def check_for_results
     results = @sensor.race_results
     if results
       self.state = :idle
@@ -76,12 +88,25 @@ private
     end
 
     results
-  rescue
+  rescue IOError
     self.state = :unplugged
+
+    nil
   end
 
   def post_results(results)
-    @latest_results.update results
+    heat = @heat.current.first
+    return unless heat
+    add_run_times heat, results
+    heat.complete!
+  end
+
+  def add_run_times(heat, results)
+    runs = heat.runs.group_by(&:lane)
+    results.each do |result|
+      run = runs[result[:lane].to_i].first
+      run.set_time result[:time]
+    end
   end
 
   def active?
