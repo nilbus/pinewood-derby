@@ -3,9 +3,12 @@ source 'https://rubygems.org'
 gem 'rails',     path: '/Users/nilbus/Dropbox/git/rails'
 gem 'arel',      github: 'rails/arel'
 gem 'activerecord-deprecated_finders', github: 'rails/activerecord-deprecated_finders'
-gem 'unicorn-rails'
+gem 'thin-rails'
 gem 'pg'
 gem 'daemons-rails'
+gem 'faye-rails', github: 'jamesotron/faye-rails'
+gem 'rack', '1.4.1' # https://github.com/faye/faye/issues/190
+gem 'faye-redis'
 
 # Gems used only for assets and not required
 # in production environments by default.

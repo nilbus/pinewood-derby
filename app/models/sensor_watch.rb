@@ -17,6 +17,8 @@ class SensorWatch
     @sensor_state   = options[:sensor_state] || SensorState
     @heat           = options[:heat]         || Heat
     @run            = options[:run]          || Run
+    @faye           = options[:faye]         || Faye
+    @faye.ensure_reactor_running!
     @state = :idle
     if @heat.current.any?
       start_race

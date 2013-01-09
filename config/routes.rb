@@ -6,6 +6,10 @@ PinewoodDerby::Application.routes.draw do
   resources :contestants
   resources :races
 
+  faye_server '/faye', timeout: 25, engine: {type: Faye::Redis, host: 'localhost'} do
+    map '/announce/**' => AnnounceController
+  end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
