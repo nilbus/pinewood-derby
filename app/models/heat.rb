@@ -1,5 +1,5 @@
 class Heat < ActiveRecord::Base
-  has_many :runs
+  has_many :runs, dependent: :destroy
   has_many :contestants, through: :runs
 
   scope :current, -> { where(status: 'current') }
