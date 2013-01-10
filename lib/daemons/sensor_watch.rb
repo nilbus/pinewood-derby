@@ -9,11 +9,6 @@ require File.join(root, "config", "environment")
 
 require 'sensor_watch'
 
-def log(message, level = :info)
-  Rails.logger.send level, message
-  Rails.logger.flush
-end
-
 $running = true
 Signal.trap("TERM") do
   $running = false

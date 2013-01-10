@@ -18,6 +18,7 @@ class SensorWatch
     @heat           = options[:heat]         || Heat
     @run            = options[:run]          || Run
     @faye           = options[:faye]         || Faye
+    @logger         = options[:logger]       || ApplicationHelper
     @faye.ensure_reactor_running!
     @state = :idle
     if @heat.current.any?
@@ -27,12 +28,8 @@ class SensorWatch
     end
   end
 
-  def log(message, level = :info)
-    Rails.logger.send level, message
-    Rails.logger.flush
-  end
-
   def start_race
+    @logger.log 'Sensor: Starting a race'
     clear_buffer
     self.state = :active
     @sensor.new_race
