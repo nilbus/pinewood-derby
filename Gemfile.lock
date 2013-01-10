@@ -46,7 +46,7 @@ GIT
       sprockets (~> 2.8)
 
 PATH
-  remote: /Users/nilbus/Dropbox/git/rails
+  remote: ../rails
   specs:
     actionmailer (4.0.0.beta)
       actionpack (= 4.0.0.beta)
@@ -144,7 +144,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.19)
-    minitest (4.3.3)
+    minitest (4.4.0)
     multi_json (1.5.0)
     pg (0.14.1)
     polyglot (0.3.3)

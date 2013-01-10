@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails',     path: '/Users/nilbus/Dropbox/git/rails'
+gem 'rails',     path: '../rails'
 gem 'arel',      github: 'rails/arel'
 gem 'activerecord-deprecated_finders', github: 'rails/activerecord-deprecated_finders'
 gem 'thin-rails'
