@@ -53,6 +53,9 @@ private
   end
 
   def notice
-    (Derby.get || {})[:notice]
+    derby_notice = (Derby.get || {})[:notice]
+    unplugged_notice = 'The sensor is unplugged!' if SensorState.get == :unplugged
+
+    unplugged_notice || derby_notice
   end
 end

@@ -1,0 +1,10 @@
+<div id="json_output">
+  <%= Dashboard.to_json %>
+</div>
+<%= javascript_tag do %>
+  var c = new Faye.Client('/faye', {timeout: 5});
+  c.subscribe('/announce', function(msg) {
+    console.log('/announce: ', msg)
+    $('#json_output').html(msg);
+  });
+<% end %>

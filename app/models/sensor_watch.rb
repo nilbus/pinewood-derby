@@ -18,6 +18,7 @@ class SensorWatch
     @heat           = options[:heat]         || Heat
     @run            = options[:run]          || Run
     @faye           = options[:faye]         || Faye
+    @announcer      = options[:announcer]    || AnnounceController
     @logger         = options[:logger]       || ApplicationHelper
     @faye.ensure_reactor_running!
     @state = :idle
@@ -66,6 +67,7 @@ private
   def state=(state)
     return if @state == state
     @state = state
+    @sensor_state.update @state
   end
 
   def clear_buffer
@@ -74,9 +76,7 @@ private
   end
 
   def update_state
-    initial_state = @state
     check_for_results # triggers an unplugged state change if unplugged
-    @sensor_state.update @state unless @state == initial_state
   end
 
   def check_for_results

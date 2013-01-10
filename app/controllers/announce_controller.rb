@@ -2,23 +2,23 @@ class AnnounceController < FayeRails::Controller
   faye = self
 
   observe Run, :after_update do |run|
-    faye.publish '/announce', run.attributes
     ApplicationHelper.log "Announcing run change"
+    faye.publish '/announce', Dashboard.to_json
   end
 
   observe Heat, :after_update do |heat|
-    faye.publish '/announce', heat.attributes
     ApplicationHelper.log "Announcing heat change"
+    faye.publish '/announce', Dashboard.to_json
   end
 
   observe SensorState, :after_update do |sensor_state|
-    faye.publish '/announce', sensor_state.attributes
     ApplicationHelper.log "Announcing sensor_state change"
+    faye.publish '/announce', Dashboard.to_json
   end
 
   observe Derby, :after_update do |derby|
-    faye.publish '/announce', derby.attributes
     ApplicationHelper.log "Announcing derby change"
+    faye.publish '/announce', Dashboard.to_json
   end
 
   channel '/announce' do

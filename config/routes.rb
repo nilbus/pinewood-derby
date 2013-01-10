@@ -6,7 +6,7 @@ PinewoodDerby::Application.routes.draw do
   resources :contestants
   resources :races
 
-  faye_server '/faye', timeout: 25, engine: {type: Faye::Redis, host: 'localhost'} do
+  faye_server '/faye', timeout: 1, engine: {type: Faye::Redis, host: 'localhost'} do
     map '/announce/**' => AnnounceController
   end
 
