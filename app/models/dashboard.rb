@@ -8,7 +8,8 @@ class Dashboard
       contestant_times: contestant_times,
       most_recent_heat: most_recent_heat,
       upcoming_heats: upcoming_heats,
-      notice: notice
+      notice: notice,
+      device_status: device_status
     }.to_json
   end
 
@@ -57,5 +58,9 @@ private
     unplugged_notice = 'The sensor is unplugged!' if SensorState.get == :unplugged
 
     unplugged_notice || derby_notice
+  end
+
+  def device_status
+    SensorState.get
   end
 end
