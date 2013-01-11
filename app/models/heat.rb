@@ -26,7 +26,7 @@ class Heat < ActiveRecord::Base
   end
 
   def complete!
-    update_attribute :status, 'completed'
+    update_attribute :status, 'complete'
   end
 
   def current?
