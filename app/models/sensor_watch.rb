@@ -9,7 +9,18 @@
 #
 class SensorWatch
   def self.start_race
-    Process.kill('USR1', daemon_pid)
+    check_daemon && Process.kill('USR1', daemon_pid)
+  rescue Errno::ESRCH
+  end
+
+  def self.check_daemon
+    Process.kill(0, daemon_pid)
+
+    true
+  rescue Errno::ESRCH
+    SensorState.update :daemon_died
+
+    false
   end
 
   def initialize(options = {})
@@ -27,6 +38,7 @@ class SensorWatch
     else
       clear_buffer
     end
+    write_state
   end
 
   def start_race
@@ -74,6 +86,10 @@ private
   def state=(state)
     return if @state == state
     @state = state
+    write_state
+  end
+
+  def write_state
     @sensor_state.update @state
   end
 
