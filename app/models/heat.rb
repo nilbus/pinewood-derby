@@ -7,15 +7,18 @@ class Heat < ActiveRecord::Base
   scope :upcoming, -> { where(status: 'upcoming').order('sequence, created_at').includes(run: :contestant) }
 
   def self.create_practice(options = {})
-    raise "There's already a race going" if Heat.current.any?
-    contestants = options[:contestants] || Contestant.limit(3)
-    heat = create sequence: -1, status: 'current'
-    contestants.each_with_index do |contestant, i|
-      lane = i + 1
-      Run.create contestant: contestant, heat: heat, lane: lane
-    end
+    Heat.transaction do
+      raise Notice.new "There's already a race going" if Heat.current.any?
+      contestants = options[:contestants] || Contestant.limit(3)
+      raise Notice.new "Add contestants first" if contestants.none?
+      heat = create! sequence: -1, status: 'current'
+      contestants.each_with_index do |contestant, i|
+        lane = i + 1
+        Run.create! contestant: contestant, heat: heat, lane: lane
+      end
 
-    heat
+      heat
+    end
   end
 
   def start(options = {})
