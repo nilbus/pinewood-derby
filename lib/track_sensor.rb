@@ -14,9 +14,9 @@ class TrackSensor
       @devices.each do |device|
         begin
           char = device.read_nonblock(1)
-          return get_times if char == "\000"
+          return race_results if char == "\000"
           line = char + device.readline
-          return get_times if line =~ /DT.000  NewBold Products/
+          return race_results if line =~ /DT.000  NewBold Products/
           return parse_times line
         rescue Errno::EAGAIN
         rescue IOError
