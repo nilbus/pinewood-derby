@@ -76,6 +76,7 @@ private
   end
 
   def initialize_device(device_path)
+    return unless File.writable? device_path
     `stty 1200 cs7 cstopb < #{device_path}`
     @devices << File.open(device_path, 'r+')
   end
