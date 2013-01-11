@@ -6,6 +6,9 @@ class Heat < ActiveRecord::Base
   scope :most_recent, -> { where(status: 'complete').order('sequence DESC').includes(runs: :contestant).limit(1) }
   scope :upcoming, -> { where(status: 'upcoming').order('sequence, created_at').includes(run: :contestant) }
 
+  validates :status,   presence: true, inclusion: {in: %w(upcoming current complete)}
+  validates :sequence, presence: true
+
   def self.create_practice(options = {})
     Heat.transaction do
       raise Notice.new "There's already a race going" if Heat.current.any?
@@ -29,7 +32,7 @@ class Heat < ActiveRecord::Base
   end
 
   def complete!
-    update_attribute :status, 'complete'
+    update_attributes! status: 'complete'
   end
 
   def current?
