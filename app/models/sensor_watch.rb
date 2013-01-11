@@ -33,16 +33,13 @@ class SensorWatch
     @logger.log 'Sensor: Starting a race'
     clear_buffer
     self.state = :active
-    @sensor.new_race
+    trigger_race_start
 
     self
-  rescue IOError
-    self.state = :unplugged
-
-    nil
   end
 
   def tick
+    trigger_race_start if active?
     update_state
 
     self
@@ -66,6 +63,12 @@ private
 
   def self.daemon_pid
     File.read(daemon_pid_filename).strip.to_i
+  end
+
+  def trigger_race_start
+    @sensor.new_race
+  rescue IOError
+    self.state = :unplugged
   end
 
   def state=(state)
