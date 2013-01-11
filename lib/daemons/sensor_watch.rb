@@ -20,6 +20,9 @@ Signal.trap("USR1") do
   sensor_watch.start_race
 end
 
+# Rewrite pidfile in case we're running in the foreground
+File.write(SensorWatch.daemon_pid_filename, Process.pid)
+
 while($running) do
   sensor_watch.tick
   sleep 0.2

@@ -60,8 +60,12 @@ class SensorWatch
 
 private
 
+  def self.daemon_pid_filename
+    Rails.root.join 'log/sensor_watch.rb.pid'
+  end
+
   def self.daemon_pid
-    File.read('log/sensor_watch.rb.pid').strip.to_i
+    File.read(daemon_pid_filename).strip.to_i
   end
 
   def state=(state)
