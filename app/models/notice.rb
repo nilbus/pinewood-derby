@@ -1,0 +1,2 @@
+class Notice < RuntimeError
+end

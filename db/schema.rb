@@ -11,11 +11,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130105124714) do
+ActiveRecord::Schema.define(version: 20130109190837) do
 
   create_table "contestants", force: true do |t|
     t.string   "name"
     t.boolean  "retired"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "heats", force: true do |t|
+    t.integer  "sequence"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "runs", force: true do |t|
+    t.integer  "contestant_id"
+    t.integer  "heat_id"
+    t.decimal  "time"
+    t.integer  "lane"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "single_values", force: true do |t|
+    t.hstore   "value"
+    t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

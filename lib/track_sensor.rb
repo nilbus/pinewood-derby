@@ -6,16 +6,17 @@ class TrackSensor
     initialize_new_devices
   end
 
-  # @return [String, nil] Line read, if any
+  # @return [Array<Hash>, nil] Race times, if any, in the format:
+  #   [{track: 2, time: 3.456}, {track: 1, time: 4.105}, ...]
   # @raise [IOError] if the device is not plugged in
   def race_results
     scan_for_device_changes do |failed_devices|
       @devices.each do |device|
         begin
           char = device.read_nonblock(1)
-          return get_times if char == "\000"
+          return race_results if char == "\000"
           line = char + device.readline
-          return get_times if line =~ /DT.000  NewBold Products/
+          return race_results if line =~ /DT.000  NewBold Products/
           return parse_times line
         rescue Errno::EAGAIN
         rescue IOError
@@ -62,6 +63,7 @@ private
 
   def plugged_in?
     initialize_new_devices
+
     @devices.any?
   end
 
@@ -74,6 +76,7 @@ private
   end
 
   def initialize_device(device_path)
+    return unless File.writable? device_path
     `stty 1200 cs7 cstopb < #{device_path}`
     @devices << File.open(device_path, 'r+')
   end
@@ -81,11 +84,11 @@ private
   def parse_times(times_string)
     times = []
     times_string.chomp.split(/ +/).each_slice(2) do |values|
-      lane, time = values
+      track, time = values
       if !time
-        times << {:time => lane.to_f} # Single track mode
+        times << {:time => track.to_f, :track => 1} # Single track mode
       else
-        times << {:time => time.to_f, :lane => lane.to_i} # Multi track mode
+        times << {:time => time.to_f, :track => track.to_i} # Multi track mode
       end
     end
 

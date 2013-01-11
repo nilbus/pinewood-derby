@@ -1,10 +1,15 @@
 source 'https://rubygems.org'
 
-gem 'rails',     path: '/Users/nilbus/Dropbox/git/rails'
+gem 'rails',     path: '../rails'
 gem 'arel',      github: 'rails/arel'
 gem 'activerecord-deprecated_finders', github: 'rails/activerecord-deprecated_finders'
-gem 'unicorn-rails'
+gem 'thin-rails'
 gem 'pg'
+gem 'daemons-rails'
+gem 'faye-rails', github: 'jamesotron/faye-rails'
+gem 'rack', '1.4.1' # https://github.com/faye/faye/issues/190
+gem 'faye-redis'
+gem 'foreman'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -23,7 +28,7 @@ end
 gem 'jquery-rails'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
+# gem 'turbolinks'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

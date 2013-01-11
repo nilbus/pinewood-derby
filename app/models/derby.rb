@@ -1,0 +1,2 @@
+class Derby < SingleValue
+end
