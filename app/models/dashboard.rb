@@ -23,19 +23,20 @@ private
       {
         rank: rank,
         name: contestant.name,
-        average_time: contestant.average_time
+        average_time: contestant.average_time || 'n/a'
       }
     end
   end
 
   def most_recent_heat
     heat = Heat.most_recent.first
-    return unless heat
+    return [] unless heat
 
     heat.runs.map do |run|
       {
         name: run.contestant.name,
-        time: run.time
+        time: run.time,
+        lane: run.lane
       }
     end
   end
@@ -43,7 +44,7 @@ private
   def upcoming_heats
     Heat.upcoming.limit(3).map do |heat|
       {
-        contestants: heat.run.map do |run|
+        contestants: heat.runs.map do |run|
           {
             name: run.contestant.name,
             lane: run.lane
