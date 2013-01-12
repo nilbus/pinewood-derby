@@ -11,6 +11,15 @@ class Contestant < ActiveRecord::Base
   end
 
   def average_time
-    self[:average_time].try :round, 3
+    average_time = self[:average_time] || calculate_average_time
+
+    average_time.try :round, 3
   end
+
+private
+
+  def calculate_average_time
+    self.class.ranked.where(id: id).first.try :average_time
+  end
+
 end
