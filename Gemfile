@@ -10,6 +10,7 @@ gem 'faye-rails', github: 'jamesotron/faye-rails'
 gem 'rack', '1.4.1' # https://github.com/faye/faye/issues/190
 gem 'faye-redis'
 gem 'foreman'
+gem 'pry'
 
 # Gems used only for assets and not required
 # in production environments by default.
