@@ -14,6 +14,8 @@ class window.Dashboard
     callback.call(@, stats) for callback in @callbacks
 
   renderDashboard: (stats) ->
+    @notifyOfChange() if @alreadyRendered
+    @alreadyRendered = true
     @dashboard = $('#dashboard')
     return unless @dashboard.length
     @renderStandings      stats.contestant_times
@@ -56,3 +58,6 @@ class window.Dashboard
         slot.html(contestant.name)
 
   renderNotice: (notice, device_status) ->
+
+  notifyOfChange: ->
+    $("body").stop().css("background-color", "#FFFF7C").animate({ backgroundColor: "#FFFFFF"}, 500)
