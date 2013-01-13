@@ -1,14 +1,17 @@
-class window.Dashboard
+class window.Announcer
   constructor: (options) ->
     @callbacks = [@renderDashboard]
-    @render(options.stats) if options.stats
+    @renderFunction = switch options.type
+      when 'dashboard' then @render
+      else                  @renderNotice
+    @renderFunction(options.stats) if options.stats
     @connect()
 
   connect: ->
     @faye = window.faye = new Faye.Client '/faye', timeout: 5
     @faye.subscribe '/announce', (stats) =>
       console.log '/announce: ', stats
-      @render JSON.parse(stats)
+      @renderFunction JSON.parse(stats)
 
   render: (stats) ->
     callback.call(@, stats) for callback in @callbacks
@@ -21,7 +24,7 @@ class window.Dashboard
     @renderStandings      stats.contestant_times
     @renderMostRecentHeat stats.most_recent_heat
     @renderUpcomingHeats  stats.upcoming_heats
-    @renderNotice         stats.notice, stats.device_status
+    @renderNotice         stats
 
   renderStandings: (contestant_times) ->
     container = @dashboard.find('#standings .contestants')
@@ -57,7 +60,12 @@ class window.Dashboard
         slot = container.find(".next#{upcoming_counter} .lane#{contestant.lane}")
         slot.html(contestant.name)
 
-  renderNotice: (notice, device_status) ->
+  renderNotice: (stats) ->
+    {notice, device_status} = stats
+    if notice.length
+      $('#faye-notification').show().html notice
+    else
+      $('#faye-notification').hide()
 
   notifyOfChange: ->
     $("body").stop().css("background-color", "#FFFF7C").animate({ backgroundColor: "#FFFFFF"}, 500)

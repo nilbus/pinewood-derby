@@ -64,7 +64,3 @@
     </div>
   </div>
 </div>
-
-  <%= javascript_tag do %>
-    window.dashboard = new Dashboard({stats: <%= Dashboard.to_json.html_safe %>});
-  <% end %>

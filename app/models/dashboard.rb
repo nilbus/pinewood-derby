@@ -56,9 +56,12 @@ private
 
   def notice
     derby_notice = (Derby.get || {})[:notice]
-    unplugged_notice = 'The sensor is unplugged!' if SensorState.get == :unplugged
+    warning_notice = case SensorState.get
+    when :unplugged then 'The sensor is unplugged'
+    when :daemon_died then 'The sensor monitor is not running'
+    end
 
-    unplugged_notice || derby_notice
+    warning_notice || derby_notice
   end
 
   def device_status
