@@ -4,23 +4,58 @@ class Heat < ActiveRecord::Base
 
   scope :current, -> { where(status: 'current') }
   scope :most_recent, -> { where(status: 'complete').order('created_at DESC').includes(runs: :contestant).limit(1) }
-  scope :upcoming, -> { where(status: 'upcoming').order('sequence, created_at').includes(run: :contestant) }
+  scope :upcoming, -> { where(status: 'upcoming').order('sequence, created_at').includes(runs: :contestant) }
 
   validates :status,   presence: true, inclusion: {in: %w(upcoming current complete)}
   validates :sequence, presence: true
 
-  def self.create_practice(options = {})
-    Heat.transaction do
-      raise Notice.new "There's already a race going" if Heat.current.any?
-      contestants = options[:contestants] || Contestant.limit(3)
-      raise Notice.new "Add contestants first" if contestants.none?
-      heat = create! sequence: -1, status: 'current'
-      contestants.each_with_index do |contestant, i|
-        lane = i + 1
-        Run.create! contestant: contestant, heat: heat, lane: lane
+  class << self
+    def fill_lineup(options = {})
+      races_to_queue = options.fetch(:races, 3)
+      contestants_per_heat = 3
+      races_to_queue.times do
+        break if upcoming.count >= races_to_queue
+        chosen_contestants = []
+        contestants_per_heat.times do |i|
+          lane = i + 1
+          next_contestant = Contestant.next_suitable(lane: lane, exclude: chosen_contestants)
+          next unless next_contestant
+          chosen_contestants << next_contestant
+        end
+        break if chosen_contestants.none?
+        Heat.create_upcoming_from_contestants chosen_contestants
       end
+    end
 
-      heat
+    def create_upcoming_from_contestants(contestants_ordered_by_lane)
+      transaction do
+        heat = Heat.create! sequence: next_sequence, status: 'upcoming'
+        contestants_ordered_by_lane.each_with_index do |contestant, i|
+          lane = i + 1
+          heat.runs.create! contestant: contestant, lane: lane
+        end
+
+        heat
+      end
+    end
+
+    def create_practice(options = {})
+      Heat.transaction do
+        raise Notice.new "There's already a race going" if Heat.current.any?
+        contestants = options[:contestants] || Contestant.limit(3)
+        raise Notice.new "Add contestants first" if contestants.none?
+        heat = create! sequence: -1, status: 'current'
+        contestants.each_with_index do |contestant, i|
+          lane = i + 1
+          Run.create! contestant: contestant, heat: heat, lane: lane
+        end
+
+        heat
+      end
+    end
+
+    def next_sequence
+      Heat.order('sequence DESC').limit(1).pluck(:sequence).first || 1
     end
   end
 
