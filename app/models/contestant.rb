@@ -19,7 +19,7 @@ class Contestant < ActiveRecord::Base
 private
 
   def calculate_average_time
-    self.class.ranked.where(id: id).first.try :average_time
+    (self.class.ranked.where(id: id).first || {})[:average_time]
   end
 
 end
