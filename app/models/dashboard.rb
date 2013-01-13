@@ -21,7 +21,7 @@ private
       rank += 1
 
       {
-        rank: rank,
+        rank: contestant.average_time ? rank : '',
         name: contestant.name,
         average_time: contestant.average_time || 'n/a'
       }
