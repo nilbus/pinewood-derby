@@ -17,13 +17,13 @@ private
 
   def contestant_times
     rank = 0
-    Contestant.ranked.map do |contestant|
+    Contestant.ranked.keep_if(&:average_time).map do |contestant|
       rank += 1
 
       {
-        rank: contestant.average_time ? rank : '',
+        rank: rank,
         name: contestant.name,
-        average_time: contestant.average_time || 'n/a'
+        average_time: contestant.average_time
       }
     end
   end
