@@ -71,6 +71,10 @@ class window.Announcer
       $('#faye-notification').show().html notice
     else
       $('#faye-notification').hide()
+    if device_status == 'idle'
+      $('#start-race').show()
+    else
+      $('#start-race').hide()
 
   notifyOfChange: ->
     $("body").stop().css("background-color", "#FFFF7C").animate({ backgroundColor: "#FFFFFF"}, 500)

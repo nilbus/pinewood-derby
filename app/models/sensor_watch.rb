@@ -126,8 +126,8 @@ private
   def add_run_times(heat, results)
     runs = heat.runs.group_by(&:lane)
     results.each do |result|
-      run = runs[result[:track].to_i].first
-      run.set_time result[:time]
+      run = runs[result[:track].to_i].try :first
+      run.set_time result[:time] if run
     end
   end
 

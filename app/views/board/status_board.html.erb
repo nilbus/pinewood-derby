@@ -31,7 +31,12 @@
       </div>
 
       <div id="upcoming-heats">
-        <h2>Up next...</h2>
+        <h2>
+          Up next...
+          <% if admin? %>
+            <%= link_to 'Start the race!', new_race_path, id: 'start-race', class: 'btn btn-success btn-large', remote: true, style: 'display: none' %>
+          <% end %>
+        </h2>
         <div class="row-fluid">
           <div class="span4">
             <small>Lane1</small>

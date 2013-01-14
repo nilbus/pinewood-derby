@@ -4,7 +4,7 @@ PinewoodDerby::Application.routes.draw do
   get 'board/welcome' => 'board#welcome'
   resources :login, only: [:new, :create]
   resources :contestants
-  resources :races
+  resources :races, only: [:new, :index]
 
   faye_server '/faye', timeout: 1, engine: {type: Faye::Redis, host: 'localhost'} do
     map '/announce/**' => AnnounceController

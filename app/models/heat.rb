@@ -3,7 +3,8 @@ class Heat < ActiveRecord::Base
   has_many :contestants, through: :runs
 
   scope :current, -> { where(status: 'current') }
-  scope :most_recent, -> { where(status: 'complete').order('created_at DESC').includes(runs: :contestant).limit(1) }
+  scope :complete, -> { where(status: 'complete').order('sequence DESC, created_at DESC').includes(runs: :contestant) }
+  scope :most_recent, -> { complete.limit(1) }
   scope :upcoming, -> { where(status: 'upcoming').order('sequence, created_at').includes(runs: :contestant) }
 
   validates :status,   presence: true, inclusion: {in: %w(upcoming current complete)}
@@ -60,6 +61,7 @@ class Heat < ActiveRecord::Base
   end
 
   def start(options = {})
+    update_attributes status: 'current' if Heat.current.count == 0
     raise 'You can only start the current Heat' unless current?
     options.fetch(:sensor_watch, SensorWatch).start_race
 
