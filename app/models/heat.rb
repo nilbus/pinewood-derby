@@ -16,23 +16,22 @@ class Heat < ActiveRecord::Base
       contestants_per_heat = 3
       races_to_queue.times do
         break if upcoming.count >= races_to_queue
-        chosen_contestants = []
+        chosen_contestants = {}
         contestants_per_heat.times do |i|
           lane = i + 1
-          next_contestant = Contestant.next_suitable(lane: lane, exclude: chosen_contestants)
+          next_contestant = Contestant.next_suitable(lane: lane, exclude: chosen_contestants.values)
           next unless next_contestant
-          chosen_contestants << next_contestant
+          chosen_contestants[lane] = next_contestant
         end
         break if chosen_contestants.none?
         Heat.create_upcoming_from_contestants chosen_contestants
       end
     end
 
-    def create_upcoming_from_contestants(contestants_ordered_by_lane)
+    def create_upcoming_from_contestants(contestants_by_lane)
       transaction do
         heat = Heat.create! sequence: next_sequence, status: 'upcoming'
-        contestants_ordered_by_lane.each_with_index do |contestant, i|
-          lane = i + 1
+        contestants_by_lane.each do |lane, contestant|
           heat.runs.create! contestant: contestant, lane: lane
         end
 
