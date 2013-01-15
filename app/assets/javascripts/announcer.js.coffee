@@ -6,6 +6,7 @@ class window.Announcer
       else                  @renderNotice
     @renderFunction(options.stats) if options.stats
     @connect()
+    @setupEvents()
 
   connect: ->
     @faye = window.faye = new Faye.Client '/faye', timeout: 5
@@ -83,3 +84,6 @@ class window.Announcer
 
   notifyOfChange: ->
     $("body").stop().css("background-color", "#FFFF7C").animate({ backgroundColor: "#FFFFFF"}, 500)
+
+  setupEvents: ->
+    $('#start-race').click -> $(@).hide()
