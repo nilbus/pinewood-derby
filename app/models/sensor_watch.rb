@@ -39,6 +39,7 @@ class SensorWatch
       clear_buffer
     end
     write_state
+    @announcer.update
   end
 
   def start_race
