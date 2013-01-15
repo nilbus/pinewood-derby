@@ -42,8 +42,10 @@ private
   end
 
   def upcoming_heats
-    Heat.upcoming.limit(3).map do |heat|
+    heats = (Heat.current + Heat.upcoming.limit(3))[0,3]
+    heats.map do |heat|
       {
+        current: heat.status == 'current',
         contestants: heat.runs.map do |run|
           {
             name: run.contestant.name,

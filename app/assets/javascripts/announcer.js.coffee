@@ -61,8 +61,13 @@ class window.Announcer
     upcoming_counter = 0
     for heat in upcoming_heats
       upcoming_counter++
+      heat_container = container.find(".next#{upcoming_counter}")
+      if heat.current
+        heat_container.addClass('btn-success')
+      else
+        heat_container.removeClass('btn-success')
       for contestant in heat.contestants
-        slot = container.find(".next#{upcoming_counter} .lane#{contestant.lane}")
+        slot = heat_container.find(".lane#{contestant.lane}")
         slot.html(contestant.name)
 
   renderNotice: (stats) ->
