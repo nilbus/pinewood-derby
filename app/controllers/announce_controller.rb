@@ -31,9 +31,9 @@ class AnnounceController < FayeRails::Controller
     faye.update
   end
 
-  channel '/announce' do
-    monitor :publish do
-      ApplicationHelper.log "Client #{client_id} published #{data.inspect} to #{channel}."
-    end
-  end
+  # channel '/announce' do
+  #   monitor :publish do
+  #     ApplicationHelper.log "Client #{client_id} published #{data.inspect} to #{channel}."
+  #   end
+  # end
 end
