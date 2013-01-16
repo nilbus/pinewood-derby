@@ -14,5 +14,6 @@
 # Ignore all logfiles and tempfiles.
 /log
 /tmp
+/public/assets
 
 /config/database.yml
