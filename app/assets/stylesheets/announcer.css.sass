@@ -1,23 +1,26 @@
-$rowtext: 30px
+$rowtextsize: 30px
+$rowtextweight: lighter
 
 #dashboard
   line-height: 50px
   h2
-    font-size: 60px
+    font-size: 40px
     clear: both
   small
     font-size: 1em
     color: #999
   #standings
     .contestants
-      font-size: $rowtext
+      font-size: $rowtextsize
+      font-weight: $rowtextweight
       .contestant
         margin-bottom: 45px
         .name, .time
           display: inline-block
   #most-recent-heat, #upcoming-heats
     .name, .time
-      font-size: $rowtext
+      font-size: $rowtextsize
+      font-weight: $rowtextweight
   #upcoming-heats
     margin-top: 50px
     .btn-success
