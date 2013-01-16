@@ -17,6 +17,8 @@ private
     base = "http://#{local_ip}"
     port = request.port
     base += ":#{port}" unless 80 == port
+
+    base
   end
 
   def self.local_ip

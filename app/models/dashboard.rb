@@ -1,3 +1,5 @@
+require 'track_sensor'
+
 class Dashboard
   def self.to_json
     new.to_json
