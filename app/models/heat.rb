@@ -6,12 +6,14 @@ class Heat < ActiveRecord::Base
   scope :complete, -> { where(status: 'complete').order('sequence DESC, created_at DESC').includes(runs: :contestant) }
   scope :most_recent, -> { complete.limit(1) }
   scope :upcoming, -> { where(status: 'upcoming').order('sequence, created_at').includes(runs: :contestant) }
+  scope :upcoming_incomplete, -> { where(status: 'upcoming').joins(:runs).group('heats.id').having('count(runs.id) < 3') }
 
   validates :status,   presence: true, inclusion: {in: %w(upcoming current complete)}
   validates :sequence, presence: true
 
   class << self
     def fill_lineup(options = {})
+      upcoming_incomplete.readonly(false).destroy_all
       races_to_queue = options.fetch(:races, 3)
       contestants_per_heat = 3
       races_to_queue.times do
