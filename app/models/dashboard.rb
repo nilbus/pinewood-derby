@@ -24,7 +24,7 @@ private
 
       {
         rank: rank,
-        name: contestant.name,
+        name: Rack::Utils.escape_html(contestant.name),
         average_time: contestant.average_time
       }
     end
@@ -36,7 +36,7 @@ private
 
     heat.runs.map do |run|
       {
-        name: run.contestant.name,
+        name: Rack::Utils.escape_html(run.contestant.name),
         time: run.time,
         lane: run.lane
       }
@@ -51,7 +51,7 @@ private
         current: heat.status == 'current',
         contestants: heat.runs.map do |run|
           {
-            name: run.contestant.name,
+            name: Rack::Utils.escape_html(run.contestant.name),
             lane: run.lane,
             postponable: heat.upcoming?,
             run_id: run.id
