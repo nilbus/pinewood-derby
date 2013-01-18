@@ -1,15 +1,17 @@
 <h1>Contestants</h1>
 
 <table id="contestants">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Round 1</th>
-      <th>Round 2</th>
-      <th>Round 3</th>
-      <th></th>
-    </tr>
-  </thead>
+  <% if @contestants.any? %>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Round 1</th>
+        <th>Round 2</th>
+        <th>Round 3</th>
+        <th></th>
+      </tr>
+    </thead>
+  <% end %>
 
   <tbody>
     <%= content_tag_for(:tr, @contestants, class: "contestant") do |contestant| %>
@@ -32,4 +34,7 @@
 
 <br>
 
-<%= link_to 'Register contestants', new_contestant_path %>
+<% if admin? %>
+  <%= link_to 'Register contestants', new_contestant_path, class: 'btn btn-primary' %>
+  <%= link_to 'Start a new derby', reset_derby_path, class: 'btn btn-danger pull-right', method: 'post', data: { confirm: 'Are you sure? This will clear out all data and start a new derby.' } %>
+<% end %>
