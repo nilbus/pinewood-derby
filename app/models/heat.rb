@@ -63,7 +63,7 @@ class Heat < ActiveRecord::Base
 
   def start(options = {})
     update_attributes status: 'current' if Heat.current.count == 0
-    raise 'You can only start the current Heat' unless current?
+    raise "Can't start; there's already a heat running" unless current?
     options.fetch(:sensor_watch, SensorWatch).start_race
 
     true

@@ -6,7 +6,7 @@ PinewoodDerby::Application.routes.draw do
   post 'reset_derby' => 'derby#reset'
   resources :login, only: [:new, :create]
   resources(:contestants) { member { post 'reactivate' } }
-  resources :races, only: [:new, :index]
+  resources :races, only: [:new, :index] { collection { put 'redo' } }
 
   faye_server '/faye', timeout: 1, engine: {type: Faye::Redis, host: 'localhost'} do
     map '/announce/**' => AnnounceController

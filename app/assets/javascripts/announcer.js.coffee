@@ -63,9 +63,9 @@ class window.Announcer
       upcoming_counter++
       heat_container = container.find(".next#{upcoming_counter}")
       if heat.current
-        heat_container.addClass('btn-success')
+        heat_container.addClass('current-race btn-success')
       else
-        heat_container.removeClass('btn-success')
+        heat_container.removeClass('current-race btn-success')
       for contestant in heat.contestants
         slot = heat_container.find(".lane#{contestant.lane}")
         if contestant.postponable
@@ -81,9 +81,9 @@ class window.Announcer
     else
       $('#faye-notification').hide()
     if device_status == 'idle'
-      $('#start-race').show()
+      $('#start-race,#redo').show()
     else
-      $('#start-race').hide()
+      $('#start-race,#redo').hide()
 
   notifyOfChange: ->
     $("body").stop().css("background-color", "#FFFF7C").animate({ backgroundColor: "#FFFFFF"}, 500)

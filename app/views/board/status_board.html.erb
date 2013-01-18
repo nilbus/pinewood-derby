@@ -8,7 +8,14 @@
 
     <div class="span8">
       <div id="most-recent-heat">
-        <h2>Previous Heat</h2>
+        <div class="row-fluid">
+          <h2 class="span12">
+            Previous Heat
+            <% if admin? %>
+              <%= link_to 'redo', redo_races_path, method: :put, id: 'redo', class: 'btn btn-danger', remote: true, style: 'display: none' %>
+            <% end %>
+          </h2>
+        </div>
         <div class="row-fluid lanes">
           <small class="span4">Lane 1</small>
           <small class="span4">Lane 2</small>
@@ -34,7 +41,7 @@
         <h2>
           Up next...
           <% if admin? %>
-            <%= link_to 'Start the race!', new_race_path, id: 'start-race', class: 'btn btn-success btn-large', remote: true, style: 'display: none' %>
+            <%= link_to 'Start the race!', new_race_path, id: 'start-race', class: 'btn btn-success', remote: true, style: 'display: none' %>
           <% end %>
         </h2>
         <div class="row-fluid">

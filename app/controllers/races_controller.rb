@@ -20,4 +20,16 @@ class RacesController < ApplicationController
       format.js { render js: "alert('#{e.class}: #{e.message}');" }
     end
   end
+
+  def redo
+    Heat.transaction do
+      heat = Heat.most_recent.first
+      heat.runs.each { |run| run.update_attributes time: nil }
+      heat.start
+    end
+
+    render js: ''
+  rescue e
+    render js: "alert('#{e.class}: #{e.message}');"
+  end
 end
