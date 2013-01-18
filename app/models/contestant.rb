@@ -13,7 +13,7 @@ class Contestant < ActiveRecord::Base
   def self.next_suitable(options = {})
     exclude = Array(options[:exclude])
     exclude = [Contestant.new] if exclude.empty?
-    exclude = exclude.map { |contestant| contestant.id.to_i }
+    exclude = exclude.map { |contestant| contestant.respond_to?(:id) ? contestant.id.to_i : contestant.to_i }
     lane = options[:lane].to_i
     max_runs_per_contestant = 3
 
