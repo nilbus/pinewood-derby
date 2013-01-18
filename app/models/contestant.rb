@@ -10,6 +10,8 @@ class Contestant < ActiveRecord::Base
     order('average_time')
   end
 
+  validates :name, presence: true
+
   def self.next_suitable(options = {})
     exclude = Array(options[:exclude])
     exclude = [Contestant.new] if exclude.empty?
