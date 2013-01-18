@@ -76,4 +76,8 @@ class Heat < ActiveRecord::Base
   def current?
     status == 'current'
   end
+
+  def upcoming?
+    status == 'upcoming'
+  end
 end
