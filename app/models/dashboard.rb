@@ -45,13 +45,18 @@ private
 
   def upcoming_heats
     heats = (Heat.current + Heat.upcoming.limit(3))[0,3]
+    upcoming_index = 0
     heats.map do |heat|
+      upcoming_index += 1
+
       {
         current: heat.status == 'current',
         contestants: heat.runs.map do |run|
           {
             name: run.contestant.name,
-            lane: run.lane
+            lane: run.lane,
+            postponable: (upcoming_index == 1) ? true : false,
+            run_id: run.id
           }
         end
       }

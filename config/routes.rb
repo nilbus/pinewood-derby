@@ -2,6 +2,7 @@ PinewoodDerby::Application.routes.draw do
   root to: 'board#welcome'
   get 'board' => 'board#status_board'
   get 'board/welcome' => 'board#welcome'
+  get 'runs/:id/postpone' => 'runs#postpone'
   resources :login, only: [:new, :create]
   resources :contestants
   resources :races, only: [:new, :index]

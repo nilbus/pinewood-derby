@@ -68,7 +68,11 @@ class window.Announcer
         heat_container.removeClass('btn-success')
       for contestant in heat.contestants
         slot = heat_container.find(".lane#{contestant.lane}")
-        slot.html(contestant.name)
+        if contestant.postponable
+          contestant_link = "<a href='/runs/#{contestant.run_id}/postpone' class='postponable'>#{contestant.name}</a>"
+          slot.html contestant_link
+        else
+          slot.html contestant.name
 
   renderNotice: (stats) ->
     {notice, device_status} = stats

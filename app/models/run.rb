@@ -14,4 +14,14 @@ class Run < ActiveRecord::Base
   def time
     self[:time].try :round, 3
   end
+
+  def postpone
+    update_attributes contestant: Contestant.next_suitable(lane: lane, exclude: heat.contestants)
+    if contestant
+      return contestant
+    else
+      destroy
+      return nil
+    end
+  end
 end
