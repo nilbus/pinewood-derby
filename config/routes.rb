@@ -4,7 +4,7 @@ PinewoodDerby::Application.routes.draw do
   get 'board/welcome' => 'board#welcome'
   get 'runs/:id/postpone' => 'runs#postpone'
   resources :login, only: [:new, :create]
-  resources :contestants
+  resources(:contestants) { member { post 'reactivate' } }
   resources :races, only: [:new, :index]
 
   faye_server '/faye', timeout: 1, engine: {type: Faye::Redis, host: 'localhost'} do

@@ -47,6 +47,21 @@ class Contestant < ActiveRecord::Base
     average_time.try :round, 3
   end
 
+  def retire
+    transaction do
+      update_attributes! retired: true
+      runs.upcoming.readonly(false).each &:postpone
+
+      self
+    end
+  end
+
+  def reactivate
+    update_attributes! retired: false
+
+    self
+  end
+
 private
 
   def calculate_average_time

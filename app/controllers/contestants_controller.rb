@@ -1,10 +1,10 @@
 class ContestantsController < ApplicationController
-  before_action :set_contestant, only: [:show, :edit, :update, :destroy]
+  before_action :set_contestant, only: [:show, :edit, :update, :destroy, :reactivate]
 
   # GET /contestants
   # GET /contestants.json
   def index
-    @contestants = Contestant.all
+    @contestants = Contestant.order('id')
 
     respond_to do |format|
       format.html # index.html.erb
@@ -69,10 +69,21 @@ class ContestantsController < ApplicationController
   # DELETE /contestants/1
   # DELETE /contestants/1.json
   def destroy
-    @contestant.destroy
+    @contestant.retire
 
     respond_to do |format|
-      format.html { redirect_to contestants_url }
+      format.html { redirect_to contestants_path, notice: "#{@contestant.name} has retired" }
+      format.json { head :no_content }
+    end
+  end
+
+  # POST /contestants/1
+  # DELETE /contestants/1.json
+  def reactivate
+    @contestant.reactivate
+
+    respond_to do |format|
+      format.html { redirect_to contestants_path, notice: "#{@contestant.name} was reactivated" }
       format.json { head :no_content }
     end
   end

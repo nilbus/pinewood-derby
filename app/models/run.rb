@@ -2,6 +2,9 @@ class Run < ActiveRecord::Base
   belongs_to :contestant
   belongs_to :heat
 
+  scope :complete, -> { joins(:heat).where(heats: {status: 'complete'}) }
+  scope :upcoming, -> { joins(:heat).where(heats: {status: 'upcoming'}) }
+
   validates :contestant_id, presence: true
   validates :heat_id,       presence: true
   validates :lane,          presence: true
