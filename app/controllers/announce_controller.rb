@@ -6,28 +6,32 @@ class AnnounceController < FayeRails::Controller
 
   faye = self
 
+  observe Contestant, :after_create do |contestant|
+    Heat.upcoming[1..-1].try :each, &:destroy
+  end
+
   observe Contestant, :after_save do |contestant|
-    ApplicationHelper.log "Announcing contestant change"
+    ApplicationHelper.log "Announcing contestant save"
     faye.update
   end
 
   observe Run, :after_update do |run|
-    ApplicationHelper.log "Announcing run change"
+    ApplicationHelper.log "Announcing run save"
     faye.update
   end
 
   observe Heat, :after_update do |heat|
-    ApplicationHelper.log "Announcing heat change"
+    ApplicationHelper.log "Announcing heat save"
     faye.update
   end
 
   observe SensorState, :after_save do |sensor_state|
-    ApplicationHelper.log "Announcing sensor_state change"
+    ApplicationHelper.log "Announcing sensor_state save"
     faye.update
   end
 
   observe Derby, :after_save do |derby|
-    ApplicationHelper.log "Announcing derby change"
+    ApplicationHelper.log "Announcing derby save"
     faye.update
   end
 
