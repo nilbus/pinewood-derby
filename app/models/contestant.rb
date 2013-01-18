@@ -41,6 +41,10 @@ class Contestant < ActiveRecord::Base
     s.first
   end
 
+  def self.generate(i = 26)
+    (?a..?z).to_a[0, i].map{|a|a.upcase + a*10}.each{|a|Contestant.create name: a}
+  end
+
   def average_time
     average_time = self[:average_time] || calculate_average_time
 
