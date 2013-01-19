@@ -32,13 +32,7 @@ class SensorWatch
     @announcer      = options[:announcer]    || AnnounceController
     @logger         = options[:logger]       || ApplicationHelper
     @faye.ensure_reactor_running!
-    @state = :idle
-    if @heat.current.any?
-      start_race
-    else
-      clear_buffer
-    end
-    write_state
+    initialize_state
     @announcer.update
   end
 
@@ -78,6 +72,15 @@ private
     File.read(daemon_pid_filename).strip.to_i
   end
 
+  def initialize_state
+    if @heat.current.any?
+      start_race
+    else
+      self.state = :idle
+      clear_buffer
+    end
+  end
+
   def trigger_race_start
     @sensor.new_race
   rescue IOError
@@ -109,6 +112,7 @@ private
       self.state = :idle
       post_results results
     end
+    initialize_state if unplugged? # No longer unplugged if we got here without error
 
     results
   rescue IOError
