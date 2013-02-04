@@ -119,6 +119,8 @@ GEM
     eventmachine (1.0.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    faker (1.1.2)
+      i18n (~> 0.5)
     faye (0.8.6)
       cookiejar (>= 0.3.0)
       em-http-request (>= 0.3.0)
@@ -200,6 +202,7 @@ DEPENDENCIES
   bootstrap-sass (~> 2.2.1.1)
   coffee-rails!
   daemons-rails
+  faker
   faye-rails!
   faye-redis
   foreman
