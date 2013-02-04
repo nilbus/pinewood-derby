@@ -81,6 +81,9 @@ Running a heat
 Developing
 ==========
 
+This project uses Rails 4.0.0.beta <= commit 5458f509d9a3ee4f8b9fb4d1f305ecb86417fc33.
+After this commit, the newer Rack that Rails requires breaks compatibility with Faye for now; resolution pending.
+
 Instead of using foreman (production environment; requires root to run on port 80), start the app server and daemon separately:
 
     rails server
