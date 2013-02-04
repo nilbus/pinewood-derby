@@ -1,7 +1,7 @@
 PinewoodDerby
 =============
 
-A race manager and status board application for Pack 420's [pinewood derby](http://en.wikipedia.org/wiki/Pinewood_derby)
+A race manager and status board application for Cub Scout Pack 420's [pinewood derby](http://en.wikipedia.org/wiki/Pinewood_derby)
 
 ![screenshot](http://cl.ly/image/1L3b3g0o0R0F/Screen%20shot%202013-02-03%20at%209.18.25%20PM.png)
 
