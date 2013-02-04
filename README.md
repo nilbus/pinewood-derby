@@ -46,7 +46,9 @@ There are with several important assumptions that are currently built into this 
 
 * Authentication - anyone who visits the app URL can start races, modify contestants, clear all data, etc.
 * Customization - support for other devices and variations on the lineup rules
-* Deltas - Indicate when a contestant moves up or down in rank with a green or red highlight
+* Deltas - indicate when a contestant moves up or down in rank with a green or red highlight
+* Canceling a heat - once you start a heat, you cannot cancel it and must trigger the sensor
+* Non-finishers - handle people whose cars don't make it to the sensor in under 10 seconds; currently they don't get a time for that heat
 * Windows support, and configurable support for device paths other than /dev/ttyUSB*
 * Mobile layout - the responsive mobile layout sometimes isn't very pretty
 
@@ -112,6 +114,8 @@ Architecture
 ### Sensor driver
 
 `TrackSensor` communicates with the sensor device via /dev/ttyUSB*. It tells the device to start a race and reads the race times. When the device is unplugged, it throws an error when attempting to read race times.
+
+This component could be separated into its own gem, but I'm including it in this project for now.
 
 ### SensorWatch daemon
 
