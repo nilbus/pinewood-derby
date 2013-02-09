@@ -124,6 +124,10 @@ This component could be separated into its own gem, but I'm including it in this
 
 `SensorWatch` runs as a daemon to keep the persistent instance of TrackSensor necessary to keep the device open. The application communicates with the daemon via POSIX signals (SIGUSR1) to start a race. The daemon communicates with the app via Faye and database updates.
 
+### Rails web server
+
+The user interface is provided via the web.
+
 ### Faye websocket pub/sub
 
 The faye-rails `AnnounceController` in the `SensorWatch` daemon uses ActiveRecord observers to detect changes the daemon makes to the models - updating heat status, run times, etc. These changes trigger Faye to publish a message.
