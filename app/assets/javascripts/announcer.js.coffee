@@ -69,7 +69,7 @@ class window.Announcer
       for contestant in heat.contestants
         slot = heat_container.find(".lane#{contestant.lane}")
         if contestant.postponable
-          contestant_link = "<a href='/runs/#{contestant.run_id}/postpone' class='postponable'>#{contestant.name}</a>"
+          contestant_link = "<a href='/runs/#{contestant.run_id}/postpone' class='postponable' title='postpone'>#{contestant.name}</a>"
           slot.html contestant_link
         else
           slot.html contestant.name
