@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails',     path: '../rails'
-gem 'arel',      github: 'rails/arel'
+gem 'rails', github: 'rails/rails', ref: '5458f509d9a3ee4f8b9fb4d1f305ecb86417fc33'
+gem 'arel', github: 'rails/arel'
 gem 'activerecord-deprecated_finders', github: 'rails/activerecord-deprecated_finders'
 gem 'thin-rails'
 gem 'pg'
