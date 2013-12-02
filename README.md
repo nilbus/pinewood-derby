@@ -67,7 +67,8 @@ Setup
 
 1. After starting the PostgreSQL server, initialize the database
 
-        rake db:setup
+        rake db:setup RAILS_ENV=development
+        rake db:setup RAILS_ENV=production
 
 1. Run the application and sensor daemon as root (for access to port 80) and wait a few seconds
 

@@ -29,5 +29,7 @@ module PinewoodDerby
     config.assets.version = '1.0'
 
     config.autoload_paths << config.root.join('lib')
+
+    config.active_record.schema_format = :sql
   end
 end
