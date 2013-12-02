@@ -1,6 +1,6 @@
 class TrackSensor
   def initialize(options = {})
-    @device_glob = options[:device_glob] || '/dev*/ttyUSB*'
+    @device_glob = options[:device_glob] || '/dev*/tty{USB,.usbserial}*'
     @devices = []
     @data = {}
     initialize_new_devices
