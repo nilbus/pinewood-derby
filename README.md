@@ -60,16 +60,25 @@ Setup
 -----
 
 1. [Install drivers for the USB serial connector](https://github.com/nilbus/pinewood-derby/wiki/USB-serial-driver-installation)
-2. Run the application and sensor daemon as root (for access to port 80) and wait a few seconds
+1. Install [Ruby &gt;= 1.9.2](https://www.ruby-lang.org/en/downloads), [bundler](http://bundler.io), and [PostgreSQL](http://www.postgresql.org/)
+1. Install the required ruby dependencies
+
+        bundle install
+
+1. After starting the PostgreSQL server, initialize the database
+
+        rake db:setup
+
+1. Run the application and sensor daemon as root (for access to port 80) and wait a few seconds
 
         rvmsudo foreman start   # or just plain sudo
 
-3. Visit http://localhost/ - You should see the welcome screen, and it should report that the sensor is not plugged in
-4. Connect the sensor via USB, and turn it on. Hit the reset button, and it should display "3 lanes". Press reset until the sensor display goes blank
-5. Verify that the "not plugged in" warning has gone away
-6. Connect with other devices to the URL on the welcome page (status board and/or other device to manage the derby)
-7. Visit the contestants page to register contestants
-8. Visit the Dashboard page to manage the races
+1. Visit http://localhost/ - You should see the welcome screen, and it should report that the sensor is not plugged in
+1. Connect the sensor via USB, and turn it on. Hit the reset button, and it should display "3 lanes". Press reset until the sensor display goes blank
+1. Verify that the "not plugged in" warning has gone away
+1. Connect with other devices to the URL on the welcome page (status board and/or other device to manage the derby)
+1. Visit the contestants page to register contestants
+1. Visit the Dashboard page to manage the races
 
 Running a heat
 --------------
@@ -82,7 +91,7 @@ Running a heat
 Developing
 ==========
 
-This project uses Rails 4.0.0.beta <= commit 5458f509d9a3ee4f8b9fb4d1f305ecb86417fc33.
+This project uses Rails 4.0.0.beta &lt;= commit 5458f509d9a3ee4f8b9fb4d1f305ecb86417fc33.
 After this commit, the newer Rack that Rails requires breaks compatibility with Faye for now; resolution pending.
 
 Instead of using foreman (production environment; requires root to run on port 80), start the app server and daemon separately:
