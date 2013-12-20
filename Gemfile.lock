@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/nilbus/faye-rails.git
+  revision: abf31511442cdb3ecdfb2a9cbc98bf4014b5e9d0
+  branch: rails4
+  specs:
+    faye-rails (1.0.11)
+      eventmachine (~> 1.0.0)
+      faye (~> 0.8.9)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -67,9 +76,6 @@ GEM
       faye-websocket (>= 0.4.0)
       rack (>= 1.0.0)
       yajl-ruby (>= 1.0.0)
-    faye-rails (1.0.10)
-      eventmachine (~> 1.0.0)
-      faye (~> 0.8.9)
     faye-redis (0.2.0)
       em-hiredis (>= 0.2.0)
       eventmachine (>= 0.12.0)
@@ -82,7 +88,7 @@ GEM
       thor (>= 0.13.6)
     hike (1.2.3)
     hiredis (0.4.5)
-    http_parser.rb (0.6.0.beta.2)
+    http_parser.rb (0.6.0)
     i18n (0.6.9)
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
@@ -154,7 +160,7 @@ GEM
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     websocket-driver (0.3.1)
-    yajl-ruby (1.1.0)
+    yajl-ruby (1.2.0)
 
 PLATFORMS
   ruby
@@ -164,7 +170,7 @@ DEPENDENCIES
   coffee-rails
   daemons-rails
   faker
-  faye-rails
+  faye-rails!
   faye-redis
   foreman
   jquery-rails
