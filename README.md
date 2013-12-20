@@ -151,4 +151,4 @@ Contributing
 This pinewood-derby application is Copyright 2013 Edward Anderson,
 and is distributed under the GNU Affero General Public License (see LICENSE).
 
-Please let me know (via issues) if you're interested in using this PinewoodDerby software or need help with it.
+Please let me know (via [issues](https://github.com/nilbus/pinewood-derby/issues)) if you're interested in using this PinewoodDerby software or need help with it.
