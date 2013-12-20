@@ -31,5 +31,7 @@ module PinewoodDerby
     config.autoload_paths << config.root.join('lib')
 
     config.active_record.schema_format = :sql
+
+    config.middleware.delete Rack::Lock
   end
 end
