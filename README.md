@@ -70,6 +70,7 @@ Setup
         rake db:setup RAILS_ENV=development
         rake db:setup RAILS_ENV=production
 
+1. Ensure the `config/derby_config.yaml` file is configured correctly for your setup
 1. Run the application and sensor daemon as root (for access to port 80) and wait a few seconds
 
         rvmsudo foreman start   # or just plain sudo
