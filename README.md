@@ -18,6 +18,7 @@ Features
 * The welcome screen displays the URL at which other devices can access the application
 * Warnings are displayed when the USB device is unplugged or the sensor daemon is not running
 * Lineup order is automatically generated (using the rules below)
+* Race using a configurable number of lanes
 
 Limitations
 -----------
@@ -28,14 +29,13 @@ There are with several important assumptions that are currently built into this 
 
 ### Sensor and track
 
-* The derby will be run on a track with 3 lanes
 * A [NewBold DT8000](http://www.pinewood-derby-timer.com/DT8000.html) track sensor
 * A USB-serial adapter that creates a character device on /dev/ttyUSB\* or /dev/tty.usbserial\* such as the [IOGEAR GUC232A](http://www.iogear.com/product/GUC232A/) on Linux
 * A Linux or OSX operating system running the sensor application
 
 ### Derby lineup rules
 
-* Each contestant will run exactly once in each lane (3 times total)
+* Each contestant will run exactly once in each lane
 * The winner is the contestant with the lowest cumulative/average time (no brackets/playoffs)
 * In the first round, contestants race in the order they were registered
 * Contestants will race against others they have not yet raced against when possible
@@ -75,7 +75,7 @@ Setup
         rvmsudo foreman start   # or just plain sudo
 
 1. Visit http://localhost/ - You should see the welcome screen, and it should report that the sensor is not plugged in
-1. Connect the sensor via USB, and turn it on. Hit the reset button, and it should display "3 lanes". Press reset until the sensor display goes blank
+1. Connect the sensor via USB, and turn it on. Hit the reset button, and it should display "3 lanes". Press reset until the sensor display goes blank.
 1. Verify that the "not plugged in" warning has gone away
 1. Connect with other devices to the URL on the welcome page (status board and/or other device to manage the derby)
 1. Visit the contestants page to register contestants
