@@ -17,23 +17,17 @@
           </h2>
         </div>
         <div class="row-fluid lanes">
-          <small class="span4">Lane 1</small>
-          <small class="span4">Lane 2</small>
-          <small class="span4">Lane 3</small>
+          <% DerbyConfig.lane_count.times do |i| %>
+            <small class="<%= BoardHelper.lane_column_width %>">Lane <%= i + 1 %></small>
+          <% end %>
         </div>
         <div class="row-fluid">
-          <div class="span4 lane1">
-            <div class="name"></div>
-            <div class="time"></div>
-          </div>
-          <div class="span4 lane2">
-            <div class="name"></div>
-            <div class="time"></div>
-          </div>
-          <div class="span4 lane3">
-            <div class="name"></div>
-            <div class="time"></div>
-          </div>
+          <% DerbyConfig.lane_count.times do |i| %>
+            <div class="<%= BoardHelper.lane_column_width %> lane<%= i+1 %>">
+              <div class="name"></div>
+              <div class="time"></div>
+            </div>
+          <% end %>
         </div>
       </div>
 
@@ -45,32 +39,28 @@
           <% end %>
         </h2>
         <div class="row-fluid">
-          <div class="span4">
-            <small>Lane1</small>
-          </div>
-          <div class="span4">
-            <small>Lane2</small>
-          </div>
-          <div class="span4">
-            <small>Lane3</small>
-          </div>
+          <% DerbyConfig.lane_count.times do |i| %>
+            <div class="<%= BoardHelper.lane_column_width %>">
+              <small>Lane<%= i + 1 %></small>
+            </div>
+          <% end %>
         </div>
         <div class="row-fluid next1">
-          <div class="span4 name lane1"></div>
-          <div class="span4 name lane2"></div>
-          <div class="span4 name lane3"></div>
+          <% DerbyConfig.lane_count.times do |i| %>
+            <div class="<%= BoardHelper.lane_column_width %> name lane<%= i + 1 %>"></div>
+          <% end %>
         </div>
         <div class="row-fluid"><hr></div>
         <div class="row-fluid next2">
-          <div class="span4 name lane1"></div>
-          <div class="span4 name lane2"></div>
-          <div class="span4 name lane3"></div>
+          <% DerbyConfig.lane_count.times do |i| %>
+            <div class="<%= BoardHelper.lane_column_width %> name lane<%= i + 1 %>"></div>
+          <% end %>
         </div>
         <div class="row-fluid"><hr></div>
         <div class="row-fluid next3">
-          <div class="span4 name lane1"></div>
-          <div class="span4 name lane2"></div>
-          <div class="span4 name lane3"></div>
+          <% DerbyConfig.lane_count.times do |i| %>
+            <div class="<%= BoardHelper.lane_column_width %> name lane<%= i + 1 %>"></div>
+          <% end %>
         </div>
       </div>
     </div>

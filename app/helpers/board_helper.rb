@@ -31,4 +31,13 @@ private
   ensure
     Socket.do_not_reverse_lookup = orig
   end
+
+  def self.column_width_split_into(column_count)
+    layout_column_count = 12
+    layout_column_count / column_count.to_i
+  end
+
+  def self.lane_column_width
+    "span#{BoardHelper.column_width_split_into(DerbyConfig.lane_count)}"
+  end
 end
