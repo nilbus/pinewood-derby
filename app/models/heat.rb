@@ -6,7 +6,7 @@ class Heat < ActiveRecord::Base
   scope :complete, -> { where(status: 'complete').order('sequence DESC, created_at DESC').includes(runs: :contestant) }
   scope :most_recent, -> { complete.limit(1) }
   scope :upcoming, -> { where(status: 'upcoming').order('sequence, created_at').includes(runs: :contestant) }
-  scope :upcoming_incomplete, -> { where(status: 'upcoming').joins(:runs).group('heats.id').having('count(runs.id) < 3') }
+  scope :upcoming_incomplete, -> { where(status: 'upcoming').joins(:runs).group('heats.id').having('count(runs.id) < ?', DerbyConfig.lane_count) }
 
   validates :status,   presence: true, inclusion: {in: %w(upcoming current complete)}
   validates :sequence, presence: true
@@ -15,7 +15,7 @@ class Heat < ActiveRecord::Base
     def fill_lineup(options = {})
       upcoming_incomplete.readonly(false).destroy_all
       races_to_queue = options.fetch(:races, 3)
-      contestants_per_heat = 3
+      contestants_per_heat = DerbyConfig.lane_count
       races_to_queue.times do
         break if upcoming.count >= races_to_queue
         chosen_contestants = {}
@@ -44,7 +44,7 @@ class Heat < ActiveRecord::Base
     def create_practice(options = {})
       Heat.transaction do
         raise Notice.new "There's already a race going" if Heat.current.any?
-        contestants = options[:contestants] || Contestant.limit(3)
+        contestants = options[:contestants] || Contestant.limit(DerbyConfig.lane_count)
         raise Notice.new "Add contestants first" if contestants.none?
         heat = create! sequence: -1, status: 'current'
         contestants.each_with_index do |contestant, i|

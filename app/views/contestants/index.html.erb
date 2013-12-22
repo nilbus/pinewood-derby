@@ -5,9 +5,9 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>Round 1</th>
-        <th>Round 2</th>
-        <th>Round 3</th>
+        <% DerbyConfig.lane_count.times do |i| %>
+          <th>Round <%= i+1 %></th>
+        <% end %>
         <th></th>
       </tr>
     </thead>
@@ -18,7 +18,7 @@
       <td class="<%= 'retired' if contestant.retired %>">
         <%= link_to contestant.name, edit_contestant_path(contestant) %>
       </td>
-      <% 3.times do |i| %>
+      <% DerbyConfig.lane_count.times do |i| %>
         <td><%= contestant.runs.complete[i].try :time %></td>
       <% end %>
       <td>

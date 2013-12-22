@@ -17,7 +17,7 @@ class Contestant < ActiveRecord::Base
     exclude = [Contestant.new] if exclude.empty?
     exclude = exclude.map { |contestant| contestant.respond_to?(:id) ? contestant.id.to_i : contestant.to_i }
     lane = options[:lane].to_i
-    max_runs_per_contestant = 3
+    max_runs_per_contestant = DerbyConfig.lane_count
 
     # select
     s = select('contestants.*')
