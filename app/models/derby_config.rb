@@ -4,7 +4,7 @@ require 'singleton'
 class DerbyConfig
   include Singleton
 
-  CONFIG_FILE = 'config/derby_config.yml'
+  CONFIG_FILE = File.expand_path(File.join(__FILE__, '../../../config/derby_config.yml'))
 
   def self.lane_count
     instance['lane_count'].to_i
