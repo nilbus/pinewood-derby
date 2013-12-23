@@ -48,11 +48,18 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    columnize (0.3.6)
     cookiejar (0.3.0)
     daemons (1.1.9)
     daemons-rails (1.2.1)
       daemons
       multi_json (~> 1.0)
+    debugger (1.5.0)
+      columnize (>= 0.3.1)
+      debugger-linecache (~> 1.2.0)
+      debugger-ruby_core_source (~> 1.2.0)
+    debugger-linecache (1.2.0)
+    debugger-ruby_core_source (1.2.0)
     dotenv (0.9.0)
     em-hiredis (0.2.1)
       hiredis (~> 0.4.0)
@@ -169,6 +176,7 @@ DEPENDENCIES
   bootstrap-sass (~> 2.2.1.1)
   coffee-rails
   daemons-rails
+  debugger
   faker
   faye-rails!
   faye-redis

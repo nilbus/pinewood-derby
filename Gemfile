@@ -8,8 +8,12 @@ gem 'faye-rails', github: 'nilbus/faye-rails', branch: 'rails4'
 gem 'rack'
 gem 'faye-redis'
 gem 'foreman'
-gem 'pry-rails'
-gem 'faker', group: :development
+
+group :development do
+  gem 'pry-rails'
+  gem 'faker'
+  gem 'debugger'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.
