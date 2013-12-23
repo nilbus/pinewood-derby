@@ -1,4 +1,6 @@
 class RacesController < ApplicationController
+  include ActionView::Helpers::JavaScriptHelper
+
   def index
   end
 
@@ -16,8 +18,8 @@ class RacesController < ApplicationController
     redirect_to races_path, alert: e.message
   rescue RuntimeError => e
     respond_to do |format|
-      format.html { redirect_to races_path, alert: "#{e.class}: #{e.message}" }
-      format.js { render js: "alert('#{e.class}: #{e.message}');" }
+      format.html { redirect_to races_path, alert: "#{e.class}: #{j e.message}" }
+      format.js { render js: "alert('#{e.class}: #{j e.message}');" }
     end
   end
 
@@ -29,7 +31,7 @@ class RacesController < ApplicationController
     end
 
     render js: ''
-  rescue e
-    render js: "alert('#{e.class}: #{e.message}');"
+  rescue RuntimeError => e
+    render js: "alert('#{e.class}: #{j e.message}');"
   end
 end
