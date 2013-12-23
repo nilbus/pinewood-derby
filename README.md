@@ -60,7 +60,7 @@ Setup
 -----
 
 1. [Install drivers for the USB serial connector](https://github.com/nilbus/pinewood-derby/wiki/USB-serial-driver-installation)
-1. Install [Ruby &gt;= 1.9.2](https://www.ruby-lang.org/en/downloads), [bundler](http://bundler.io), and [PostgreSQL](http://www.postgresql.org/)
+1. Install [Ruby &gt;= 1.9.2](https://www.ruby-lang.org/en/downloads), [bundler](http://bundler.io), [PostgreSQL](http://www.postgresql.org/), and [Redis](http://redis.io)
 1. Install the required ruby dependencies
 
         bundle install
