@@ -15,6 +15,10 @@ group :development do
   gem 'debugger'
 end
 
+group :test, :development do
+  gem 'rspec-rails'
+end
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
