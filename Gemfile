@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.0.2'
+gem 'rails', '~> 4.1.0.beta1'
 gem 'thin-rails'
 gem 'pg'
 gem 'daemons-rails'
@@ -17,6 +17,7 @@ end
 
 group :test, :development do
   gem 'rspec-rails'
+  gem 'spring-commands-rspec'
 end
 
 # Gems used only for assets and not required
