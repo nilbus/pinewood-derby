@@ -19,7 +19,7 @@ private
 
   def contestant_times
     rank = 0
-    Contestant.ranked.keep_if(&:average_time).map do |contestant|
+    Contestant.ranked.select(&:average_time).map do |contestant|
       rank += 1
 
       {
