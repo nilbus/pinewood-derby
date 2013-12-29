@@ -16,8 +16,8 @@ group :development do
 end
 
 group :test, :development do
-  gem 'guard-rspec'
-  gem 'rspec-rails'
+  gem 'guard-rspec', github: 'guard/guard-rspec', ref: '394596b647d7082c0487bf5c11e36702ccbf5bf1'
+  gem 'rspec-rails', '~> 3.0.0.beta1'
   gem 'spring-commands-rspec'
 end
 
