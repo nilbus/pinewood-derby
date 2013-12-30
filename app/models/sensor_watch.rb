@@ -70,6 +70,8 @@ private
 
   def self.daemon_pid
     File.read(daemon_pid_filename).strip.to_i
+  rescue Errno::ENOENT
+    raise Errno::ESRCH
   end
 
   def initialize_state
