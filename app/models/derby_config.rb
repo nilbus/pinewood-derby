@@ -10,6 +10,12 @@ class DerbyConfig
     instance['lane_count'].to_i
   end
 
+  def self.sensor_class
+    sensor_class_name = instance['sensor_class_name']
+
+    TrackSensor.const_get(sensor_class_name)
+  end
+
   def initialize
     reload
   end

@@ -24,7 +24,7 @@ class SensorWatch
   end
 
   def initialize(options = {})
-    @sensor         = options[:track_sensor] || TrackSensor::NewboldDt8000.new
+    @sensor         = options[:track_sensor] || DerbyConfig.sensor_class.new
     @sensor_state   = options[:sensor_state] || SensorState
     @heat           = options[:heat]         || Heat
     @run            = options[:run]          || Run
