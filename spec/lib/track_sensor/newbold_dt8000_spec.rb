@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe TrackSensor do
-  subject(:track_sensor) { TrackSensor.new device_glob: "{#{device_path},#{secondary_path},/tmp/nonexistent,/etc/profile}" } # Include some bad files in the glob; it should read from any/all files
+describe TrackSensor::NewboldDt8000 do
+  subject(:track_sensor) { described_class.new device_glob: "{#{device_path},#{secondary_path},/tmp/nonexistent,/etc/profile}" } # Include some bad files in the glob; it should read from any/all files
   let(:device_path) { '/tmp/device' }
   let(:device_data) { '' }
   let(:secondary_path) { '/tmp/secondary' }
@@ -63,7 +63,7 @@ describe TrackSensor do
 
   context 'with no device files' do
     it 'raises an IOError' do
-      sensor = TrackSensor.new device_glob: '/tmp/whoopsitsnotthere'
+      sensor = described_class.new device_glob: '/tmp/whoopsitsnotthere'
       expect { sensor.race_results }.to raise_exception IOError, 'The sensor is not plugged in'
     end
   end
