@@ -42,6 +42,14 @@ protected
 
 private
 
+  def initialize_device(device_path)
+    return false unless File.writable? device_path
+    params = serial_params
+    `stty #{params[:baud].to_i} cs#{params[:data_bits].to_i} #{'-' unless params[:stop_bits] == 2}cstopb < #{device_path}`
+
+    File.open(device_path, 'r+')
+  end
+
   def scan_for_device_changes
     failed_devices = []
     initialize_new_devices

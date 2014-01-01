@@ -24,14 +24,15 @@ module TrackSensor
       nil
     end
 
-  private
-
-    def initialize_device(device_path)
-      return false unless File.writable? device_path
-      # `stty 9600 cs8 -cstopb < #{device_path}`
-
-      File.open(device_path, 'r+')
+    def serial_params
+      {
+        baud: 9600,
+        data_bits: 8,
+        stop_bits: 1,
+      }
     end
+
+  private
 
     def parse_times(times_string)
       times = times_string.chomp.split(/ +/).map do |value|
