@@ -2,6 +2,8 @@
 # More info at https://github.com/guard/guard#readme
 
 guard :rspec, cmd: 'spring rspec', all_after_pass: true, all_on_start: true do
+  watch('lib/track_sensor/base.rb')                   { 'spec/lib/track_sensor' }
+
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }
@@ -21,4 +23,3 @@ guard :rspec, cmd: 'spring rspec', all_after_pass: true, all_on_start: true do
   watch(%r{^spec/acceptance/(.+)\.feature$})
   watch(%r{^spec/acceptance/steps/(.+)_steps\.rb$})   { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'spec/acceptance' }
 end
-
