@@ -2,32 +2,24 @@ module TrackSensor
   class NewboldDt8000 < TrackSensor::Base
     # @return [Array<Hash>, nil] Race times, if any, in the format:
     #   [{track: 2, time: 3.456}, {track: 1, time: 4.105}, ...]
-    # @raise [IOError] if the device is not plugged in
+    # @raise [IOError] if a device is not plugged in
     def race_results
-      communicate do |device, failed_devices|
-        begin
-          char = device.read_nonblock(1)
-          return race_results if char == "\000"
-          line = char + device.readline
-          return race_results if line =~ /DT.000  NewBold Products/
-          return parse_times line
-        rescue Errno::EAGAIN
-        rescue IOError
-          failed_devices << device
-        end
+      communicate do |device|
+        char = device.read_nonblock(1)
+        return race_results if char == "\000"
+        line = char + device.readline
+        return race_results if line =~ /DT.000  NewBold Products/
+        return parse_times line
       end
 
       nil
     end
 
+    # @raise [IOError] if a device is not plugged in
     def new_race
-      communicate do |device, failed_devices|
-        begin
-          device.write ' '
-          device.flush
-        rescue
-          failed_devices << device
-        end
+      communicate do |device|
+        device.write ' '
+        device.flush
       end
 
       nil

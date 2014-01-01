@@ -4,29 +4,21 @@ module TrackSensor
 
     # @return [Array<Hash>, nil] Race times, if any, in the format:
     #   [{track: 2, time: 3.456}, {track: 1, time: 4.105}, ...]
-    # @raise [IOError] if the device is not plugged in
+    # @raise [IOError] if a device is not plugged in
     def race_results
-      communicate do |device, failed_devices|
-        begin
-          line = device.readline while line.try(:strip) !~ TIMES_REGEX
-          return parse_times line
-        rescue Errno::EAGAIN
-        rescue IOError
-          failed_devices << device
-        end
+      communicate do |device|
+        line = device.readline while line.try(:strip) !~ TIMES_REGEX
+        return parse_times line
       end
 
       nil
     end
 
+    # @raise [IOError] if a device is not plugged in
     def new_race
-      communicate do |device, failed_devices|
-        begin
-          device.write 'RA'
-          device.flush
-        rescue
-          failed_devices << device
-        end
+      communicate do |device|
+        device.write 'RA'
+        device.flush
       end
 
       nil
