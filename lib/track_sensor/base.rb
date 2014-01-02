@@ -1,3 +1,5 @@
+require 'monkeypatches/io'
+
 class TrackSensor::Base
   def initialize(options = {})
     @device_glob = options[:device_glob] || '/dev*/tty{USB,.usbserial}*'
@@ -25,6 +27,8 @@ protected
   # Try to communicate with all device files that match the device_glob option to {#initialize}.
   # IO errors that occur while reading or writing to a device cause the device to be temporarily
   # ignored until the next call to this method.
+  # The block should do only non-blocking IO using read_nonblock and write_nonblock.
+  # The block need not handle exceptions raised caused by when IO would block.
   # @yield [device] IO object to read from and write to
   # @raise [IOError] if no device is available for use
   def communicate
@@ -32,8 +36,8 @@ protected
       @devices.each do |device|
         begin
           yield device
-        rescue Errno::EAGAIN
-        rescue IOError
+        rescue IO::WaitWritable, IO::WaitReadable
+        rescue IOError, Errno::ENXIO
           failed_devices << device
         end
       end
@@ -44,10 +48,10 @@ private
 
   def initialize_device(device_path)
     return false unless File.writable? device_path
-    params = serial_params
-    `stty #{params[:baud].to_i} cs#{params[:data_bits].to_i} #{'-' unless params[:stop_bits] == 2}cstopb < #{device_path}`
+    device = SerialPort.new device_path, serial_params.stringify_keys.reverse_merge('baud' => 9600, 'data_bits' => 8, 'stop_bits' => 1, 'parity' => SerialPort::NONE)
+    device.class_eval { define_method(:path) { device_path } }
 
-    File.open(device_path, 'r+')
+    device
   end
 
   def scan_for_device_changes
