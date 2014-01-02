@@ -1,14 +1,13 @@
 module TrackSensor
   class NewboldDt8000 < TrackSensor::Base
+    TIMES_REGEX = /(\d \d\.\d+ ?)+/
+
     # @return [Array<Hash>, nil] Race times, if any, in the format:
     #   [{track: 2, time: 3.456}, {track: 1, time: 4.105}, ...]
     # @raise [IOError] if a device is not plugged in
     def race_results
       communicate do |device|
-        first_char = device.read_nonblock(1)
-        return race_results if first_char == "\000"
-        line = first_char + device.readline
-        return race_results if line =~ /DT.000  NewBold Products/
+        line = device.readline_nonblock while line !~ TIMES_REGEX
         return parse_times line
       end
 

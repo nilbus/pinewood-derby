@@ -1,3 +1,5 @@
+require 'monkeypatches/io'
+
 class TrackSensor::Base
   def initialize(options = {})
     @device_glob = options[:device_glob] || '/dev*/tty{USB,.usbserial}*'
