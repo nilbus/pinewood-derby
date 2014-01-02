@@ -1,7 +1,9 @@
 require_relative 'test_pty'
 
 shared_examples 'track sensors' do
-  subject(:track_sensor) { described_class.new device_glob: "{#{@device.path},#{@second_device.path},/tmp/nonexistent,/etc/profile}" } # Includes some bad files in the glob; it should read from any/all files
+  # device_glob includes some bad files in the glob.
+  # TrackSensors should read from any/all serial device files matched and ignore others
+  subject(:track_sensor) { described_class.new device_glob: "{#{@device.path},#{@second_device.path},/tmp/nonexistent,/etc/profile}" }
 
   let(:device_data) { '' }
 
