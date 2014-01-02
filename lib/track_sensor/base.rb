@@ -25,6 +25,8 @@ protected
   # Try to communicate with all device files that match the device_glob option to {#initialize}.
   # IO errors that occur while reading or writing to a device cause the device to be temporarily
   # ignored until the next call to this method.
+  # The block should do only non-blocking IO using read_nonblock and write_nonblock.
+  # The block need not handle exceptions raised caused by when IO would block.
   # @yield [device] IO object to read from and write to
   # @raise [IOError] if no device is available for use
   def communicate
@@ -32,8 +34,8 @@ protected
       @devices.each do |device|
         begin
           yield device
-        rescue Errno::EAGAIN
-        rescue IOError
+        rescue IO::WaitWritable, IO::WaitReadable
+        rescue IOError, Errno::ENXIO
           failed_devices << device
         end
       end

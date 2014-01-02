@@ -5,9 +5,9 @@ module TrackSensor
     # @raise [IOError] if a device is not plugged in
     def race_results
       communicate do |device|
-        char = device.read_nonblock(1)
-        return race_results if char == "\000"
-        line = char + device.readline
+        first_char = device.read_nonblock(1)
+        return race_results if first_char == "\000"
+        line = first_char + device.readline
         return race_results if line =~ /DT.000  NewBold Products/
         return parse_times line
       end
@@ -18,7 +18,7 @@ module TrackSensor
     # @raise [IOError] if a device is not plugged in
     def new_race
       communicate do |device|
-        device.write ' '
+        device.write_nonblock ' '
         device.flush
       end
 
