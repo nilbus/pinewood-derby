@@ -44,10 +44,10 @@ private
 
   def initialize_device(device_path)
     return false unless File.writable? device_path
-    params = serial_params
-    `stty #{params[:baud].to_i} cs#{params[:data_bits].to_i} #{'-' unless params[:stop_bits] == 2}cstopb < #{device_path}`
+    device = SerialPort.new device_path, serial_params.stringify_keys.reverse_merge('baud' => 9600, 'data_bits' => 8, 'stop_bits' => 1, 'parity' => SerialPort::NONE)
+    device.class_eval { define_method(:path) { device_path } }
 
-    File.open(device_path, 'r+')
+    device
   end
 
   def scan_for_device_changes

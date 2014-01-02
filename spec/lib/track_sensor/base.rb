@@ -1,14 +1,19 @@
+require_relative 'test_pty'
+
 shared_examples 'track sensors' do
-  subject(:track_sensor) { described_class.new device_glob: "{#{device_path},#{secondary_path},/tmp/nonexistent,/etc/profile}" } # Include some bad files in the glob; it should read from any/all files
-  let(:device_path) { '/tmp/device' }
+  subject(:track_sensor) { described_class.new device_glob: "{#{@device.path},#{@second_device.path},/tmp/nonexistent,/etc/profile}" } # Includes some bad files in the glob; it should read from any/all files
+
   let(:device_data) { '' }
-  let(:secondary_path) { '/tmp/secondary' }
+
   before :each do
-    File.write device_path, device_data || ''
+    @device        = TestPTY.new
+    @second_device = TestPTY.new
+    @device.pty.write device_data
   end
+
   after :each do
-    FileUtils.rm_f device_path
-    FileUtils.rm_f secondary_path
+    @device.close
+    @second_device.close
   end
 
   describe '#race_results' do
@@ -36,7 +41,7 @@ shared_examples 'track sensors' do
   describe '#new_race' do
     it 'writes a space character to the device' do
       track_sensor.new_race
-      expect(File.read(device_path)).to eq new_race_command
+      expect(@device.pty.read_nonblock(new_race_command.length)).to eq new_race_command
     end
   end
 
@@ -53,8 +58,7 @@ shared_examples 'track sensors' do
     it 'attempts to read from any/all of the files specified in the :device_glob option' do
       expect(track_sensor.race_results.size).to eq 4
       expect(track_sensor.race_results).to be_nil
-      File.write device_path, ''
-      File.write secondary_path, result_data.sub('3', '2')
+      @second_device.pty.write device_data.sub('3', '2')
       expect(track_sensor.race_results.first[:time]).to eq 2.1
     end
   end

@@ -8,6 +8,7 @@ gem 'faye-rails', github: 'nilbus/faye-rails', branch: 'rails4'
 gem 'rack'
 gem 'faye-redis'
 gem 'foreman'
+gem 'serialport'
 
 group :development do
   gem 'pry-rails'
