@@ -1,6 +1,6 @@
 module TrackSensor
   class MicroWizardFastTrack  < TrackSensor::Base
-    TIMES_REGEX = /^([A-H]=\d\.\d+[!"\#$%&] *)+$/
+    TIMES_REGEX = /^([A-H]=\d\.\d+[!"\#$%&] *)+\r?$/
 
     # @return [Array<Hash>, nil] Race times, if any, in the format:
     #   [{track: 2, time: 3.456}, {track: 1, time: 4.105}, ...]
@@ -30,6 +30,22 @@ module TrackSensor
         data_bits: 8,
         stop_bits: 1,
       }
+    end
+
+    def self.random_result_example(lanes = 4)
+      possible_lanes = 6
+      random_time = ->{ "%.3f" % (rand * 10) }
+      times = []
+      lanes.times { times << random_time[] }
+      sorted_times = times.sort
+      (possible_lanes - lanes).times { times << 0.0 }
+      ranks = times.each_with_object([]) do |time, ranks|
+        ranks << sorted_times.index(time)
+      end
+      rank_symbols = {0 => '!', 1 => '"', 2 => '#', 3 => '$', 4 => '%', 5 => '&', nil => '&'}
+      ranks = ranks.map { |numeric_rank| rank_symbols[numeric_rank] }
+
+      %Q(A=#{times[0]}#{rank_symbols[0]} B=#{times[1]}#{rank_symbols[1]} C=#{times[2]}#{rank_symbols[2]} D=#{times[3]}#{rank_symbols[3]} E=#{times[4]}#{rank_symbols[4]} F=#{times[5]}#{rank_symbols[5]} \r\n)
     end
 
   private

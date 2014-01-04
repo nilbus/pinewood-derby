@@ -71,4 +71,10 @@ shared_examples 'track sensors' do
       expect { sensor.race_results }.to raise_exception IOError, 'The sensor is not plugged in'
     end
   end
+
+  describe '.random_result_example' do
+    it 'returns an example string that matches the TIMES_REGEX' do
+      expect(described_class.random_result_example).to match described_class.const_get("TIMES_REGEX")
+    end
+  end
 end

@@ -104,19 +104,9 @@ Instead of using foreman, start the app server and daemon separately:
 Testing
 -------
 
-To simulate a sensor device, you can create a fifo at /dev2/ttyUSB0:
+To simulate a sensor device, run:
 
-    sudo mkdir /dev2
-    sudo mkfifo /dev2/ttyUSB0
-    sudo chown $USER /dev2/ttyUSB0
-
-Because a fifo differs from a real character device, every time the daemon restarts, the daemon will block until you feed it some input:
-
-    echo hello > /dev2/ttyUSB0
-
-To simulate random race times after starting a heat:
-
-    ruby -e 'print ": "; 3.times {|i| print "#{i+1} #{(rand*10).round(3)} " }; puts' | tee /dev2/ttyUSB0
+    bin/mock-sensor
 
 When using the Rails console, start EventMachine or Faye will throw `RuntimeError: eventmachine not initialized: evma_connect_to_server` when events are triggered.
 

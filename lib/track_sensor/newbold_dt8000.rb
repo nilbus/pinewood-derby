@@ -32,6 +32,14 @@ module TrackSensor
       }
     end
 
+    def self.random_result_example(lanes = 4)
+      random_time = ->{ "%.4f" % (rand * 10) }
+      data = ""
+      lanes.times { |i| data << "#{i + 1} #{random_time[]} " }
+
+      data.strip
+    end
+
   private
 
     def parse_times(times_string)

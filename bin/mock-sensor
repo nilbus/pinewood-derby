@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+require_relative '../config/environment'
+
+track_sensor_not_given_message = <<MSG
+  Usage: mock_sensor <sensor-type>
+    sensor-type can be one of: #{TrackSensor::MockSensor::SENSOR_TYPES.join(', ')}
+MSG
+
+sensor_type = ARGV[0]
+abort track_sensor_not_given_message unless sensor_type
+mock_sensor = TrackSensor::MockSensor.new sensor_type
+begin
+  mock_sensor.open do
+    puts "Mock Sensor running on #{mock_sensor.path}."
+    puts "Press Enter to send race times."
+    puts "Press Ctrl+C to quit."
+    loop do
+      STDIN.gets
+      print mock_sensor.send_race_times
+    end
+  end
+rescue Interrupt
+end
