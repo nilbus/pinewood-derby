@@ -1,7 +1,7 @@
 PinewoodDerby
 =============
 
-A race manager and status board application for Cub Scout Pack 420's [pinewood derby](http://en.wikipedia.org/wiki/Pinewood_derby)
+A web-based race manager and status board application for the Cub Scout [pinewood derby](http://en.wikipedia.org/wiki/Pinewood_derby)
 
 ![screenshot](http://cl.ly/image/1L3b3g0o0R0F/Screen%20shot%202013-02-03%20at%209.18.25%20PM.png)
 
@@ -20,19 +20,6 @@ Features
 * Lineup order is automatically generated (using the rules below)
 * Race using a configurable number of lanes
 
-Limitations
------------
-
-This PinewoodDerby app was written in a short period of time for our Pack's needs.
-Some features were left out due to time constraints.
-There are with several important assumptions that are currently built into this application, including:
-
-### Sensor and track
-
-* A [NewBold DT8000](http://www.pinewood-derby-timer.com/DT8000.html) track sensor
-* A USB-serial adapter that creates a character device on /dev/ttyUSB\* or /dev/tty.usbserial\* such as the [IOGEAR GUC232A](http://www.iogear.com/product/GUC232A/) on Linux
-* A Linux or OSX operating system running the sensor application
-
 ### Derby lineup rules
 
 * Each contestant will run exactly once in each lane
@@ -44,17 +31,24 @@ There are with several important assumptions that are currently built into this 
 
 ### Missing features
 
+* Manual lineup - Races are lined up using the rules above and cannot yet be manually set
 * Authentication - anyone who visits the app URL can start races, modify contestants, clear all data, etc.
 * Customization - support for other devices and variations on the lineup rules
 * Deltas - indicate when a contestant moves up or down in rank with a green or red highlight
 * Canceling a heat - once you start a heat, you cannot cancel it and must trigger the sensor
 * Non-finishers - handle people whose cars don't make it to the sensor in under 10 seconds; currently they don't get a time for that heat
-* Windows support, and configurable support for device paths other than /dev/ttyUSB\* or /dev/tty.usbserial\*
+* Windows support - The application runs only on Linux and Mac OSX
 * Mobile layout - the responsive mobile layout sometimes isn't very pretty
 
 Feel free to inquire (via issues) regarding how you can modify this app for your setup. I am happy to assist.
 
-Despite this being a last-minute attempt with no automated tests, it ran our 2013 derby perfectly with zero problems.
+Supported Track Sensors
+-----------------------
+
+* [NewBold DT8000](http://www.pinewood-derby-timer.com/DT8000.html)
+* [MicroWizard FastTrack K3](http://microwizard.com/k3page.html)
+
+Adding support for any track sensor that communicates via serial port should be straightforward.
 
 Setup
 -----
@@ -73,10 +67,10 @@ Setup
 1. Ensure the `config/derby_config.yaml` file is configured correctly for your setup
 1. Run the application and sensor daemon as root (for access to port 80) and wait a few seconds
 
-        rvmsudo foreman start   # or just plain sudo
+        sudo foreman start   # or rvmsudo if using rvm
 
 1. Visit http://localhost/ - You should see the welcome screen, and it should report that the sensor is not plugged in
-1. Connect the sensor via USB, and turn it on. Hit the reset button, and it should display "3 lanes". Press reset until the sensor display goes blank.
+1. Connect the sensor via USB, and turn it on. (DT-8000: Hit the reset button, and it should display "3 lanes". Press reset until the sensor display goes blank.)
 1. Verify that the "not plugged in" warning has gone away
 1. Connect with other devices to the URL on the welcome page (status board and/or other device to manage the derby)
 1. Visit the contestants page to register contestants
@@ -90,25 +84,45 @@ Running a heat
 3. Simultaneously release the cars and release the sensor's start switch to start the timer. The race times will appear on the Dashboard after they pass the finish line.
 4. If needed, click the "redo" button to re-run the same heat.
 
+Testing
+-------
+
+To simulate a track sensor when one is not plugged in, use the mock sensor:
+
+    bin/mock-sensor
+
+mock-sensor will announce what device file (ie. `/dev/ttys009`) it is using.
+
+Before staring the server/daemon, set the environment variable `TRACK_SENSOR_DEVICE` to this device file. Eg:
+
+In production:
+
+    export TRACK_SENSOR_DEVICE=/dev/ttys009
+    sudo -E foreman start
+
+In development:
+
+    TRACK_SENSOR_DEVICE=/dev/ttys009 rake daemon:sensor_watch
+
+Configuration
+=============
+
+`config/derby_config.yml` contains several configuration options, including sensor type, device file location, and lane count.
+
 Developing
 ==========
 
 This project uses Rails 4.
 
-Instead of using foreman, start the app server and daemon separately:
+In production, use `foreman` to start the app server and sensor\_watch daeon togehter using foreman.
+
+In development, start the app server and daemon separately in different terminals:
 
     rails server
 
     rake daemon:sensor_watch
 
-Testing
--------
-
-To simulate a sensor device, run:
-
-    bin/mock-sensor
-
-When using the Rails console, start EventMachine or Faye will throw `RuntimeError: eventmachine not initialized: evma_connect_to_server` when events are triggered.
+If using the Rails console, start EventMachine or Faye will throw `RuntimeError: eventmachine not initialized: evma_connect_to_server` when events are triggered.
 
     Faye.ensure_reactor_running!
 
@@ -117,7 +131,7 @@ Architecture
 
 ### Sensor driver
 
-`TrackSensor` communicates with the sensor device via the device file in /dev. It tells the device to start a race and reads the race times. When the device is unplugged, it throws an error when attempting to read race times.
+`TrackSensor` drivers in lib/track\_sensor/\* communicate with the sensor device via the device file in /dev. It tells the device to start a race and reads the race times. When the device is unplugged, it throws an error when attempting to read race times.
 
 This component could be separated into its own gem, but I'm including it in this project for now.
 
@@ -139,7 +153,8 @@ This publisher sends the `Dashboard` json updates to its javascript clients conn
 Contributing
 ------------
 
-This pinewood-derby application is Copyright 2013 Edward Anderson,
+This pinewood-derby application is Copyright 2014 Edward Anderson,
 and is distributed under the GNU Affero General Public License (see LICENSE).
+This license requires that you provide the source code to users of this application.
 
 Please let me know (via [issues](https://github.com/nilbus/pinewood-derby/issues)) if you're interested in using this PinewoodDerby software or need help with it.
