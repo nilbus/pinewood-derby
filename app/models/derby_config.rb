@@ -16,6 +16,12 @@ class DerbyConfig
     TrackSensor.const_get(sensor_class_name)
   end
 
+  def self.device_glob
+    instance['device_glob']
+  rescue KeyError
+    nil
+  end
+
   def initialize
     reload
   end

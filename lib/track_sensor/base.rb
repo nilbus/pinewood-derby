@@ -2,7 +2,7 @@ require 'monkeypatches/io'
 
 class TrackSensor::Base
   def initialize(options = {})
-    @device_glob = options[:device_glob] || '/dev*/tty{USB,.usbserial}*'
+    @device_glob = ENV['TRACK_SENSOR_DEVICE'] || options[:device_glob] || '/dev/tty{USB,.usbserial}*'
     @devices = []
     @data = {}
     initialize_new_devices

@@ -1,3 +1,4 @@
 ---
 lane_count: 4
 sensor_class_name: NewboldDt8000
+# device_glob: "/dev/tty{USB,.usbserial}*"

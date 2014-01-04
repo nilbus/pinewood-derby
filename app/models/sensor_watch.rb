@@ -24,7 +24,7 @@ class SensorWatch
   end
 
   def initialize(options = {})
-    @sensor         = options[:track_sensor] || DerbyConfig.sensor_class.new
+    @sensor         = options[:track_sensor] || DerbyConfig.sensor_class.new(device_glob: DerbyConfig.device_glob)
     @sensor_state   = options[:sensor_state] || SensorState
     @heat           = options[:heat]         || Heat
     @run            = options[:run]          || Run
