@@ -41,9 +41,11 @@ shared_examples 'track sensors' do
   end
 
   describe '#new_race' do
-    it 'writes a space character to the device' do
-      track_sensor.new_race
-      expect(@device.pty.read_nonblock(new_race_command.length)).to eq new_race_command
+    it 'writes the new race sequence to the device, if any' do
+      if new_race_command.present?
+        track_sensor.new_race
+        expect(@device.pty.read_nonblock(new_race_command.length)).to eq new_race_command
+      end
     end
   end
 

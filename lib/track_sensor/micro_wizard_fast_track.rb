@@ -1,26 +1,20 @@
 module TrackSensor
   class MicroWizardFastTrack  < TrackSensor::Base
-    TIMES_REGEX = /^([A-H]=\d\.\d+[!"\#$%&] *)+\r?$/
+    TIMES_REGEX = /^@?([A-H]=\d\.\d+[!"\#$%& ]? ?)+\r?$/
 
     # @return [Array<Hash>, nil] Race times, if any, in the format:
     #   [{track: 2, time: 3.456}, {track: 1, time: 4.105}, ...]
     # @raise [IOError] if a device is not plugged in
     def race_results
       communicate do |device|
-        line = device.readline_nonblock while line.try(:strip) !~ TIMES_REGEX
+        line = device.readline_nonblock.try(:strip).try(:chomp) while line !~ TIMES_REGEX
         return parse_times line
       end
 
       nil
     end
 
-    # @raise [IOError] if a device is not plugged in
     def new_race
-      communicate do |device|
-        device.write_nonblock 'RA'
-        device.flush
-      end
-
       nil
     end
 
@@ -42,10 +36,10 @@ module TrackSensor
       ranks = times.each_with_object([]) do |time, ranks|
         ranks << sorted_times.index(time)
       end
-      rank_symbols = {0 => '!', 1 => '"', 2 => '#', 3 => '$', 4 => '%', 5 => '&', nil => '&'}
+      rank_symbols = {0 => '!', 1 => '"', 2 => '#', 3 => '$', 4 => '%', 5 => '&', nil => ' '}
       ranks = ranks.map { |numeric_rank| rank_symbols[numeric_rank] }
 
-      %Q(A=#{times[0]}#{rank_symbols[0]} B=#{times[1]}#{rank_symbols[1]} C=#{times[2]}#{rank_symbols[2]} D=#{times[3]}#{rank_symbols[3]} E=#{times[4]}#{rank_symbols[4]} F=#{times[5]}#{rank_symbols[5]} \r\n)
+      %Q(@A=#{times[0]}#{rank_symbols[0]} B=#{times[1]}#{rank_symbols[1]} C=#{times[2]}#{rank_symbols[2]} D=#{times[3]}#{rank_symbols[3]} E=#{times[4]}#{rank_symbols[4]} F=#{times[5]}#{rank_symbols[5]} \r\n)
     end
 
   private
@@ -53,7 +47,7 @@ module TrackSensor
     def parse_times(times_string)
       times = times_string.chomp.split(/ +/).map do |value|
         time = value[/\d\.\d+/].to_f
-        track_letter = value[/^([A-H])=/, 1]
+        track_letter = value[/^@?([A-H])=/, 1]
         {:time => time, :track => convert_track_letter_to_number(track_letter)}
       end
 
