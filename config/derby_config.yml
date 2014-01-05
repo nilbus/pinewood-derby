@@ -1,4 +1,4 @@
 ---
 lane_count: 4
-sensor_class_name: NewboldDt8000
+sensor_class_name: MicroWizardFastTrack
 # device_glob: "/dev/tty{USB,.usbserial}*"

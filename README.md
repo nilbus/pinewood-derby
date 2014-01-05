@@ -45,8 +45,8 @@ Feel free to inquire (via issues) regarding how you can modify this app for your
 Supported Track Sensors
 -----------------------
 
-* [NewBold DT8000](http://www.pinewood-derby-timer.com/DT8000.html)
 * [MicroWizard FastTrack K3](http://microwizard.com/k3page.html)
+* [NewBold DT8000](http://www.pinewood-derby-timer.com/DT8000.html)
 
 Adding support for any track sensor that communicates via serial port should be straightforward.
 
