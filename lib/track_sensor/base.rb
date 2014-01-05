@@ -37,7 +37,7 @@ protected
         begin
           yield device
         rescue IO::WaitWritable, IO::WaitReadable
-        rescue IOError, Errno::ENXIO
+        rescue IOError, Errno::ENXIO, Errno::EIO, Errno::EBUSY
           failed_devices << device
         end
       end
