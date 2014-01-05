@@ -1,6 +1,8 @@
 PinewoodDerby
 =============
 
+[![Code Climate](https://codeclimate.com/github/nilbus/pinewood-derby.png)](https://codeclimate.com/github/nilbus/pinewood-derby)
+
 A web-based race manager and status board application for the Cub Scout [pinewood derby](http://en.wikipedia.org/wiki/Pinewood_derby)
 
 ![screenshot](http://cl.ly/image/1L3b3g0o0R0F/Screen%20shot%202013-02-03%20at%209.18.25%20PM.png)
