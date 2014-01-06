@@ -12,8 +12,8 @@ gem 'serialport'
 
 group :development do
   gem 'pry-rails'
+  gem 'pry-debugger'
   gem 'faker'
-  gem 'debugger'
 end
 
 group :test, :development do
