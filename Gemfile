@@ -9,6 +9,7 @@ gem 'faye-redis'
 gem 'foreman'
 gem 'serialport'
 gem 'iobuffer'
+gem 'bootstrap-sass', '~> 2.2.1.1'
 
 group :development do
   gem 'pry-rails'
@@ -28,7 +29,6 @@ group :assets do
   gem 'sprockets-rails'
   gem 'sass-rails'
   gem 'coffee-rails'
-  gem 'bootstrap-sass', '~> 2.2.1.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', platforms: :ruby

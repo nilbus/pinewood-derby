@@ -52,8 +52,8 @@ Supported Track Sensors
 
 Adding support for any track sensor that communicates via serial port should be straightforward.
 
-Setup
------
+Initial Setup
+-------------
 
 1. [Install drivers for the USB serial connector](https://github.com/nilbus/pinewood-derby/wiki/USB-serial-driver-installation)
 1. Install [Ruby &gt;= 1.9.2](https://www.ruby-lang.org/en/downloads), [bundler](http://bundler.io), [PostgreSQL](http://www.postgresql.org/), and [Redis](http://redis.io)
@@ -67,6 +67,13 @@ Setup
         rake db:setup RAILS_ENV=production
 
 1. Ensure the `config/derby_config.yaml` file is configured correctly for your setup
+1. Precompile assets for production mode (Do this every time you update javascript/css/images)
+
+        rake asset:precompile RAILS_ENV=production
+
+Starting the Derby
+------------------
+
 1. Run the application and sensor daemon as root (for access to port 80) and wait a few seconds
 
         sudo foreman start   # or rvmsudo if using rvm
