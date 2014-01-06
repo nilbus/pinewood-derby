@@ -247,7 +247,6 @@ DEPENDENCIES
   pg
   pry-debugger
   pry-rails
-  rack
   rails (~> 4.1.0.beta1)
   rspec-rails (~> 3.0.0.beta1)
   sass-rails
