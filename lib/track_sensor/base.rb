@@ -1,5 +1,3 @@
-require 'monkeypatches/io'
-
 class TrackSensor::Base
   def initialize(options = {})
     @device_glob = ENV['TRACK_SENSOR_DEVICE'] || options[:device_glob] || '/dev/tty{USB,.usbserial}*'
@@ -36,7 +34,7 @@ protected
       @devices.each do |device|
         begin
           yield device
-        rescue IO::WaitWritable, IO::WaitReadable
+        rescue IO::WaitWritable, IO::WaitReadable, Errno::EAGAIN
         rescue IOError, Errno::ENXIO, Errno::EIO, Errno::EBUSY
           failed_devices << device
         end
@@ -48,8 +46,7 @@ private
 
   def initialize_device(device_path)
     return false unless File.writable? device_path
-    device = SerialPort.new device_path, serial_params.stringify_keys.reverse_merge('baud' => 9600, 'data_bits' => 8, 'stop_bits' => 1, 'parity' => SerialPort::NONE)
-    device.class_eval { define_method(:path) { device_path } }
+    device = BufferedSerialDevice.new device_path, serial_params.stringify_keys.reverse_merge('baud' => 9600, 'data_bits' => 8, 'stop_bits' => 1, 'parity' => SerialPort::NONE)
 
     device
   end

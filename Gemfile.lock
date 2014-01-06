@@ -119,6 +119,7 @@ GEM
     hiredis (0.4.5)
     http_parser.rb (0.6.0)
     i18n (0.6.9)
+    iobuffer (1.1.2)
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
@@ -243,6 +244,7 @@ DEPENDENCIES
   faye-redis
   foreman
   guard-rspec!
+  iobuffer
   jquery-rails
   pg
   pry-debugger

@@ -7,7 +7,7 @@ module TrackSensor
     # @raise [IOError] if a device is not plugged in
     def race_results
       communicate do |device|
-        line = device.readline_nonblock while line !~ TIMES_REGEX
+        line = device.readline while line !~ TIMES_REGEX
         return parse_times line
       end
 
@@ -17,8 +17,7 @@ module TrackSensor
     # @raise [IOError] if a device is not plugged in
     def new_race
       communicate do |device|
-        device.write_nonblock ' '
-        device.flush
+        device.write ' '
       end
 
       nil
