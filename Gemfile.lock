@@ -136,7 +136,7 @@ GEM
     mime-types (1.25.1)
     minitest (5.2.0)
     multi_json (1.8.2)
-    pg (0.17.0)
+    pg (0.17.1)
     phantomjs (1.9.2.1)
     polyglot (0.3.3)
     pry (0.9.12.4)
