@@ -9,7 +9,7 @@ gem 'faye-redis'
 gem 'foreman'
 gem 'serialport'
 gem 'iobuffer'
-gem 'bootstrap-sass', '~> 2.2.1.1'
+gem 'foundation-rails'
 
 group :development do
   gem 'pry-rails'
