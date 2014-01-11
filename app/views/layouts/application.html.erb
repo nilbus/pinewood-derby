@@ -13,27 +13,20 @@
 </head>
 
 <body>
-  <div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-inner">
-      <div class="container">
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </a>
-        <%= link_to 'PinewoodDerby', root_path, class: 'brand' %>
-        <div class="nav-collapse collapse pull-right">
-          <ul class="nav">
-            <li class="<%= 'active' if current_page?(root_path) %>"><%= link_to 'Welcome', root_path %></li>
-            <li class="<%= 'active' if current_page?(board_path) %>"><%= link_to 'Dashboard', board_path%></li>
-            <li class="<%= 'active' if current_page?(contestants_path) %>"><%= link_to 'Contestants', contestants_path%></li>
-            <!-- <li class="<%#= 'active' if current_page?(races_path) %>"><%#= link_to 'Races', races_path%></li> -->
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </div>
-  </div>
-
+  <header id="header" class="top-bar" data-topbar>
+    <ul class="title-area">
+      <li class="name"><h1><%= link_to 'Pinewood Derby', root_path %></h1></li>
+    </ul>
+    <nav class="top-bar-section">
+      <ul class="right">
+        <li class="<%= 'active' if current_page?(root_path) %>"><%= link_to 'Welcome', root_path %></li>
+        <li class="<%= 'active' if current_page?(board_path) %>"><%= link_to 'Dashboard', board_path%></li>
+        <li class="<%= 'active' if current_page?(contestants_path) %>"><%= link_to 'Contestants', contestants_path%></li>
+        <!-- <li class="<%#= 'active' if current_page?(races_path) %>"><%#= link_to 'Races', races_path%></li> -->
+      </ul>
+    </nav>
+  </header>
+  
   <div class="container">
 
     <%= render 'layouts/messages' %>
