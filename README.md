@@ -61,6 +61,7 @@ Initial Setup
 
         bundle install
 
+1. Copy and configure `config/database.yml.example` to `config/database.yml`
 1. After starting the PostgreSQL server, initialize the database
 
         rake db:setup RAILS_ENV=development
@@ -130,10 +131,6 @@ In development, start the app server and daemon separately in different terminal
     rails server
 
     rake daemon:sensor_watch
-
-If using the Rails console, start EventMachine or Faye will throw `RuntimeError: eventmachine not initialized: evma_connect_to_server` when events are triggered.
-
-    Faye.ensure_reactor_running!
 
 Architecture
 ------------

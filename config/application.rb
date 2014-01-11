@@ -33,5 +33,9 @@ module PinewoodDerby
     config.active_record.schema_format = :sql
 
     config.middleware.delete Rack::Lock
+
+    console do
+      Faye.ensure_reactor_running!
+    end
   end
 end
