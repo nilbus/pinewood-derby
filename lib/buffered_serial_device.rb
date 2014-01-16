@@ -21,7 +21,7 @@ class BufferedSerialDevice
 
     line + newline
   ensure
-    @buffer.prepend remaining
+    @buffer.prepend remaining.to_s
   end
 
   def write(data)

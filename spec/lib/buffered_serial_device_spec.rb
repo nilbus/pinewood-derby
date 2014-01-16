@@ -47,6 +47,11 @@ describe BufferedSerialDevice do
       expect(buffered_serial_device.readline).to eq "partial line\n"
       expect { buffered_serial_device.readline }.to raise_exception Errno::EAGAIN
     end
+
+    it 'passes up exceptions that are raised' do
+      expect(serial_port).to be_a RSpec::Mocks::Mock
+      expect { buffered_serial_device.readline }.to raise_exception TypeError, "can't convert RSpec::Mocks::Mock into IO"
+    end
   end
 
   describe '#write' do
