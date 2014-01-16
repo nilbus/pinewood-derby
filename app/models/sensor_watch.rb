@@ -24,20 +24,22 @@ class SensorWatch
   end
 
   def initialize(options = {})
-    @sensor         = options[:track_sensor] || DerbyConfig.sensor_class.new(device_glob: DerbyConfig.device_glob)
+    debug           = options[:debug]
+    @logger         = options[:logger]       || Logger.new(STDOUT).tap { |l| l.level = Logger::INFO unless debug }
+    @sensor         = options[:track_sensor] || DerbyConfig.sensor_class.new(device_glob: DerbyConfig.device_glob, logger: @logger)
     @sensor_state   = options[:sensor_state] || SensorState
     @heat           = options[:heat]         || Heat
     @run            = options[:run]          || Run
     @faye           = options[:faye]         || Faye
     @announcer      = options[:announcer]    || AnnounceController
-    @logger         = options[:logger]       || ApplicationHelper
     @faye.ensure_reactor_running!
     initialize_state
     @announcer.update
+    @logger.info "Sensor watch started w/ device search path: #{@sensor.device_glob.inspect}"
   end
 
   def start_race
-    @logger.log 'Sensor: Starting a race'
+    @logger.debug 'Sensor: Starting a race'
     clear_buffer
     self.state = :active
     trigger_race_start

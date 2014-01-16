@@ -1,9 +1,13 @@
 class TrackSensor::Base
+  attr_accessor :device_glob
+
   def initialize(options = {})
     @device_glob = ENV['TRACK_SENSOR_DEVICE'] || options[:device_glob] || '/dev/tty{USB,.usbserial}*'
     @devices = []
     @data = {}
+    @logger = options[:logger] || Logger.new(nil)
     initialize_new_devices
+    debug "Devices found: #{@devices.map(&:path)}"
   end
 
   def race_results
@@ -36,6 +40,7 @@ protected
           yield device
         rescue IO::WaitWritable, IO::WaitReadable, Errno::EAGAIN
         rescue IOError, Errno::ENXIO, Errno::EIO, Errno::EBUSY
+          debug "Failed device #{device.path}"
           failed_devices << device
         end
       end
@@ -46,6 +51,7 @@ private
 
   def initialize_device(device_path)
     return false unless File.writable? device_path
+    debug "Initializing #{device_path} with serial params #{serial_params.inspect}"
     device = BufferedSerialDevice.new device_path, serial_params.stringify_keys.reverse_merge('baud' => 9600, 'data_bits' => 8, 'stop_bits' => 1, 'parity' => SerialPort::NONE)
 
     device
@@ -71,7 +77,12 @@ private
     new_device_paths = available_device_paths - @devices.map(&:path)
     new_device_paths.each do |new_device_path|
       device = initialize_device(new_device_path)
+      debug "New device: #{new_device_path.inspect}" if device
       @devices << device if device
     end
+  end
+
+  def debug(message)
+    @logger.debug message
   end
 end

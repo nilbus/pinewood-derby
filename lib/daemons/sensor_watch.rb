@@ -14,7 +14,7 @@ Signal.trap("TERM") do
   $running = false
 end
 
-sensor_watch = SensorWatch.new
+sensor_watch = SensorWatch.new debug: ENV['DEBUG']
 
 Signal.trap("USR1") do
   sensor_watch.start_race

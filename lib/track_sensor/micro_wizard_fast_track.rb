@@ -7,7 +7,11 @@ module TrackSensor
     # @raise [IOError] if a device is not plugged in
     def race_results
       communicate do |device|
-        line = device.readline.strip.chomp while line !~ TIMES_REGEX
+        begin
+          line = device.readline.strip.chomp
+          debug "Ignoring non-time data: #{line}" if line !~ TIMES_REGEX
+        end while line !~ TIMES_REGEX
+        debug "Read times: #{line}"
         return parse_times line
       end
 

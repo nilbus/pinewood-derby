@@ -112,7 +112,9 @@ In production:
 
 In development:
 
-    TRACK_SENSOR_DEVICE=/dev/ttys009 rake daemon:sensor_watch
+    rake daemon:sensor_watch TRACK_SENSOR_DEVICE=/dev/ttys009
+
+Set the environment variable `DEBUG=true` to get more output from the sensor\_watch daemon, including sensor device status and data received.
 
 Configuration
 =============
