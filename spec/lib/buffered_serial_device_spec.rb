@@ -42,10 +42,10 @@ describe BufferedSerialDevice do
       # expect(SerialPort).to receive(:new).and_return mock_io('partial'), mock_io(" line\nleftover")
       serial_port, serial_port_writer = mock_io('partial')
       expect(SerialPort).to receive(:new).and_return serial_port
-      expect{buffered_serial_device.readline}.to raise_exception Errno::EAGAIN
+      expect { buffered_serial_device.readline }.to raise_exception Errno::EAGAIN
       serial_port_writer.write(" line\nleftover")
       expect(buffered_serial_device.readline).to eq "partial line\n"
-      expect{buffered_serial_device.readline}.to raise_exception Errno::EAGAIN
+      expect { buffered_serial_device.readline }.to raise_exception Errno::EAGAIN
     end
   end
 
