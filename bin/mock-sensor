@@ -21,4 +21,5 @@ begin
     end
   end
 rescue Interrupt
+  puts
 end

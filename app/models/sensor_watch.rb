@@ -36,6 +36,7 @@ class SensorWatch
     initialize_state
     @announcer.update
     @logger.info "Sensor watch started w/ device search path: #{@sensor.device_glob.inspect}"
+    @logger.info "Press ^C to quit"
   end
 
   def start_race

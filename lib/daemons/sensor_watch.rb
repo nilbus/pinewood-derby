@@ -10,9 +10,8 @@ require File.join(root, "config", "environment")
 require 'sensor_watch'
 
 $running = true
-Signal.trap("TERM") do
-  $running = false
-end
+Signal.trap("TERM") { $running = false }
+Signal.trap("INT")  { $running = false }
 
 sensor_watch = SensorWatch.new debug: ENV['DEBUG']
 
@@ -28,3 +27,4 @@ while($running) do
   sleep 0.2
 end
 sensor_watch.quit
+puts
