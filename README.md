@@ -94,8 +94,13 @@ Running a heat
 3. Simultaneously release the cars and release the sensor's start switch to start the timer. The race times will appear on the Dashboard after they pass the finish line.
 4. If needed, click the "redo" button to re-run the same heat.
 
-Testing
--------
+Configuration
+=============
+
+`config/derby_config.yml` contains several configuration options, including sensor type, device file location, and lane count.
+
+Running for Testing / Development
+=================================
 
 To simulate a track sensor when one is not plugged in, use the mock sensor:
 
@@ -107,32 +112,18 @@ Before staring the server/daemon, set the environment variable `TRACK_SENSOR_DEV
 
 In production:
 
-    export TRACK_SENSOR_DEVICE=/dev/ttys009
-    sudo -E foreman start
+    TRACK_SENSOR_DEVICE=/dev/ttys009 sudo -E foreman start   # or rvmsudo if using rvm
 
 In development:
 
-    rake daemon:sensor_watch TRACK_SENSOR_DEVICE=/dev/ttys009
+    TRACK_SENSOR_DEVICE=/dev/ttys009 RAILS_ENV=development DEBUG=true sudo -E foreman start   # or rvmsudo if using rvm
 
-Set the environment variable `DEBUG=true` to get more output from the sensor\_watch daemon, including sensor device status and data received.
-
-Configuration
-=============
-
-`config/derby_config.yml` contains several configuration options, including sensor type, device file location, and lane count.
+Optionally set the environment variable `DEBUG=true` to get more output from the sensor\_watch daemon, including sensor device status and data received.
 
 Developing
 ==========
 
-This project uses Rails 4.
-
-In production, use `foreman` to start the app server and sensor\_watch daeon togehter using foreman.
-
-In development, start the app server and daemon separately in different terminals:
-
-    rails server
-
-    rake daemon:sensor_watch
+This project uses Rails 4.1.
 
 Architecture
 ------------
