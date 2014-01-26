@@ -70,7 +70,7 @@ Initial Setup
 1. Ensure the `config/derby_config.yaml` file is configured correctly for your setup
 1. Precompile assets for production mode (Do this every time you update javascript/css/images)
 
-        rake asset:precompile RAILS_ENV=production
+        rake assets:precompile RAILS_ENV=production
 
 Starting the Derby
 ------------------
