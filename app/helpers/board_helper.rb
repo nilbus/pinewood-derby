@@ -14,6 +14,7 @@ private
   end
 
   def self.url_from_ip(request)
+    (ip = local_ip) or return
     base = "http://#{local_ip}"
     port = request.port
     base += ":#{port}" unless 80 == port
@@ -28,6 +29,8 @@ private
       s.connect '64.233.187.99', 1
       s.addr.last
     end
+  rescue Errno::ENETUNREACH
+    nil
   ensure
     Socket.do_not_reverse_lookup = orig
   end
