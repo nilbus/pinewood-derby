@@ -3,6 +3,7 @@ PinewoodDerby::Application.routes.draw do
   get 'board' => 'board#status_board'
   get 'board/welcome' => 'board#welcome'
   get 'runs/:id/postpone' => 'runs#postpone'
+  post 'heats/cancel_current' => 'heats#cancel_current'
   post 'reset_derby' => 'derby#reset'
   resources :login, only: [:new, :create]
   resources(:contestants) { member { post 'reactivate' } }

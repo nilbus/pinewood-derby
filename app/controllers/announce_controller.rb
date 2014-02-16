@@ -25,11 +25,6 @@ class AnnounceController < FayeRails::Controller
     faye.update
   end
 
-  observe SensorState, :after_save do |sensor_state|
-    ApplicationHelper.log "Announcing sensor_state save"
-    faye.update
-  end
-
   observe Derby, :after_save do |derby|
     ApplicationHelper.log "Announcing derby save"
     faye.update

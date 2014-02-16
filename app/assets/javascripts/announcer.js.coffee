@@ -6,6 +6,23 @@ class window.Announcer
       else                  @renderNotice
     @renderFunction(options.stats) if options.stats
     @connect()
+    @initializeDomEvents()
+
+  initializeDomEvents: ->
+    @initizlizeCancelHeatButton()
+
+  initizlizeCancelHeatButton: ->
+    cancelHeatButton = $('.cancel-heat')
+    cancelHeatButton.click ->
+      $(@).css(opacity: 0)
+      $.ajax
+        url: "/heats/cancel_current"
+        method: 'post'
+    hoverTargets = '.current-race,.cancel-heat'
+    $(document).on 'mouseenter', hoverTargets, ->
+      cancelHeatButton.css(opacity: 1, cursor: 'pointer') if $('.current-race').length
+    $(document).on 'mouseleave', hoverTargets, ->
+      cancelHeatButton.css(opacity: 0, cursor: 'default')
 
   connect: ->
     @faye = window.faye = new Faye.Client '/faye', timeout: 5

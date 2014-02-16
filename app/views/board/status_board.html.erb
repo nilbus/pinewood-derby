@@ -45,6 +45,9 @@
             </div>
           <% end %>
         </div>
+        <% if admin? %>
+          <i class="cancel-heat icon-remove-circle" style="opacity: 0;" title="Cancel heat"></i>
+        <% end %>
         <div class="row-fluid next1">
           <% DerbyConfig.lane_count.times do |i| %>
             <div class="<%= BoardHelper.lane_column_width %> name lane<%= i + 1 %>"></div>

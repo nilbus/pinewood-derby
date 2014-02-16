@@ -73,6 +73,11 @@ class Heat < ActiveRecord::Base
     update_attributes! status: 'complete'
   end
 
+  def cancel!
+    return false unless status == 'current'
+    update_attributes! status: 'upcoming'
+  end
+
   def current?
     status == 'current'
   end

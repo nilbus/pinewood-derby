@@ -72,6 +72,6 @@ private
   end
 
   def device_status
-    SensorState.get
+    Heat.current.count.zero? ? :idle : :active
   end
 end
