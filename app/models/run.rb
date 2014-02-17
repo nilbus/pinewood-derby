@@ -13,7 +13,6 @@ class Run < ActiveRecord::Base
     update_attributes! time: time
   end
 
-  # Round times to 3 decimal places
   def time
     self[:time].try :round, 3
   end
