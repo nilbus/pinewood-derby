@@ -21,6 +21,7 @@ Features
 * Warnings are displayed when the USB device is unplugged or the sensor daemon is not running
 * Lineup order is automatically generated (using the rules below)
 * Race using a configurable number of lanes
+* Password authentication
 
 ### Derby lineup rules
 
@@ -34,7 +35,6 @@ Features
 ### Missing features
 
 * Manual lineup - Races are lined up using the rules above and cannot yet be manually set
-* Authentication - anyone who visits the app URL can start races, modify contestants, clear all data, etc.
 * Customization - support for other devices and variations on the lineup rules
 * Deltas - indicate when a contestant moves up or down in rank with a green or red highlight
 * Non-finishers - handle people whose cars don't make it to the sensor in under 10 seconds; currently they don't get a time for that heat
@@ -97,6 +97,23 @@ Configuration
 =============
 
 `config/derby_config.yml` contains several configuration options, including sensor type, device file location, and lane count.
+
+Password Authentication
+-----------------------
+
+A password can be used to prevent others who access the app URL from doing things that only the derby master should.
+
+The default `config/derby_config.yml` uses the environment variable `DERBY\_ADMIN\_KEY` to supply the password, for example:
+
+    DERBY_ADMIN_KEY="mySuperSecretPassword" sudo -E foreman start
+
+Alternatively, the password can be stored directly in `config/derby_config.yml`:
+
+    admin_password: "mySuperSecretPassword"
+
+When a password is set, the app locks itself down in read-only mode and creates a "Run the race" login button on the front page.
+
+Revisit the login page to log out.
 
 Running for Testing / Development
 =================================
