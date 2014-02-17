@@ -1,4 +1,5 @@
 ---
+admin_password: <%= ENV['DERBY_ADMIN_KEY'] %>
 # device_glob: "/dev/tty{USB,.usbserial}*"
 lane_count: 4
 sensor_class_name: MicroWizardFastTrack

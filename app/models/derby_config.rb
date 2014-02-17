@@ -6,6 +6,10 @@ class DerbyConfig
 
   CONFIG_FILE = File.expand_path(File.join(__FILE__, '../../../config/derby_config.yml'))
 
+  def self.admin_password
+    instance['admin_password'].presence
+  end
+
   def self.device_glob
     instance['device_glob']
   rescue KeyError
@@ -27,7 +31,8 @@ class DerbyConfig
   end
 
   def reload
-    yaml = File.read CONFIG_FILE
+    erb = File.read CONFIG_FILE
+    yaml = ERB.new(erb).result
     @config = Psych.load yaml
   end
 
