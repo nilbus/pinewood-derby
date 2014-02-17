@@ -5,6 +5,7 @@
     <thead>
       <tr>
         <th>Name</th>
+        <th>Average</th>
         <% DerbyConfig.lane_count.times do |i| %>
           <th>Round <%= i+1 %></th>
         <% end %>
@@ -21,6 +22,9 @@
         <% else %>
           <%= contestant.name %>
         <% end %>
+      </td>
+      <td>
+        <%= contestant.average_time %>
       </td>
       <% DerbyConfig.lane_count.times do |i| %>
         <td><%= contestant.runs.complete[i].try :time %></td>
