@@ -4,6 +4,14 @@ class AnnounceController < FayeRails::Controller
     publish '/announce', Dashboard.to_json
   end
 
+  def self.derby_begin
+    publish '/announce', {derby_status: 'begin'}.to_json
+  end
+
+  def self.derby_complete
+    publish '/announce', {derby_status: 'complete'}.to_json
+  end
+
   faye = self
 
   observe Contestant, :after_create do |contestant|
@@ -23,6 +31,11 @@ class AnnounceController < FayeRails::Controller
   observe Heat, :after_update do |heat|
     ApplicationHelper.log "Announcing heat save"
     faye.update
+    if heat.status.to_sym == :current && Heat.complete.count.zero?
+      faye.derby_begin
+    elsif heat.status.to_sym == :complete && Heat.upcoming.count.zero?
+      faye.derby_complete
+    end
   end
 
   observe Derby, :after_save do |derby|
