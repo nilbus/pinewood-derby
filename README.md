@@ -37,7 +37,6 @@ Features
 * Authentication - anyone who visits the app URL can start races, modify contestants, clear all data, etc.
 * Customization - support for other devices and variations on the lineup rules
 * Deltas - indicate when a contestant moves up or down in rank with a green or red highlight
-* Canceling a heat - once you start a heat, you cannot cancel it and must trigger the sensor
 * Non-finishers - handle people whose cars don't make it to the sensor in under 10 seconds; currently they don't get a time for that heat
 * Windows support - The application runs only on Linux and Mac OSX
 * Mobile layout - the responsive mobile layout sometimes isn't very pretty
