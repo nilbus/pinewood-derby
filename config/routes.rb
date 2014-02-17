@@ -4,8 +4,13 @@ PinewoodDerby::Application.routes.draw do
   get 'board/welcome' => 'board#welcome'
   get 'runs/:id/postpone' => 'runs#postpone'
   post 'heats/cancel_current' => 'heats#cancel_current'
-  post 'reset_derby' => 'derby#reset'
-  resources :login, only: [:new, :create]
+  resource 'derby', only: [] do
+    collection do
+      get 'login'         => 'derby#login'
+      post 'authenticate' => 'derby#authenticate'
+      post 'reset'        => 'derby#reset'
+    end
+  end
   resources(:contestants) { member { post 'reactivate' } }
   resources :races, only: [:new, :index] { collection { put 'redo' } }
 
