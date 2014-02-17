@@ -16,7 +16,11 @@
   <tbody>
     <%= content_tag_for(:tr, @contestants, class: "contestant") do |contestant| %>
       <td class="<%= 'retired' if contestant.retired %>">
-        <%= link_to contestant.name, edit_contestant_path(contestant) %>
+        <% if admin? %>
+          <%= link_to contestant.name, edit_contestant_path(contestant) %>
+        <% else %>
+          <%= contestant.name %>
+        <% end %>
       </td>
       <% DerbyConfig.lane_count.times do |i| %>
         <td><%= contestant.runs.complete[i].try :time %></td>

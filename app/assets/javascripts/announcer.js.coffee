@@ -1,5 +1,6 @@
 class window.Announcer
   constructor: (options) ->
+    @admin = options.admin
     @callbacks = [@renderDashboard]
     @renderFunction = switch options.type
       when 'dashboard' then @render
@@ -85,7 +86,7 @@ class window.Announcer
         heat_container.removeClass('current-race btn-success')
       for contestant in heat.contestants
         slot = heat_container.find(".lane#{contestant.lane}")
-        if contestant.postponable
+        if contestant.postponable and @admin
           contestant_link = "<a href='/runs/#{contestant.run_id}/postpone' class='postponable' title='postpone'>#{contestant.name}</a>"
           slot.html contestant_link
         else

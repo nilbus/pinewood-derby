@@ -1,5 +1,6 @@
 class ContestantsController < ApplicationController
   before_action :set_contestant, only: [:show, :edit, :update, :destroy, :reactivate]
+  before_filter :require_admin, except: :index
 
   # GET /contestants
   # GET /contestants.json

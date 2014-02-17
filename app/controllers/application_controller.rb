@@ -10,4 +10,10 @@ class ApplicationController < ActionController::Base
   def check_daemon
     SensorWatch.check_daemon
   end
+
+protected
+
+  def require_admin
+    return render text: 'Access denied', layout: 'application', status: 403 unless admin?
+  end
 end

@@ -1,5 +1,6 @@
 class DerbyController < ApplicationController
   before_filter :ignore_if_password_not_set, only: [:login, :authenticate]
+  before_filter :require_admin, except: [:login, :authenticate]
 
   def login
     session[:admin] = false # implicit logout

@@ -1,6 +1,8 @@
 class RacesController < ApplicationController
   include ActionView::Helpers::JavaScriptHelper
 
+  before_filter :require_admin
+
   def index
   end
 
