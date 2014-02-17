@@ -5,6 +5,10 @@ module ApplicationHelper
   end
 
   def admin?
-    true
+    if DerbyConfig.admin_password
+      session['admin']
+    else
+      true
+    end
   end
 end

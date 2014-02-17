@@ -2,8 +2,11 @@
 <div class="jumbotron">
   <h2>It's race time...</h2>
   <h1>dooo your best!</h1>
-  <%= link_to 'Watch the race', board_path, class: 'btn btn-large btn-success' %>
+  <p><%= link_to 'Watch the race', board_path, class: 'btn btn-large btn-success' %></p>
   <p>Connect to this app from other devices<p>
   <code><i class="icon-share"></i> <%= @url || 'git dis thingy online furst' %></code>
+  <% if DerbyConfig.admin_password %>
+    <p><%= link_to 'Run the race', login_derby_path, class: 'btn btn-info' %></p>
+  <% end %>
   <%= render 'forkme', mobile: true %>
 </div>

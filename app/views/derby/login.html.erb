@@ -1,0 +1,12 @@
+<p>You are now logged out.</p>
+<p>Please log in to run the derby:</p>
+<%= form_tag authenticate_derby_path do %>
+  <p>
+    <input type="password" name="password" placeholder="password" id="password">
+    <br>
+    <%= submit_tag 'Log in', class: 'btn btn-primary' %>
+    <%= javascript_tag do %>
+      $('#password').focus()
+    <% end %>
+  </p>
+<% end %>
