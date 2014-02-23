@@ -1,13 +1,12 @@
 class window.Announcer
   constructor: (options) ->
     @admin = options.admin
-    @callbacks = [@renderDashboard]
-    @renderFunction = switch options.type
-      when 'dashboard' then @render
-      else                  @renderNotice
-    @renderFunction(options.stats) if options.stats
-    @connect()
     @initializeDomEvents()
+    @render = switch options.type
+      when 'dashboard' then @renderDashboard
+      else                  @renderNotice
+    @render(options.stats)
+    @connect()
 
   initializeDomEvents: ->
     @initizlizeCancelHeatButton()
@@ -29,10 +28,7 @@ class window.Announcer
     @faye = window.faye = new Faye.Client '/faye', timeout: 5
     @faye.subscribe '/announce', (stats) =>
       console.log '/announce: ', stats
-      @renderFunction JSON.parse(stats)
-
-  render: (stats) ->
-    callback.call(@, stats) for callback in @callbacks
+      @render JSON.parse(stats)
 
   renderDashboard: (stats) ->
     @notifyOfChange() if @alreadyRendered
