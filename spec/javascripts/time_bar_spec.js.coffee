@@ -12,6 +12,26 @@ describe 'StandingsTimeBar', ->
       bar = new StandingsTimeBar time: 2.5, fastest: 2.5, slowest: 5.0
       expect(bar.render()).to.match /100%/
 
+    it 'notes 1st-3rd place', ->
+      bar = new StandingsTimeBar time: 2.1, fastest: 2.1, slowest: 5.0, place: 1
+      output = bar.render()
+      expect(output).to.match /1st/         # text
+      expect(output).to.match /first-place/ # css class
+      bar = new StandingsTimeBar time: 2.2, fastest: 2.1, slowest: 5.0, place: 2
+      output = bar.render()
+      expect(output).to.match /2nd/          # text
+      expect(output).to.match /second-place/ # css class
+      bar = new StandingsTimeBar time: 2.3, fastest: 2.1, slowest: 5.0, place: 3
+      output = bar.render()
+      expect(output).to.match /3rd/         # text
+      expect(output).to.match /third-place/ # css class
+      bar = new StandingsTimeBar time: 5.0, fastest: 2.1, slowest: 5.0, place: 4
+      output = bar.render()
+      expect(output).not.to.match /-place/
+      bar = new StandingsTimeBar time: 5.0, fastest: 2.1, slowest: 5.0
+      output = bar.render()
+      expect(output).not.to.match /-place/
+
     it 'assigns color based on the place'
 
 describe 'HeatTimeBar', ->
@@ -30,8 +50,6 @@ describe 'HeatTimeBar', ->
       expect(bar.render()).to.match /60%/
       bar = new HeatTimeBar time: 2
       expect(bar.render()).to.match /100%/
-
-    it 'notes 1st-3rd place'
 
     it 'assigns a color on a gradient based on time'
 
