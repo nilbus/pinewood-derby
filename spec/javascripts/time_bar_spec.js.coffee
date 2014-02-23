@@ -18,7 +18,10 @@ describe 'HeatTimeBar', ->
   describe 'render', ->
     it 'outputs markup based on the lane, time, and name', ->
       bar = new HeatTimeBar name: 'Bob', time: '2.222', lane: 2
-      expect(bar.render()).to.match /Lane 2.*2\.222.*Bob/
+      output = bar.render()
+      expect(output).to.match /Lane 2/
+      expect(output).to.match /2\.222/
+      expect(output).to.match /Bob/
 
     it 'sets the bar height scaled to the fastest and slowest top racers', ->
       bar = new HeatTimeBar time: 10
