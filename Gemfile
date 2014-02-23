@@ -12,6 +12,7 @@ gem 'iobuffer'
 gem 'bootstrap-sass', '~> 2.2.1.1'
 
 group :development do
+  gem 'coffee-rails-source-maps'
   gem 'pry-rails'
   gem 'pry-debugger'
   gem 'faker'

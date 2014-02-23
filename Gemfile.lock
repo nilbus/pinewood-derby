@@ -57,6 +57,8 @@ GEM
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
+    coffee-rails-source-maps (1.4.0)
+      coffee-script-source (>= 1.6.1)
     coffee-script (2.2.0)
       coffee-script-source
       execjs
@@ -242,6 +244,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass (~> 2.2.1.1)
   coffee-rails
+  coffee-rails-source-maps
   daemons-rails
   faker
   faye-rails!
