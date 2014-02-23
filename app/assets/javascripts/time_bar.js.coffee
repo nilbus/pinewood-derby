@@ -25,13 +25,7 @@ class window.HeatTimeBar extends TimeBar
     @lowerText = name
     @heightPercentage = @heightForRange(12 - time, 2, 10)
 
-  render: ->
-    super()
-
 class window.PendingTimeBar extends TimeBar
   constructor: ({name: @lowerText}) ->
     @centerText = '?'
     @heightPercentage = 100
-
-  render: ->
-    super()
