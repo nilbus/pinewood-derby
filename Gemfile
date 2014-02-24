@@ -1,15 +1,16 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 4.1.0.beta1'
-gem 'thin-rails'
-gem 'pg'
+
+gem 'bootstrap-sass', '~> 2.2.1.1'
 gem 'daemons-rails'
 gem 'faye-rails', github: 'nilbus/faye-rails', branch: 'rails4'
 gem 'faye-redis'
 gem 'foreman'
-gem 'serialport'
 gem 'iobuffer'
-gem 'bootstrap-sass', '~> 2.2.1.1'
+gem 'pg'
+gem 'serialport'
+gem 'thin-rails'
 
 group :development do
   gem 'coffee-rails-source-maps'
