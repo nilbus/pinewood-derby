@@ -32,11 +32,11 @@ class window.StandingsTimeBar extends TimeBar
       else ''
 
 class window.HeatTimeBar extends TimeBar
-  constructor: ({lane, time, name}) ->
+  constructor: ({lane, @time, name, @fastest, @slowest}) ->
     @upperText = "Lane #{lane}"
-    @centerText = time
+    @centerText = @time
     @lowerText = name
-    @heightPercentage = @heightForRange(12 - time, 2, 10)
+    @heightPercentage = @heightForRange(@slowest + @fastest - @time, @fastest, @slowest)
 
 class window.PendingTimeBar extends TimeBar
   constructor: ({name: @lowerText}) ->

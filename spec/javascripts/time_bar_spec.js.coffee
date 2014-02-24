@@ -44,11 +44,11 @@ describe 'HeatTimeBar', ->
       expect(output).to.match /Bob/
 
     it 'sets the bar height scaled to the fastest and slowest top racers', ->
-      bar = new HeatTimeBar time: 10
+      bar = new HeatTimeBar time: 10, slowest: 10, fastest: 2
       expect(bar.render()).to.match /20%/
-      bar = new HeatTimeBar time: 6
+      bar = new HeatTimeBar time: 6, slowest: 10, fastest: 2
       expect(bar.render()).to.match /60%/
-      bar = new HeatTimeBar time: 2
+      bar = new HeatTimeBar time: 2, slowest: 10, fastest: 2
       expect(bar.render()).to.match /100%/
 
     it 'assigns a color on a gradient based on time'
