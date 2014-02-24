@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require lodash
 //= require bootstrap
 //= require faye-browser
 //= require_tree ../../../vendor/assets/javascripts

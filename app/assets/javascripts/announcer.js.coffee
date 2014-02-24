@@ -40,14 +40,26 @@ class window.Announcer
     @renderUpcomingHeats  stats.upcoming_heats
     @renderNotice         stats
 
+  extremeTimes = (numbers) ->
+    min = 100
+    max = 0
+    for num in numbers
+      min = num if num < min
+      max = num if num > max
+    [min, max]
+
   renderStandings: (contestant_times) ->
     container = @dashboard.find('#standings')
+    window.allTimes = allTimes = _.pluck(contestant_times, 'average_time')
+    [fastestTime, slowestTime] = extremeTimes(allTimes)
     standings = for contestant in contestant_times
-      "<div class='contestant'>" +
-      "  <div class='name span2'>#{contestant.rank}</div>" +
-      "  <div class='name span7'>#{contestant.name}</div>" +
-      "  <div class='time span3'>#{contestant.average_time}</div>" +
-      "</div>"
+      bar = new StandingsTimeBar
+        name: contestant.name
+        time: contestant.average_time
+        place: contestant.rank
+        fastest: fastestTime
+        slowest: slowestTime
+      bar.render()
     if standings.length
       container.show().find('.contestants').html standings.join('\n')
     else

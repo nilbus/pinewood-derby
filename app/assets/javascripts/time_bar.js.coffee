@@ -1,6 +1,6 @@
 class TimeBar
   render: ->
-    classAttribute = @class and " class=\"#{@class}\">" or ''
+    classAttribute = @class and " class=\"#{@class}\"" or ''
     styleAttribute = " style=\"background-color: #{@color()}\""
     @upperText  ?= ''
     @centerText ?= ''
@@ -11,7 +11,7 @@ class TimeBar
     minimumHeight = 20
     value = rangeMin if value < rangeMin
     value = rangeMax if value > rangeMax
-    return minimumHeight + (100 - minimumHeight) * (value - rangeMin) / (rangeMax - rangeMin)
+    return Math.round(minimumHeight + (100 - minimumHeight) * (value - rangeMin) / (rangeMax - rangeMin))
 
 class window.StandingsTimeBar extends TimeBar
   constructor: ({@name, time, place, fastest, slowest}) ->
