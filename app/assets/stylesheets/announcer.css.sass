@@ -2,29 +2,21 @@ $rowtextsize: 30px
 $rowtextweight: lighter
 
 #dashboard
-  line-height: 50px
   h2
     font-size: 40px
     clear: both
   small
     font-size: 1em
     color: #999
-  #standings
-    .contestants
-      font-size: $rowtextsize
-      font-weight: $rowtextweight
-      .contestant
-        clear: both
-        margin-bottom: 45px
-        .name, .time
-          display: inline-block
   #most-recent-heat, #upcoming-heats
+    line-height: 50px
     .name, .time
       font-size: $rowtextsize
       font-weight: $rowtextweight
     .lanes
       line-height: 35px
   #upcoming-heats
+    line-height: 50px
     margin-top: 50px
     .current-race.btn-success
       border-radius: 6px
@@ -42,3 +34,16 @@ $rowtextweight: lighter
   a.postponable:hover
     color: #b94a48
     text-decoration: line-through
+.time-bar
+  display: flex
+  float: left
+  flex-direction: column-reverse
+  margin: 10px
+  width: 140px
+  text-align: center
+  font-size: $rowtextsize*2/3
+  white-space: nowrap
+  div
+    height: $rowtextsize
+  .time-bar-box
+    border: 1px solid #aaa

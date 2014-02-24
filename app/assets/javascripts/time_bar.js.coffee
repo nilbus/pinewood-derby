@@ -1,11 +1,14 @@
 class TimeBar
   render: ->
-    classAttribute = @class and " class=\"#{@class}\"" or ''
-    styleAttribute = " style=\"background-color: #{@color()}\""
+    @class      ?= ''
     @upperText  ?= ''
     @centerText ?= ''
     @lowerText  ?= ''
-    "<div#{classAttribute}#{styleAttribute}>#{@upperText} #{@centerText} (#{@heightPercentage}%) #{@lowerText}</div>"
+    heightPx = Number(@heightPercentage) * 1
+    upperDiv = "<div class='time-bar-cap'>#{@upperText}</div>"
+    centerDiv = "<div class='time-bar-box' style='background-color: #{@color()}; height: #{heightPx}px'>#{@centerText}</div>"
+    lowerDiv = "<div class='time-bar-base'>#{@lowerText}</div>"
+    "<div class='time-bar #{@class}'>" + upperDiv + centerDiv + lowerDiv + '</div>'
 
   heightForRange: (value, rangeMin, rangeMax) ->
     minimumHeight = 20

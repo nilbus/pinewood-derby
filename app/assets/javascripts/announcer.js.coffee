@@ -40,19 +40,12 @@ class window.Announcer
     @renderUpcomingHeats  stats.upcoming_heats
     @renderNotice         stats
 
-  extremeTimes = (numbers) ->
-    min = 100
-    max = 0
-    for num in numbers
-      min = num if num < min
-      max = num if num > max
-    [min, max]
-
   renderStandings: (contestant_times) ->
     container = @dashboard.find('#standings')
-    window.allTimes = allTimes = _.pluck(contestant_times, 'average_time')
-    [fastestTime, slowestTime] = extremeTimes(allTimes)
-    standings = for contestant in contestant_times
+    topTimes = _.sortBy(contestant_times, -> @average_time)[0...7]
+    [fastestTime, slowestTime] = [topTimes[0].average_time, topTimes[6].average_time]
+    centerRanked = [topTimes[5], topTimes[3], topTimes[1], topTimes[0], topTimes[2], topTimes[4], topTimes[6]]
+    standings = for contestant in centerRanked
       bar = new StandingsTimeBar
         name: contestant.name
         time: contestant.average_time
