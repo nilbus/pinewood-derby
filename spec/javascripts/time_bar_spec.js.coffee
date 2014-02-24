@@ -1,3 +1,5 @@
+color = /(?:#([0-9a-f]{3}){1,2}\b|hsl\(\d{1,3}, ?\d{1,3}%, ?\d{1,3}%\))/i
+
 describe 'StandingsTimeBar', ->
   describe 'render', ->
     it 'outputs markup based on the name and time', ->
@@ -51,7 +53,18 @@ describe 'HeatTimeBar', ->
       bar = new HeatTimeBar time: 2, slowest: 10, fastest: 2
       expect(bar.render()).to.match /100%/
 
-    it 'assigns a color on a gradient based on time'
+    it 'assigns a color on a gradient based on time', ->
+      bar1 = (new HeatTimeBar time: 2, slowest: 3, fastest: 2).render()
+      bar2 = (new HeatTimeBar time: 2, slowest: 3, fastest: 2).render()
+      bar3 = (new HeatTimeBar time: 3, slowest: 3, fastest: 2).render()
+      expect(bar1).to.match color
+      expect(bar2).to.match color
+      expect(bar3).to.match color
+      color1 = bar1.match(color)[0]
+      color2 = bar2.match(color)[0]
+      color3 = bar3.match(color)[0]
+      expect(color1).to.be color2
+      expect(color1).not.to.be color3
 
 describe 'PendingTimeBar', ->
   describe 'render', ->
@@ -63,4 +76,7 @@ describe 'PendingTimeBar', ->
       bar = new PendingTimeBar {}
       expect(bar.render()).to.match /100%/
 
-    it 'is gray'
+    it 'is gray', ->
+      bar = new PendingTimeBar {}
+      gray = /#([0-9a-f]{1,2})\1\1\b/i
+      expect(bar.render()).to.match gray

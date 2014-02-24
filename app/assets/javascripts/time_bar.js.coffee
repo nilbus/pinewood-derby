@@ -1,7 +1,11 @@
 class TimeBar
   render: ->
-    classAttribute = " class=\"#{@class}\">" if @class
-    "<div#{classAttribute or ''}>#{@upperText or ''} #{@centerText or ''} (#{@heightPercentage}%) #{@lowerText or ''}</div>"
+    classAttribute = @class and " class=\"#{@class}\">" or ''
+    styleAttribute = " style=\"background-color: #{@color()}\""
+    @upperText  ?= ''
+    @centerText ?= ''
+    @lowerText  ?= ''
+    "<div#{classAttribute}#{styleAttribute}>#{@upperText} #{@centerText} (#{@heightPercentage}%) #{@lowerText}</div>"
 
   heightForRange: (value, rangeMin, rangeMax) ->
     minimumHeight = 20
@@ -16,6 +20,9 @@ class window.StandingsTimeBar extends TimeBar
     @lowerText = time
     @heightPercentage = @heightForRange(slowest + fastest - time, fastest, slowest)
     @class = @placeClass(place)
+
+  color: ->
+    'x'
 
   placeOrdinal: (place) ->
     switch place
@@ -33,12 +40,29 @@ class window.StandingsTimeBar extends TimeBar
 
 class window.HeatTimeBar extends TimeBar
   constructor: ({lane, @time, name, @fastest, @slowest}) ->
+    @time    ?= 0
+    @fastest ?= 0
+    @slowest ?= 0
     @upperText = "Lane #{lane}"
     @centerText = @time
     @lowerText = name
     @heightPercentage = @heightForRange(@slowest + @fastest - @time, @fastest, @slowest)
 
+  color: ->
+    hueMin = 120 # green
+    hueMax = 220 # blue
+    percentage = if @fastest == @slowest
+      1.0
+    else
+      (@time - @slowest) / (@fastest - @slowest)
+    hue = hueMin + (hueMax - hueMin) * percentage
+    "hsl(#{hue}, 71%, 41%)"
+
+
 class window.PendingTimeBar extends TimeBar
   constructor: ({name: @lowerText}) ->
     @centerText = '?'
     @heightPercentage = 100
+
+  color: ->
+    '#ddd'
