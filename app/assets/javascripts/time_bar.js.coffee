@@ -14,15 +14,24 @@ class TimeBar
     return minimumHeight + (100 - minimumHeight) * (value - rangeMin) / (rangeMax - rangeMin)
 
 class window.StandingsTimeBar extends TimeBar
-  constructor: ({name, time, place, fastest, slowest}) ->
-    @upperText = name
+  constructor: ({@name, time, place, fastest, slowest}) ->
+    @name ?= ''
+    @upperText = @name
     @centerText = @placeOrdinal(place)
     @lowerText = time
     @heightPercentage = @heightForRange(slowest + fastest - time, fastest, slowest)
     @class = @placeClass(place)
 
+  colors: ['red', 'blue', 'green', 'purple', 'orange', 'darkred', 'darkblue', 'darkgreen', 'cadetblue', 'darkpurple']
+
+  hash = (str) ->
+    val = 0
+    for i in [0...str.length]
+      val += str.charCodeAt i
+    val
+
   color: ->
-    'x'
+    @colors[hash(@name) % @colors.length]
 
   placeOrdinal: (place) ->
     switch place

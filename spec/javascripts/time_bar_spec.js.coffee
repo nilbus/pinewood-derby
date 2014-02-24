@@ -34,7 +34,12 @@ describe 'StandingsTimeBar', ->
       output = bar.render()
       expect(output).not.to.match /-place/
 
-    it 'assigns color based on the place'
+    it 'assigns color based on the name', ->
+      bar1 = (new StandingsTimeBar name: 'Alex G').render()
+      bar2 = (new StandingsTimeBar name: 'Alex G').render()
+      bar3 = (new StandingsTimeBar name: 'Alan P').render()
+      expect(bar1).to.be bar2
+      expect(bar1).not.to.be bar3
 
 describe 'HeatTimeBar', ->
   describe 'render', ->
