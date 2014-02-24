@@ -16,6 +16,9 @@ class TimeBar
 class window.StandingsTimeBar extends TimeBar
   constructor: ({@name, time, place, fastest, slowest}) ->
     @name ?= ''
+    time    = Number(time)
+    fastest = Number(fastest)
+    slowest = Number(slowest)
     @upperText = @name
     @centerText = @placeOrdinal(place)
     @lowerText = time
@@ -77,9 +80,9 @@ class window.StandingsTimeBar extends TimeBar
 
 class window.HeatTimeBar extends TimeBar
   constructor: ({lane, @time, name, @fastest, @slowest}) ->
-    @time    ?= 0
-    @fastest ?= 0
-    @slowest ?= 0
+    @time    = Number(@time)
+    @fastest = Number(@fastest)
+    @slowest = Number(@slowest)
     @upperText = "Lane #{lane}"
     @centerText = @time
     @lowerText = name
