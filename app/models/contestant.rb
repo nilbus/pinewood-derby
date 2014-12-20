@@ -23,7 +23,7 @@ class Contestant < ActiveRecord::Base
     s = select('contestants.*')
     # filter
     s = s.where('contestants.id NOT IN (?)', exclude) if exclude.any?
-    s = s.where('contestants.retired IS NOT TRUE')
+    s = s.where("contestants.retired IS NULL OR contestants.retired = ?", false)
     s = s.group('contestants.id')
     s = s.joins('LEFT JOIN runs ON runs.contestant_id = contestants.id')
     s = s.having('count(DISTINCT heats.id) < ?', max_runs_per_contestant)
