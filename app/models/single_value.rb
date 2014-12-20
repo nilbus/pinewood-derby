@@ -1,7 +1,12 @@
 class SingleValue < ActiveRecord::Base
+  @@mutex = Mutex.new
+
   def self.update(value)
     sublcass_name = self.name
-    single_value = SingleValue.find_or_create_by(type: sublcass_name)
+    single_value = nil
+    @@mutex.synchronize do
+      single_value = SingleValue.find_or_create_by(type: sublcass_name)
+    end
     single_value.update_attribute :value, Marshal.dump(value)
 
     single_value
