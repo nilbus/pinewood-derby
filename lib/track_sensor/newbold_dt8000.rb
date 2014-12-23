@@ -7,7 +7,11 @@ module TrackSensor
     # @raise [IOError] if a device is not plugged in
     def race_results
       communicate do |device|
-        line = device.readline while line !~ TIMES_REGEX
+        begin
+          line = device.readline.strip.chomp
+          debug "Ignoring non-time data: #{line}" if line !~ TIMES_REGEX
+        end while line !~ TIMES_REGEX
+        debug "Read times: #{line}"
         return parse_times line
       end
 
@@ -36,15 +40,14 @@ module TrackSensor
       data = ""
       lanes.times { |i| data << "#{i + 1} #{random_time[]} " }
 
-      data.strip
+      data.strip + "\n"
     end
 
   private
 
     def parse_times(times_string)
       times = []
-      times_string.chomp.split(/ +/).each_slice(2) do |values|
-        track, time = values
+      times_string.chomp.split(/ +/).each_slice(2) do |(track, time)|
         if !time
           times << {:time => track.to_f, :track => 1} # Single track mode
         else
