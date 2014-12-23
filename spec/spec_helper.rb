@@ -40,3 +40,6 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 end
+
+DatabaseCleaner.strategy = :truncation
+DatabaseCleaner.clean
