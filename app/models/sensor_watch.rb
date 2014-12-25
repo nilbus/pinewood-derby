@@ -8,35 +8,30 @@
 # so Observers can take care of the updates.
 #
 class SensorWatch
+  include Celluloid
+
   def self.start_race
-    check_daemon && Process.kill('USR1', daemon_pid)
-  rescue Errno::ESRCH
-  end
-
-  def self.check_daemon
-    Process.kill(0, daemon_pid)
-
-    true
-  rescue Errno::ESRCH
-    SensorState.update :daemon_died
-
-    false
+    $sensor_watch.async.start_race
   end
 
   def initialize(options = {})
     debug           = options[:debug]
-    @logger         = options[:logger]       || Logger.new(STDOUT).tap { |l| l.level = Logger::INFO unless debug }
+    @logger         = options[:logger]       || Celluloid.logger.tap { |l| l.level = ::Logger::INFO unless debug }
     @sensor         = options[:track_sensor] || DerbyConfig.sensor_class.new(device_glob: DerbyConfig.device_glob, logger: @logger)
     @sensor_state   = options[:sensor_state] || SensorState
     @heat           = options[:heat]         || Heat
     @run            = options[:run]          || Run
     @faye           = options[:faye]         || Faye
     @announcer      = options[:announcer]    || AnnounceController
-    @faye.ensure_reactor_running!
     initialize_state
-    @announcer.update
     @logger.info "Sensor watch started w/ device search path: #{@sensor.device_glob.inspect}"
-    @logger.info "Press ^C to quit"
+  end
+
+  def monitor
+    loop do
+      tick
+      sleep 0.2
+    end
   end
 
   def start_race
