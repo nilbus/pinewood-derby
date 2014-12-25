@@ -72,7 +72,6 @@ GEM
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.3.1)
     diff-lcs (1.2.5)
-    dotenv (0.9.0)
     em-hiredis (0.2.1)
       hiredis (~> 0.4.0)
     em-http-request (1.1.1)
@@ -103,9 +102,6 @@ GEM
       eventmachine (>= 0.12.0)
       websocket-driver (>= 0.3.1)
     ffi (1.9.3)
-    foreman (0.63.0)
-      dotenv (>= 0.7)
-      thor (>= 0.13.6)
     formatador (0.2.4)
     guard (2.2.5)
       formatador (>= 0.2.4)
@@ -244,7 +240,6 @@ DEPENDENCIES
   faker
   faye-rails!
   faye-redis
-  foreman
   guard-rspec!
   iobuffer
   jquery-rails
