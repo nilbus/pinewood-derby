@@ -14,7 +14,7 @@ PinewoodDerby::Application.routes.draw do
   resources(:contestants) { member { post 'reactivate' } }
   resources :races, only: [:new, :index] { collection { put 'redo' } }
 
-  faye_server '/faye', timeout: 1, engine: {type: Faye::Redis, host: 'localhost'} do
+  faye_server '/faye', timeout: 1 do
     map '/announce/**' => AnnounceController
   end
 
