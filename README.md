@@ -55,13 +55,13 @@ Initial Setup
 -------------
 
 1. [Install drivers for the USB serial connector](https://github.com/nilbus/pinewood-derby/wiki/USB-serial-driver-installation)
-1. Install [Ruby &gt;= 1.9.2](https://www.ruby-lang.org/en/downloads), [bundler](http://bundler.io), [PostgreSQL](http://www.postgresql.org/), and [Redis](http://redis.io)
+1. Install [Ruby &gt;= 1.9.2](https://www.ruby-lang.org/en/downloads) and [bundler](http://bundler.io)
 1. Install the required ruby dependencies
 
         bundle install
 
 1. Copy and configure `config/database.yml.example` to `config/database.yml`
-1. After starting the PostgreSQL server, initialize the database
+1. Initialize the database
 
         rake db:setup RAILS_ENV=development
         rake db:setup RAILS_ENV=production
@@ -140,30 +140,6 @@ Developing
 ==========
 
 This project uses Rails 4.1.
-
-Architecture
-------------
-
-### Sensor driver
-
-`TrackSensor` drivers in lib/track\_sensor/\* communicate with the sensor device via the device file in /dev. It tells the device to start a race and reads the race times. When the device is unplugged, it throws an error when attempting to read race times.
-
-This component could be separated into its own gem, but I'm including it in this project for now.
-
-### SensorWatch daemon
-
-`SensorWatch` runs as a daemon to keep the persistent instance of TrackSensor necessary to keep the device open. The application communicates with the daemon via POSIX signals (SIGUSR1) to start a race. The daemon communicates with the app via Faye and database updates.
-
-### Rails web server
-
-The user interface is provided via the web.
-
-### Faye websocket pub/sub
-
-The faye-rails `AnnounceController` in the `SensorWatch` daemon uses ActiveRecord observers to detect changes the daemon makes to the models - updating heat status, run times, etc. These changes trigger Faye to publish a message.
-
-The faye-redis engine communicates these update messages to the Faye publisher running in the app server.
-This publisher sends the `Dashboard` json updates to its javascript clients connected via websockets.
 
 Contributing
 ------------
