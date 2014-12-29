@@ -1,3 +1,5 @@
+require 'celluloid/test'
+Celluloid.logger.level = ::Logger::Severity::INFO
 require_relative 'test_pty'
 
 shared_examples 'track sensors' do
@@ -11,6 +13,12 @@ shared_examples 'track sensors' do
     @device        = TestPTY.new
     @second_device = TestPTY.new
     @device.pty.write device_data
+  end
+
+  around :each do |example|
+    Celluloid.boot
+    example.call
+    Celluloid.shutdown
   end
 
   after :each do
