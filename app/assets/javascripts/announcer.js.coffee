@@ -26,7 +26,7 @@ class window.Announcer
       cancelHeatButton.css(opacity: 0, cursor: 'default')
 
   connect: ->
-    @faye = window.faye = new Faye.Client '/faye', timeout: 5
+    @faye = window.faye = new Faye.Client '/faye', timeout: 30
     @faye.subscribe '/announce', (stats) =>
       console.log '/announce: ', stats
       @renderFunction JSON.parse(stats)
