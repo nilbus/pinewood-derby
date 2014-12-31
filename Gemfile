@@ -7,6 +7,8 @@ gem 'faye-rails', github: 'nilbus/faye-rails', branch: 'rails4'
 gem 'serialport'
 gem 'iobuffer'
 gem 'bootstrap-sass', '~> 2.2.1.1'
+gem 'celluloid'
+gem 'celluloid-io'
 
 group :development do
   gem 'pry-rails'

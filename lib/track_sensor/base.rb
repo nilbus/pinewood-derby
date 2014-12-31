@@ -1,11 +1,15 @@
 class TrackSensor::Base
+  include Celluloid
+  include Celluloid::IO
+  include Celluloid::Notifications
+
   attr_accessor :device_glob
 
   def initialize(options = {})
     @device_glob = ENV['TRACK_SENSOR_DEVICE'] || options[:device_glob] || '/dev/tty{USB,.usbserial}*'
     @devices = []
     @data = {}
-    @logger = options[:logger] || Logger.new(nil)
+    @logger = options[:logger] || Celluloid.logger
     initialize_new_devices
     debug "Devices found: #{@devices.map(&:path)}"
   end
