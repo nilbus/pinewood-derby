@@ -8,6 +8,7 @@ gem 'serialport'
 gem 'bootstrap-sass', '~> 2.2.1.1'
 gem 'celluloid'
 gem 'celluloid-io'
+gem 'celluloid-io-serialport', require: 'celluloid/io/serial_port'
 
 group :development do
   gem 'pry-rails'
