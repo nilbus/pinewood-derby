@@ -33,8 +33,7 @@ protected
   # Try to communicate with all device files that match the device_glob option to {#initialize}.
   # IO errors that occur while reading or writing to a device cause the device to be temporarily
   # ignored until the next call to this method.
-  # The block should do only non-blocking IO using read_nonblock and write_nonblock.
-  # The block need not handle exceptions raised caused by when IO would block.
+  # The block should use blocking IO.
   # @yield [device] IO object to read from and write to
   # @raise [IOError] if no device is available for use
   def communicate
@@ -42,8 +41,7 @@ protected
       @devices.each do |device|
         begin
           yield device
-        rescue IO::WaitWritable, IO::WaitReadable, Errno::EAGAIN
-        rescue IOError, Errno::ENXIO, Errno::EIO, Errno::EBUSY
+        rescue IOError, Errno::ENXIO, Errno::EIO
           debug "Failed device #{device.path}"
           failed_devices << device
         end
@@ -56,7 +54,8 @@ private
   def initialize_device(device_path)
     return false unless File.writable? device_path
     debug "Initializing #{device_path} with serial params #{serial_params.inspect}"
-    device = BufferedSerialDevice.new device_path, serial_params.stringify_keys.reverse_merge('baud' => 9600, 'data_bits' => 8, 'stop_bits' => 1, 'parity' => SerialPort::NONE)
+    device = SerialPort.new device_path, serial_params.stringify_keys.reverse_merge('baud' => 9600, 'data_bits' => 8, 'stop_bits' => 1, 'parity' => ::SerialPort::NONE)
+    device.class_eval { define_method(:path) { device_path } }
 
     device
   end

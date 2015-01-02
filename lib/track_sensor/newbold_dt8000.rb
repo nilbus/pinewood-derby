@@ -22,6 +22,7 @@ module TrackSensor
     def new_race
       communicate do |device|
         device.write ' '
+        device.flush
       end
 
       nil
