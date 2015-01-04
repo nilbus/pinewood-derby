@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative 'base'
+require_relative 'base_spec'
 
 describe TrackSensor::NewboldDt8000 do
   let(:device_initialization_data) { "\000DT.000  NewBold Products\n" }

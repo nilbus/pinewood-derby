@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative 'base'
+require_relative 'base_spec'
 
 describe TrackSensor::MicroWizardFastTrack do
   let(:device_initialization_data) { "Copyrigh Micro Wizard 2001-2009 \r\nK3 1.07A  Serial Number 23855\r\n" }
