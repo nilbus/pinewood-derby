@@ -1,0 +1,2 @@
+describe SerialDevice do
+end
