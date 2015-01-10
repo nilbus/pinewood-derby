@@ -62,12 +62,12 @@ shared_examples 'track sensors' do
     end
   end
 
-#   describe '#close' do
-#     it 'closes all open devices' do
-#       # There are no external effects, so ...
-#       expect{track_sensor.close}.not_to raise_exception
-#     end
-#   end
+  describe '#close' do
+    it 'closes all open devices' do
+      # There are no external effects, so ...
+      expect{track_sensor.close}.not_to raise_exception
+    end
+  end
 
 #   describe 'hot changing devices' do
 #     let(:device_data) { result_data }

@@ -16,6 +16,11 @@ class SerialDevice
     @port.flush
   end
 
+  def close
+    @port.close
+    terminate
+  end
+
 private
 
   def monitor
