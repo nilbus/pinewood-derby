@@ -80,13 +80,6 @@ shared_examples 'track sensors' do
     end
   end
 
-#   context 'with no device files' do
-#     it 'raises an IOError' do
-#       sensor = described_class.new device_glob: '/tmp/whoopsitsnotthere'
-#       expect { sensor.race_results }.to raise_exception IOError, 'The sensor is not plugged in'
-#     end
-#   end
-
 #   describe '.random_result_example' do
 #     it 'returns an example string that matches the TIMES_REGEX' do
 #       expect(described_class.random_result_example).to match described_class.const_get("TIMES_REGEX")
