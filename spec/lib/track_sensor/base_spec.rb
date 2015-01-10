@@ -80,11 +80,11 @@ shared_examples 'track sensors' do
     end
   end
 
-#   describe '.random_result_example' do
-#     it 'returns an example string that matches the TIMES_REGEX' do
-#       expect(described_class.random_result_example).to match described_class.const_get("TIMES_REGEX")
-#     end
-#   end
+  describe '.random_result_example' do
+    it 'returns an example string that matches the times_regex' do
+      expect(described_class.random_result_example).to match track_sensor.times_regex
+    end
+  end
 end
 
 class Subscriber
