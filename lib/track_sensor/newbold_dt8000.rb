@@ -6,12 +6,7 @@ module TrackSensor
 
     # @raise [IOError] if a device is not plugged in
     def new_race
-      communicate do |device|
-        device.write ' '
-        device.flush
-      end
-
-      nil
+      write ' '
     end
 
     def serial_params

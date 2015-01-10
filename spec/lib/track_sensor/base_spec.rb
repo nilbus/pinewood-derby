@@ -52,14 +52,15 @@ shared_examples 'track sensors' do
     end
   end
 
-#   describe '#new_race' do
-#     it 'writes the new race sequence to the device, if any' do
-#       if new_race_command.present?
-#         track_sensor.new_race
-#         expect(@device.pty.read_nonblock(new_race_command.length)).to eq new_race_command
-#       end
-#     end
-#   end
+  describe '#new_race' do
+    it 'writes the new race sequence to the device, if any' do
+      unless new_race_command.nil?
+        track_sensor.new_race
+        sleep 0.1
+        expect(@device.pty.read_nonblock(new_race_command.length)).to eq new_race_command
+      end
+    end
+  end
 
 #   describe '#close' do
 #     it 'closes all open devices' do

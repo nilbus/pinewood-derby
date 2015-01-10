@@ -11,6 +11,11 @@ class SerialDevice
     async.monitor
   end
 
+  def write(data)
+    @port.write(data)
+    @port.flush
+  end
+
 private
 
   def monitor

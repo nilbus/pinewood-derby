@@ -46,6 +46,17 @@ class TrackSensor::Base
 
 protected
 
+  # Write to the serial devices.
+  # Try to communicate with all device files that match the device_glob option to {#initialize}.
+  # If the write raises an exception, it will crash the SerialDevice actor.
+  # @yield [device] IO object to read from and write to
+  def write(data)
+    scan_for_device_changes
+    @devices.each do |device|
+      device.async.write(data)
+    end
+  end
+
 private
 
   def initialize_device(device_path)
