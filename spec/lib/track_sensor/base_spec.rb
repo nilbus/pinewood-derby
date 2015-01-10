@@ -69,16 +69,16 @@ shared_examples 'track sensors' do
     end
   end
 
-#   describe 'hot changing devices' do
-#     let(:device_data) { result_data }
+  describe 'hot changing devices' do
+    let(:device_data) { result_data }
 
-#     it 'attempts to read from any/all of the files specified in the :device_glob option' do
-#       expect(track_sensor.race_results.size).to eq 4
-#       expect(track_sensor.race_results).to be_nil
-#       @second_device.pty.write device_data.sub('3', '2')
-#       expect(track_sensor.race_results.first[:time]).to eq 2.1
-#     end
-#   end
+    it 'attempts to read from any/all of the files specified in the :device_glob option' do
+      expect(Subscriber.for_race_results).to receive(:message).twice
+      @second_device.pty.write device_data.sub('3', '2')
+      track_sensor.async.run
+      sleep 0.1
+    end
+  end
 
 #   context 'with no device files' do
 #     it 'raises an IOError' do
