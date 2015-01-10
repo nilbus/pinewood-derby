@@ -27,11 +27,11 @@ shared_examples 'track sensors' do
     @second_device.close
   end
 
-  describe '#race_results' do
+  describe '#run' do
     context 'with results queued' do
       let(:device_data) { device_initialization_data + result_data }
 
-      it 'returns the results in track order' do
+      it 'publishes the race results on the "race results" channel' do
         expect(Subscriber.for_race_results).to receive(:message).with 'race results', [
           {time: 3.1, track: 1},
           {time: 3.2, track: 2},
@@ -44,7 +44,7 @@ shared_examples 'track sensors' do
     end
 
     context 'when there are no results' do
-      it 'returns nil' do
+      it 'does not publish anything' do
         expect(Subscriber.for_race_results).not_to receive(:message)
         track_sensor.async.run
         sleep 0.1
