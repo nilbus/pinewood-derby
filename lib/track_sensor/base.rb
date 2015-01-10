@@ -4,6 +4,7 @@ class TrackSensor::Base
   include Celluloid::Notifications
 
   SERIAL_DEFAULTS = {'baud' => 9600, 'data_bits' => 8, 'stop_bits' => 1, 'parity' => ::SerialPort::NONE}
+  POLL_DEVICES_PERIOD_SECONDS = 5
 
   attr_accessor :device_glob
 
@@ -19,7 +20,9 @@ class TrackSensor::Base
 
   def run
     scan_for_device_changes
-    # scan_for_device_changes periodically later
+    every(POLL_DEVICES_PERIOD_SECONDS) do
+      async.scan_for_device_changes
+    end
   end
 
   # As they occur, publish [Array<Hash>, nil] Race times
