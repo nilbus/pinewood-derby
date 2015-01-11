@@ -41,6 +41,13 @@ class Heat < ActiveRecord::Base
       end
     end
 
+    def post_results(results)
+      heat = current.first
+      return unless heat
+      heat.add_run_times(results)
+      heat.complete!
+    end
+
     def create_practice(options = {})
       Heat.transaction do
         raise Notice.new "There's already a race going" if Heat.current.any?
@@ -67,6 +74,14 @@ class Heat < ActiveRecord::Base
     options.fetch(:sensor_watch, SensorWatch).start_race
 
     true
+  end
+
+  def add_run_times(results)
+    runs_by_lane = runs.group_by(&:lane)
+    results.each do |result|
+      run = runs_by_lane[result[:track].to_i].try :first
+      run.set_time result[:time] if run
+    end
   end
 
   def complete!
