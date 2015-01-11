@@ -6,7 +6,7 @@ gem 'sqlite3'
 gem 'faye-rails', github: 'nilbus/faye-rails', branch: 'rails4'
 gem 'serialport'
 gem 'bootstrap-sass', '~> 2.2.1.1'
-gem 'celluloid'
+gem 'celluloid', require: 'celluloid/autostart'
 gem 'celluloid-io'
 gem 'celluloid-io-serialport', require: 'celluloid/io/serial_port'
 
