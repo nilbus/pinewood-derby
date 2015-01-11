@@ -1,3 +1,9 @@
+# A serial port device interface to a SerialPort.
+# Write using #write.
+# A SerialDevice immediately attempts to read, and uses
+# Celluloid::Notifications to publish the topic "serial device line" for each
+# line read.
+# Close with #close to stop reading.
 class SerialDevice
   include Celluloid
   include Celluloid::IO
