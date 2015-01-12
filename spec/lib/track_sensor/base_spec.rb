@@ -69,6 +69,12 @@ shared_examples 'track sensors' do
     end
   end
 
+  describe '.random_result_example' do
+    it 'returns an example string that matches the times_regex' do
+      expect(described_class.random_result_example).to match track_sensor.times_regex
+    end
+  end
+
   describe 'hot changing devices' do
     let(:device_data) { result_data }
 
@@ -77,12 +83,6 @@ shared_examples 'track sensors' do
       @second_device.pty.write device_data.sub('3', '2')
       track_sensor.async.run
       sleep 0.1
-    end
-  end
-
-  describe '.random_result_example' do
-    it 'returns an example string that matches the times_regex' do
-      expect(described_class.random_result_example).to match track_sensor.times_regex
     end
   end
 end
