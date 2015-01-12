@@ -5,8 +5,10 @@ gem 'thin-rails'
 gem 'sqlite3'
 gem 'faye-rails', github: 'nilbus/faye-rails', branch: 'rails4'
 gem 'serialport'
-gem 'iobuffer'
 gem 'bootstrap-sass', '~> 2.2.1.1'
+gem 'celluloid', require: 'celluloid/autostart'
+gem 'celluloid-io'
+gem 'celluloid-io-serialport', require: 'celluloid/io/serial_port'
 
 group :development do
   gem 'pry-rails'
