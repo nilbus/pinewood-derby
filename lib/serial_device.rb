@@ -10,6 +10,7 @@ class SerialDevice
   include Celluloid::Notifications
 
   attr_accessor :path
+  finalizer :finalize
 
   def initialize(device_path, *args)
     @path = device_path
@@ -23,7 +24,6 @@ class SerialDevice
   end
 
   def close
-    @port.close
     terminate
   end
 
@@ -34,5 +34,9 @@ private
       publish 'serial device line', line
     end
     terminate
+  end
+
+  def finalize
+    @port.close
   end
 end
