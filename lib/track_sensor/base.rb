@@ -1,3 +1,7 @@
+# An abstract driver for SerialPort based track sensors.
+# Uses Celluloid::Notifications to publish on topics:
+#   - 'race results' (see #handle_device_input)
+#   - 'device change'
 class TrackSensor::Base
   include Celluloid
   include Celluloid::IO
@@ -42,6 +46,11 @@ class TrackSensor::Base
     raise NotImplementedError
   end
 
+  def plugged_in?
+    scan_for_device_changes
+    @devices.any?
+  end
+
   def close
     @devices.each &:close
     @devices.clear
@@ -69,18 +78,13 @@ private
     params = serial_params.stringify_keys.reverse_merge(SERIAL_DEFAULTS)
     device = SerialDevice.new(device_path, params)
     link device
+    publish 'device change'
     device
   end
 
   def scan_for_device_changes
     initialize_new_devices
     # raise IOError.new('The sensor is not plugged in') unless plugged_in?
-  end
-
-  def plugged_in?
-    scan_for_device_changes
-
-    @devices.any?
   end
 
   def initialize_new_devices
@@ -97,6 +101,7 @@ private
   def device_failed(device, reason)
     debug "Removing failed device. #{reason}"
     @devices.delete(device)
+    publish 'device change' if Celluloid::Actor[:notifications_fanout]
   end
 
   def debug(message)

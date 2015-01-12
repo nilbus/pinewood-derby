@@ -19,15 +19,25 @@ class SensorWatch
     @heat           = options[:heat]         || Heat
     @faye           = options[:faye]         || Faye
     @announcer      = options[:announcer]    || AnnounceController
+    @state = @sensor_state.get
     initialize_state
     subscribe('race results', :record_race_results)
+    subscribe('device change', :handle_device_change)
     @sensor.run
     @logger.info "Sensor watch started w/ device search path: #{@sensor.device_glob.inspect}"
   end
 
   def record_race_results(_, results)
-    self.state = :idle
     @heat.post_results results
+    self.state = :idle
+  end
+
+  def handle_device_change(_)
+    if @sensor.plugged_in?
+      initialize_state
+    else
+      self.state = :unplugged
+    end
   end
 
   def start_race
@@ -55,7 +65,6 @@ private
   end
 
   def state=(state)
-    return if @state == state
     @state = state
     write_state
   end
