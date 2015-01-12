@@ -15,7 +15,7 @@ class SerialDevice
   def initialize(device_path, *args)
     @path = device_path
     @port = SerialPort.new device_path, *args
-    async.monitor
+    async.monitor_input
   end
 
   def write(data)
@@ -29,7 +29,7 @@ class SerialDevice
 
 private
 
-  def monitor
+  def monitor_input
     @port.each_line do |line|
       publish 'serial device line', line
     end

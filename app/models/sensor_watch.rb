@@ -21,6 +21,7 @@ class SensorWatch
     @announcer      = options[:announcer]    || AnnounceController
     initialize_state
     subscribe('race results', :record_race_results)
+    @sensor.run
     @logger.info "Sensor watch started w/ device search path: #{@sensor.device_glob.inspect}"
   end
 
