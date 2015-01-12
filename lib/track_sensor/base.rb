@@ -8,6 +8,8 @@ class TrackSensor::Base
 
   attr_accessor :device_glob
 
+  trap_exit :device_failed
+
   def initialize(options = {})
     @device_glob = ENV['TRACK_SENSOR_DEVICE'] || options[:device_glob] || '/dev/tty{USB,.usbserial}*'
     @devices = []
@@ -64,7 +66,9 @@ private
     debug "Initializing #{device_path} with serial params #{serial_params.inspect}"
 
     params = serial_params.stringify_keys.reverse_merge(SERIAL_DEFAULTS)
-    SerialDevice.new(device_path, params)
+    device = SerialDevice.new(device_path, params)
+    link device
+    device
   end
 
   def scan_for_device_changes
@@ -87,6 +91,11 @@ private
         @devices << device
       end
     end
+  end
+
+  def device_failed(device, reason)
+    debug "Removing failed device. #{reason}"
+    @devices.delete(device)
   end
 
   def debug(message)
