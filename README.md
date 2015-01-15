@@ -121,7 +121,7 @@ To simulate a track sensor when one is not plugged in, use the mock sensor:
 
     bin/mock-sensor
 
-mock-sensor will announce what device file (ie. `/dev/ttys009`) it is using.
+mock-sensor will announce what device file (eg. `/dev/ttys009`) it is using.
 
 Before staring the server/daemon, set the environment variable `TRACK_SENSOR_DEVICE` to this device file. Eg:
 
