@@ -55,7 +55,7 @@ Initial Setup
 -------------
 
 1. [Install drivers for the USB serial connector](https://github.com/nilbus/pinewood-derby/wiki/USB-serial-driver-installation)
-1. Install [Ruby &gt;= 1.9.2](https://www.ruby-lang.org/en/downloads) and [bundler](http://bundler.io)
+1. Install [Ruby &gt;= 1.9.2](https://www.ruby-lang.org/en/downloads), [bundler](http://bundler.io), and [node.js][http://nodejs.org].
 1. Install the required ruby dependencies
 
         bundle install
