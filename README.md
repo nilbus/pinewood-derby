@@ -60,7 +60,6 @@ Initial Setup
 
         bundle install
 
-1. Copy and configure `config/database.yml.example` to `config/database.yml`
 1. Initialize the database
 
         rake db:setup RAILS_ENV=development
