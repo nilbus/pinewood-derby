@@ -19,6 +19,11 @@ class AnnounceController < FayeRails::Controller
     Heat.upcoming[1..-1].try :each, &:destroy
   end
 
+  observe Contestant, :after_save do |contestant|
+    ApplicationHelper.log "Announcing contestant save"
+    faye.update
+  end
+
   observe Heat, :after_update do |heat|
     if heat.status.to_sym == :current && Heat.complete.count.zero?
       faye.derby_begin
