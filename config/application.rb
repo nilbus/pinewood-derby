@@ -31,6 +31,9 @@ module PinewoodDerby
     config.autoload_paths << config.root.join('lib')
 
     config.middleware.delete Rack::Lock
+    config.middleware.use FayeRails::Middleware, mount: '/faye', timeout: 30 do
+      map '/announce/**' => AnnounceController
+    end
 
     console do
       Faye.ensure_reactor_running!

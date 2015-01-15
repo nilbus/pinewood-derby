@@ -14,10 +14,6 @@ PinewoodDerby::Application.routes.draw do
   resources(:contestants) { member { post 'reactivate' } }
   resources :races, only: [:new, :index] { collection { put 'redo' } }
 
-  faye_server '/faye', timeout: 30 do
-    map '/announce/**' => AnnounceController
-  end
-
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
