@@ -116,7 +116,6 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.1)
-    libv8 (3.16.14.7)
     listen (2.4.0)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
@@ -163,7 +162,6 @@ GEM
     rb-fsevent (0.9.3)
     rb-inotify (0.9.3)
       ffi (>= 0.5.0)
-    ref (1.0.5)
     rspec (3.0.0.beta1)
       rspec-core (= 3.0.0.beta1)
       rspec-expectations (= 3.0.0.beta1)
@@ -208,9 +206,6 @@ GEM
     teaspoon (0.7.8)
       phantomjs (>= 1.8.1.1)
       railties (>= 3.2.5, < 5)
-    therubyracer (0.12.1)
-      libv8 (~> 3.16.14.0)
-      ref
     thin (1.6.1)
       daemons (>= 1.0.9)
       eventmachine (>= 1.0.0)
@@ -258,6 +253,5 @@ DEPENDENCIES
   sprockets-rails
   sqlite3
   teaspoon
-  therubyracer
   thin-rails
   uglifier (>= 1.0.3)
