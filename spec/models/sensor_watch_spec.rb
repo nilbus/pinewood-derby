@@ -10,9 +10,10 @@ describe SensorWatch do
 
   describe '#record_race_results' do
     it 'updates SensorState, Heat, and Run database records' do
-      sensor_state = instance_double('SensorState')
+      sensor_state = class_double('SensorState')
       heat_class = class_double('Heat')
-      expect(sensor_state).to receive(:update)
+      allow(sensor_state).to receive(:get).at_least(:once)
+      expect(sensor_state).to receive(:update).at_least(:once)
       allow(heat_class).to receive(:current).and_return([])
       expect(heat_class).to receive(:post_results)
       sensor_watch = SensorWatch.new(sensor_state: sensor_state, heat: heat_class)
