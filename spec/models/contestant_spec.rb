@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Contestant do
   before :all do
     Faye.ensure_reactor_running!

@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe SensorWatch do
   around :each do |example|
     Celluloid.boot

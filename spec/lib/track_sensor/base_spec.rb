@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'celluloid/test'
 # Celluloid.logger.level = ::Logger::Severity::INFO
 require_relative 'test_pty'
