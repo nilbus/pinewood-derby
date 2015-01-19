@@ -17,7 +17,7 @@ class SingleValue < ActiveRecord::Base
     scope = where(type: subclass_name)
     scope = scope.where("updated_at >= ?", options[:newer_than]) if options[:newer_than].present?
     result = scope.first
-    return if result.nil?
+    return if result.try(:value).nil?
     value = Marshal.load(result.value)
 
     HashWithIndifferentAccess[value] if value
