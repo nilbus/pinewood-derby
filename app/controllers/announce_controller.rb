@@ -1,6 +1,6 @@
 class AnnounceController < FayeRails::Controller
   def self.update
-    return unless FayeRails.servers.any?
+    return unless EventMachine.reactor_running? && FayeRails.servers.any?
     Heat.fill_lineup
     publish '/announce', Dashboard.to_json
   end
