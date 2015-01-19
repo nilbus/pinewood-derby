@@ -19,7 +19,6 @@ class TrackSensor::Base
     @devices = []
     @data = {}
     @logger = options[:logger] || Celluloid.logger
-    @logger.level = ::Logger::Severity::DEBUG
     subscribe('serial device line', :handle_device_input)
     initialize_new_devices
     debug "Devices found: #{@devices.map(&:path)}"

@@ -13,12 +13,13 @@ class SensorWatch
 
   def initialize(options = {})
     debug           = options[:debug]
-    @logger         = options[:logger]       || Celluloid.logger.tap { |l| l.level = ::Logger::INFO unless debug }
+    @logger         = options[:logger]       || Celluloid.logger
     @sensor         = options[:track_sensor] || DerbyConfig.sensor_class.new(device_glob: DerbyConfig.device_glob, logger: @logger)
     @sensor_state   = options[:sensor_state] || SensorState
     @heat           = options[:heat]         || Heat
     @faye           = options[:faye]         || Faye
     @announcer      = options[:announcer]    || AnnounceController
+    @logger.level = ::Logger::DEBUG if debug
     @state = @sensor_state.get
     initialize_state
     subscribe('race results', :record_race_results)
