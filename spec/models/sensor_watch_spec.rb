@@ -4,6 +4,7 @@ describe SensorWatch do
   around :each do |example|
     Celluloid.boot
     Celluloid.start
+    Celluloid.logger.level = ::Logger::Severity::WARN unless ENV['DEBUG']
     example.call
     Celluloid.shutdown
   end
