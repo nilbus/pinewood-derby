@@ -10,16 +10,35 @@ class window.Announcer
     @initializeDomEvents()
 
   initializeDomEvents: ->
-    @initizlizeCancelHeatButton()
+    @initializeButtonClickWithRender
+      selector: '#start-race'
+      url: '/races/new'
+      method: 'get'
+    @initializeButtonClickWithRender
+      selector: '#redo'
+      url: '/races/redo'
+      method: 'put'
+    @initializeButtonClickWithRender
+      selector: '.cancel-heat'
+      url: '/heats/cancel_current'
+      method: 'post'
+      click: (event) -> $(event.target).css(opacity: 0)
+    @initializeHoverEventsForCancelHeat()
 
-  initizlizeCancelHeatButton: ->
-    cancelHeatButton = $('.cancel-heat')
-    cancelHeatButton.click ->
-      $(@).css(opacity: 0)
+  initializeButtonClickWithRender: (options) ->
+    button = $(options.selector)
+    button.click (event) =>
+      event.preventDefault()
+      options.click?(event)
       $.ajax
-        url: "/heats/cancel_current"
-        method: 'post'
+        url: options.url
+        method: options.method || 'POST'
+        dataType: 'json'
+        success: (json) => @renderFunction(json)
+
+  initializeHoverEventsForCancelHeat: ->
     hoverTargets = '.current-race,.cancel-heat'
+    cancelHeatButton = $('.cancel-heat')
     $(document).on 'mouseenter', hoverTargets, ->
       cancelHeatButton.css(opacity: 1, cursor: 'pointer') if $('.current-race').length
     $(document).on 'mouseleave', hoverTargets, ->

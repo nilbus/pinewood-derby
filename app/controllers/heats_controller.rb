@@ -5,6 +5,6 @@ class HeatsController < ApplicationController
     current_heat = Heat.current.first
     success = !!current_heat.try(:cancel!)
     SensorState.update :canceled
-    render json: {canceled: success}
+    render json: Dashboard.to_json
   end
 end
