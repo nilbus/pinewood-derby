@@ -21,7 +21,7 @@ class RacesController < ApplicationController
   rescue RuntimeError => e
     respond_to do |format|
       format.html { redirect_to races_path, alert: "#{e.class}: #{j e.message}" }
-      format.js { render js: "alert('#{e.class}: #{j e.message}');" }
+      format.js { render js: "console.log('#{e.class}: #{j e.message}');" }
     end
   end
 
@@ -34,6 +34,6 @@ class RacesController < ApplicationController
 
     render js: ''
   rescue RuntimeError => e
-    render js: "alert('#{e.class}: #{j e.message}');"
+    render js: "console.log('#{e.class}: #{j e.message}');"
   end
 end
