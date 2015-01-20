@@ -10,6 +10,7 @@ gem 'bootstrap-sass', '~> 2.2.1.1'
 gem 'celluloid', require: 'celluloid/autostart'
 gem 'celluloid-io'
 gem 'celluloid-io-serialport', require: 'celluloid/io/serial_port'
+gem 'lodash-rails'
 
 group :development do
   gem 'pry-rails'

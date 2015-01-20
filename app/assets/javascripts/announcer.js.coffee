@@ -54,6 +54,8 @@ class window.Announcer
     callback.call(@, stats) for callback in @callbacks
 
   renderDashboard: (stats) ->
+    return if @renderEquivalent(stats, @lastRenderedStats)
+    @lastRenderedStats = stats
     @notifyOfChange() if @alreadyRendered
     @alreadyRendered = true
     @dashboard = $('#dashboard')
@@ -62,6 +64,17 @@ class window.Announcer
     @renderMostRecentHeat stats.most_recent_heat
     @renderUpcomingHeats  stats.upcoming_heats
     @renderNotice         stats
+
+  renderEquivalent: (stats1, stats2) ->
+    stats1 = $.extend({}, stats1)
+    stats2 = $.extend({}, stats2)
+    for stats in [stats1, stats2]
+      stats.device_status = null
+      for heat in stats.upcoming_heats || []
+        for contestant in heat.contestants || []
+          contestant.run_id = null
+    console.log('checking', window.s1=stats1, window.s2=stats2, _.isEqual(stats1, stats2))
+    _.isEqual(stats1, stats2)
 
   renderStandings: (contestant_times) ->
     container = @dashboard.find('#standings')
