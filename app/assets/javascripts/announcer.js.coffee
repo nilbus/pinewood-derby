@@ -10,16 +10,35 @@ class window.Announcer
     @initializeDomEvents()
 
   initializeDomEvents: ->
-    @initizlizeCancelHeatButton()
+    @initializeButtonClickWithRender
+      selector: '#start-race'
+      url: '/races/new'
+      method: 'get'
+    @initializeButtonClickWithRender
+      selector: '#redo'
+      url: '/races/redo'
+      method: 'put'
+    @initializeButtonClickWithRender
+      selector: '.cancel-heat'
+      url: '/heats/cancel_current'
+      method: 'post'
+      click: (event) -> $(event.target).css(opacity: 0)
+    @initializeHoverEventsForCancelHeat()
 
-  initizlizeCancelHeatButton: ->
-    cancelHeatButton = $('.cancel-heat')
-    cancelHeatButton.click ->
-      $(@).css(opacity: 0)
+  initializeButtonClickWithRender: (options) ->
+    button = $(options.selector)
+    button.click (event) =>
+      event.preventDefault()
+      options.click?(event)
       $.ajax
-        url: "/heats/cancel_current"
-        method: 'post'
+        url: options.url
+        method: options.method || 'POST'
+        dataType: 'json'
+        success: (json) => @renderFunction(json)
+
+  initializeHoverEventsForCancelHeat: ->
     hoverTargets = '.current-race,.cancel-heat'
+    cancelHeatButton = $('.cancel-heat')
     $(document).on 'mouseenter', hoverTargets, ->
       cancelHeatButton.css(opacity: 1, cursor: 'pointer') if $('.current-race').length
     $(document).on 'mouseleave', hoverTargets, ->
@@ -35,6 +54,8 @@ class window.Announcer
     callback.call(@, stats) for callback in @callbacks
 
   renderDashboard: (stats) ->
+    return if @renderEquivalent(stats, @lastRenderedStats)
+    @lastRenderedStats = stats
     @notifyOfChange() if @alreadyRendered
     @alreadyRendered = true
     @dashboard = $('#dashboard')
@@ -43,6 +64,17 @@ class window.Announcer
     @renderMostRecentHeat stats.most_recent_heat
     @renderUpcomingHeats  stats.upcoming_heats
     @renderNotice         stats
+
+  renderEquivalent: (stats1, stats2) ->
+    stats1 = $.extend({}, stats1)
+    stats2 = $.extend({}, stats2)
+    for stats in [stats1, stats2]
+      stats.device_status = null
+      for heat in stats.upcoming_heats || []
+        for contestant in heat.contestants || []
+          contestant.run_id = null
+    console.log('checking', window.s1=stats1, window.s2=stats2, _.isEqual(stats1, stats2))
+    _.isEqual(stats1, stats2)
 
   renderStandings: (contestant_times) ->
     container = @dashboard.find('#standings')

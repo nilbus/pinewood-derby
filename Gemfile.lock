@@ -118,6 +118,8 @@ GEM
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
+    lodash-rails (2.4.1)
+      railties (>= 3.1)
     lumberjack (1.0.9)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -247,6 +249,7 @@ DEPENDENCIES
   foreman
   guard-rspec
   jquery-rails
+  lodash-rails
   pry-debugger
   pry-rails
   rails (~> 4.1.0.beta1)

@@ -12,7 +12,7 @@
           <h2 class="span12">
             Previous Heat
             <% if admin? %>
-              <%= link_to 'redo', redo_races_path, method: :put, id: 'redo', class: 'btn btn-danger', remote: true, style: 'display: none' %>
+              <%= link_to 'redo', '#', id: 'redo', class: 'btn btn-danger', style: 'display: none' %>
             <% end %>
           </h2>
         </div>
@@ -35,7 +35,7 @@
         <h2>
           Up next...
           <% if admin? %>
-            <%= link_to 'Start the race!', new_race_path, id: 'start-race', class: 'btn btn-success', remote: true, style: 'display: none' %>
+            <%= link_to 'Start the race!', '#', id: 'start-race', class: 'btn btn-success', style: 'display: none' %>
           <% end %>
         </h2>
         <div class="row-fluid">

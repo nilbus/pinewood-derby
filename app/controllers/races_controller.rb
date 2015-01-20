@@ -14,7 +14,7 @@ class RacesController < ApplicationController
     heat.try :start
     respond_to do |format|
       format.html { redirect_to races_path, notice: 'Race started' }
-      format.js { render js: '' }
+      format.js { render json: Dashboard.to_json }
     end
   rescue Notice => e
     redirect_to races_path, alert: e.message
@@ -32,7 +32,7 @@ class RacesController < ApplicationController
       heat.start
     end
 
-    render js: ''
+    render json: Dashboard.to_json
   rescue RuntimeError => e
     render js: "console.log('#{e.class}: #{j e.message}');"
   end
