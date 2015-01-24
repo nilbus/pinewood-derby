@@ -29,7 +29,7 @@ class window.Announcer
     button = $(options.selector)
     button.click (event) =>
       event.preventDefault()
-      options.click?(event)
+      return if options.click?(event) == false
       $.ajax
         url: options.url
         method: options.method || 'POST'
