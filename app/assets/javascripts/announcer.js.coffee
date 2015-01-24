@@ -92,9 +92,9 @@ class window.Announcer
     console.log('checking', window.s1=stats1, window.s2=stats2, _.isEqual(stats1, stats2))
     _.isEqual(stats1, stats2)
 
-  renderStandings: (contestant_times) ->
+  renderStandings: (contestantTimes) ->
     container = @dashboard.find('#standings')
-    standings = for contestant in contestant_times
+    standings = for contestant in contestantTimes
       "<div class='contestant'>" +
       "  <div class='name span2'>#{contestant.rank}</div>" +
       "  <div class='name span7'>#{contestant.name}</div>" +
@@ -105,38 +105,38 @@ class window.Announcer
     else
       container.hide()
 
-  renderMostRecentHeat: (most_recent_heat) ->
+  renderMostRecentHeat: (mostRecentHeat) ->
     container = @dashboard.find('#most-recent-heat')
     container.find('.name, .time').html('')
-    for run in most_recent_heat
+    for run in mostRecentHeat
       lane = container.find(".lane#{run.lane}")
       lane.find('.name').html(run.name)
       lane.find('.time').html(run.time)
-    if most_recent_heat.length
+    if mostRecentHeat.length
       container.show()
     else
       container.hide()
 
-  renderUpcomingHeats: (upcoming_heats) ->
+  renderUpcomingHeats: (upcomingHeats) ->
     container = @dashboard.find('#upcoming-heats')
-    if upcoming_heats.length
+    if upcomingHeats.length
       container.show()
     else
       container.hide()
     container.find('.name').html('')
-    upcoming_counter = 0
-    for heat in upcoming_heats
-      upcoming_counter++
-      heat_container = container.find(".next#{upcoming_counter}")
+    upcomingCounter = 0
+    for heat in upcomingHeats
+      upcomingCounter++
+      heatContainer = container.find(".next#{upcomingCounter}")
       if heat.current
-        heat_container.addClass('current-race btn-success')
+        heatContainer.addClass('current-race btn-success')
       else
-        heat_container.removeClass('current-race btn-success')
+        heatContainer.removeClass('current-race btn-success')
       for contestant in heat.contestants
-        slot = heat_container.find(".lane#{contestant.lane}")
+        slot = heatContainer.find(".lane#{contestant.lane}")
         if contestant.postponable and @admin
-          contestant_link = "<a href='/runs/#{contestant.run_id}/postpone' class='postponable' title='postpone'>#{contestant.name}</a>"
-          slot.html contestant_link
+          contestantLink = "<a href='/runs/#{contestant.run_id}/postpone' class='postponable' title='postpone'>#{contestant.name}</a>"
+          slot.html contestantLink
         else
           slot.html contestant.name
 
