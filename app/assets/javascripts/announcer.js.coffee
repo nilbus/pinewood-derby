@@ -14,10 +14,12 @@ class window.Announcer
       selector: '#start-race'
       url: '/races/new'
       method: 'get'
+      replacementText: 'Starting…'
     @initializeButtonClickWithRender
       selector: '#redo'
       url: '/races/redo'
       method: 'put'
+      replacementText: 'redoing…'
     @initializeButtonClickWithRender
       selector: '.cancel-heat'
       url: '/heats/cancel_current'
@@ -30,11 +32,25 @@ class window.Announcer
     button.click (event) =>
       event.preventDefault()
       return if options.click?(event) == false
-      $.ajax
-        url: options.url
-        method: options.method || 'POST'
-        dataType: 'json'
-        success: (json) => @renderFunction(json)
+      @ajaxLoadingButton button, options.replacementText, (doneLoadingCallback) =>
+        $.ajax
+          url: options.url
+          method: options.method || 'POST'
+          dataType: 'json'
+          success: (json) =>
+            @renderFunction(json)
+            doneLoadingCallback()
+
+  ajaxLoadingButton: (button, replacementText, clickHandler) ->
+    button = $(button)
+    return console.log 'Ignored click while loading' if button.data 'loading'
+    button.data 'loading', true
+    button.data 'originalText', button.text() unless button.data 'originalText'
+    doneLoadingCallback = ->
+      button.text button.data 'originalText'
+      button.data 'loading', false
+    clickHandler(doneLoadingCallback)
+    button.text(replacementText) if replacementText
 
   initializeHoverEventsForCancelHeat: ->
     hoverTargets = '.current-race,.cancel-heat'
