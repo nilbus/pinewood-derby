@@ -14,7 +14,7 @@ class Run < ActiveRecord::Base
   end
 
   def time
-    self[:time].try :round, 3
+    self[:time].try :round, 4
   end
 
   def postpone
