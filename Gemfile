@@ -16,6 +16,7 @@ group :development do
   gem 'pry-rails'
   gem 'pry-debugger'
   gem 'faker'
+  gem 'foreman-export-initd'
 end
 
 group :test, :development do
