@@ -1,0 +1,65 @@
+#!/bin/bash
+led_control_file='/sys/class/leds/led0/trigger'
+led_brightness_file='/sys/class/leds/led0/brightness'
+
+if [ ! -w "$led_control_file" ]; then
+  echo "Can't write to $led_control_file" >&2
+  exit 1
+fi
+
+set_led_pattern() {
+  pattern="$1"
+  brightness=''
+  case $pattern in
+  off)
+    trigger='none'
+    brightness=0
+    ;;
+  solid)
+    trigger='none'
+    brightness=1
+    ;;
+  blinking)
+    trigger='timer'
+    ;;
+  heartbeat)
+    trigger='heartbeat'
+    ;;
+  sdcard-access)
+    trigger='mmc0'
+    ;;
+  *)
+    echo "Invalid LED pattern: $pattern" >&2
+    return
+    ;;
+  esac
+  echo $trigger > $led_control_file
+  if [[ "$brightness" ]]; then
+    echo $brightness > $led_brightness_file
+  fi
+}
+
+wifi_missing() {
+  ! ifconfig | grep wlan0 > /dev/null
+}
+
+wifi_up() {
+  ifconfig wlan0 | grep "inet addr" > /dev/null
+}
+
+http_open() {
+  nc -z localhost 80
+}
+
+set_led_pattern off
+trap "set_led_pattern sdcard-access" EXIT
+while true; do
+  if wifi_missing; then
+    set_led_pattern blinking
+  elif wifi_up && http_open; then
+    set_led_pattern heartbeat
+  else
+    set_led_pattern solid
+  fi
+  sleep 3
+done
