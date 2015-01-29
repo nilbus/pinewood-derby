@@ -1,0 +1,56 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:             pinewood-derby-web
+# Required-Start:       $syslog networking
+# Required-Stop:        $syslog networking
+# Default-Start:        2 3 4 5
+# Default-Stop:         0 1 6
+# Short-Description:    Pinewood Derby web app
+# Description:          https://github.com/nilbus/pinewood-derby
+### END INIT INFO
+
+NAME=pinewood-derby
+DESC=
+PWD=/home/pi/pinewood-derby
+DAEMON="${PWD}/bin/bundle"
+DAEMON_USER=root
+PIDDIR=/var/run/pinewood-derby
+PIDFILE=/var/run/pinewood-derby/app-web.pid
+
+test -x ${DAEMON} || exit 0
+set -e
+. /lib/lsb/init-functions
+
+
+case "${1}" in
+  start)
+    log_daemon_msg "Starting ${DESC}" "${NAME}"
+    mkdir -p ${PIDDIR}
+    if (start-stop-daemon --start --make-pidfile --background --pidfile $PIDFILE --chuid $DAEMON_USER --chdir "$PWD" --exec $DAEMON -- exec rails server -p 80 -e production); then
+      log_end_msg 0
+    else
+      log_end_msg 1
+    fi
+  ;;
+  stop)
+    log_daemon_msg "Stopping ${DESC}" "${NAME}"
+    if (start-stop-daemon --stop --oknodo --retry 20 --pidfile $PIDFILE --chuid $DAEMON_USER); then
+      log_end_msg 0
+    else
+      log_end_msg 1
+    fi
+  ;;
+  status)
+    status_of_proc -p ${PIDFILE} ${DAEMON} ${NAME}
+  ;;
+  restart)
+    ${0} stop
+    ${0} start
+  ;;
+  *)
+    echo "Usage: ${0} {start|stop|status|restart}" >&2
+  ;;
+esac
+
+exit 0
