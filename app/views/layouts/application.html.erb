@@ -50,6 +50,6 @@
   </div> <!-- /container -->
 </body>
 <%= javascript_tag do %>
-  window.alerts = new Announcer({type: '<%= current_page?(board_path) ? "dashboard" : "alerts" %>', stats: <%= Dashboard.to_json.html_safe %>, admin: <%= admin? %>})
+  window.alerts = new Announcer({type: '<%= current_page?(board_path) ? "dashboard" : "alerts" %>', stats: <%= Dashboard.to_json.html_safe %>, admin: <%= !!admin? %>})
 <% end %>
 </html>
