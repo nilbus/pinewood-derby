@@ -31,7 +31,7 @@ module TrackSensor
       times = []
       times_string.chomp.split(/ +/).each_slice(2) do |(track, time)|
         if !time
-          times << {:time => track.to_f, :track => 1} # Single track mode
+          times << {:time => track.to_f, :track => 1} # Single track mode doesn't list the lane number
         else
           times << {:time => time.to_f, :track => track.to_i} # Multi track mode
         end
