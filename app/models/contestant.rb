@@ -11,7 +11,7 @@ class Contestant < ActiveRecord::Base
   scope :with_average_time, -> do
     select('contestants.*, avg(runs.time) AS average_time').
     group('contestants.id').
-    joins(:runs => :heat)
+    joins('LEFT JOIN runs ON runs.contestant_id = contestants.id LEFT JOIN heats ON heats.id = runs.heat_id')
   end
 
   validates :name, presence: true
