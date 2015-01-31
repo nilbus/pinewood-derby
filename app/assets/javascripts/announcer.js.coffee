@@ -92,7 +92,7 @@ class window.Announcer
     console.log('checking', window.s1=stats1, window.s2=stats2, _.isEqual(stats1, stats2))
     _.isEqual(stats1, stats2)
 
-  renderStandings: (contestantTimes) ->
+  renderStandings: (contestantTimes = []) ->
     container = @dashboard.find('#standings')
     standings = for contestant in contestantTimes
       "<div class='contestant'>" +
@@ -105,7 +105,7 @@ class window.Announcer
     else
       container.hide()
 
-  renderMostRecentHeat: (mostRecentHeat) ->
+  renderMostRecentHeat: (mostRecentHeat = []) ->
     container = @dashboard.find('#most-recent-heat')
     container.find('.name, .time').html('')
     for run in mostRecentHeat
@@ -117,7 +117,7 @@ class window.Announcer
     else
       container.hide()
 
-  renderUpcomingHeats: (upcomingHeats) ->
+  renderUpcomingHeats: (upcomingHeats = []) ->
     container = @dashboard.find('#upcoming-heats')
     if upcomingHeats.length
       container.show()
