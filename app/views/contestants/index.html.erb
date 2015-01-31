@@ -4,6 +4,7 @@
   <% if @contestants.any? %>
     <thead>
       <tr>
+        <th>Rank</th>
         <th>Name</th>
         <th>Average</th>
         <% DerbyConfig.lane_count.times do |i| %>
@@ -15,7 +16,11 @@
   <% end %>
 
   <tbody>
+    <% i = 0 %>
     <%= content_tag_for(:tr, @contestants, class: "contestant") do |contestant| %>
+      <td class="rank">
+        <%= i += 1 if contestant.average_time %>
+      </td>
       <td class="<%= 'retired' if contestant.retired %>">
         <% if admin? %>
           <%= link_to contestant.name, edit_contestant_path(contestant) %>
