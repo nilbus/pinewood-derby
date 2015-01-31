@@ -44,5 +44,5 @@
 
 <% if admin? %>
   <%= link_to 'Register contestants', new_contestant_path, class: 'btn btn-primary' %>
-  <%= link_to 'Start a new derby', reset_derby_path, class: 'btn btn-danger pull-right', method: 'post', data: { confirm: 'Are you sure? This will clear out all data and start a new derby.' } %>
+  <%= link_to 'Reset derby', reset_derby_path, class: 'btn btn-danger pull-right', method: 'post', data: { confirm: 'Are you sure? This will clear out all data and start a new derby.' } %>
 <% end %>
