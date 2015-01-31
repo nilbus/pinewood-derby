@@ -3,11 +3,15 @@ class Contestant < ActiveRecord::Base
   has_many :heats, through: :runs
 
   scope :ranked, -> do
-    select('contestants.*, avg(runs.time) AS average_time').
-    joins(:runs => :heat).
+    with_average_time.
     where('heats.sequence >= 0').
-    group('contestants.id').
     order('average_time')
+  end
+
+  scope :with_average_time, -> do
+    select('contestants.*, avg(runs.time) AS average_time').
+    group('contestants.id').
+    joins(:runs => :heat)
   end
 
   validates :name, presence: true

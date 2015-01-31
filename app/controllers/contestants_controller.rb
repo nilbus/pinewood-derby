@@ -5,7 +5,13 @@ class ContestantsController < ApplicationController
   # GET /contestants
   # GET /contestants.json
   def index
-    @contestants = Contestant.order('id')
+    @contestants = Contestant.with_average_time.to_a.sort_by do |contestant|
+      if contestant.average_time
+        [contestant.average_time, contestant.name]
+      else
+        [99, contestant.name]
+      end
+    end
 
     respond_to do |format|
       format.html # index.html.erb
