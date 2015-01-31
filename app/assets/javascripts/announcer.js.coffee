@@ -152,6 +152,10 @@ class window.Announcer
       $('#start-race,#redo').hide()
     if stats.derby_status == 'begin' && window.location.pathname == '/'
       window.location.href = '/board'
+    else if stats.derby_status == 'complete'
+      setTimeout ->
+        window.location.href = '/contestants'
+      , 5000
 
   notifyOfChange: ->
     $("body").stop().css("background-color", "#FFFF7C").animate({ backgroundColor: "#FFFFFF"}, 500)
