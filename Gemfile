@@ -14,7 +14,7 @@ gem 'lodash-rails'
 
 group :development do
   gem 'pry-rails'
-  gem 'pry-debugger'
+  gem 'pry-byebug'
   gem 'faker'
   gem 'foreman-export-initd'
 end
