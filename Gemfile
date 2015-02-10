@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.1.0.beta1'
+gem 'rails', '~> 4.1'
 gem 'thin-rails'
 gem 'sqlite3'
 gem 'faye-rails', '~> 2.0'
