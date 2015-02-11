@@ -83,7 +83,6 @@ private
 
   def scan_for_device_changes
     initialize_new_devices
-    # raise IOError.new('The sensor is not plugged in') unless plugged_in?
   end
 
   def initialize_new_devices

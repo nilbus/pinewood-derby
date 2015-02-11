@@ -34,11 +34,7 @@ class SensorWatch
   end
 
   def handle_device_change(_)
-    if @sensor.plugged_in?
-      initialize_state
-    else
-      self.state = :unplugged
-    end
+    initialize_state
   end
 
   def start_race
@@ -58,6 +54,7 @@ class SensorWatch
 private
 
   def initialize_state
+    return self.state = :unplugged unless @sensor.plugged_in?
     if @heat.current.any?
       start_race
     else
