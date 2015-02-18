@@ -142,7 +142,7 @@ Optionally set the environment variable `DEBUG=true` to get more output from the
 Developing
 ==========
 
-This project uses Rails 4.1.
+This project uses Rails 4.2.
 
 Contributing
 ------------
