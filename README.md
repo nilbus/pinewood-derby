@@ -147,7 +147,7 @@ This project uses Rails 4.2.
 Contributing
 ------------
 
-This pinewood-derby application is Copyright 2014 Edward Anderson,
+This pinewood-derby application is Copyright 2015 Edward Anderson,
 and is distributed under the GNU Affero General Public License (see LICENSE).
 This license requires that you provide the source code to users of this application.
 
