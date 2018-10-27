@@ -55,7 +55,7 @@ Initial Setup
 -------------
 
 1. [Install drivers for the USB serial connector](https://github.com/nilbus/pinewood-derby/wiki/USB-serial-driver-installation)
-1. Install [Ruby &gt;= 2.0.0](https://www.ruby-lang.org/en/downloads), [bundler](http://bundler.io), and [node.js][http://nodejs.org].
+1. Install [Ruby &gt;= 2.0.0](https://www.ruby-lang.org/en/downloads), [bundler](http://bundler.io), and [node.js](http://nodejs.org).
 1. Install build tools for your operating system:
   a. **Mac OSX**: Install the _Xcode command line tools_
   b. **Ubuntu/Debian Linux**: `sudo apt-get install build-essential`
