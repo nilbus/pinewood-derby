@@ -1,0 +1,32 @@
+---
+version: "2"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+    environment:
+      - RAILS_ENV=development
+    volumes:
+      - .:/app:cached
+      - pinewood-derby-tmp-cache:/app/tmp/cache
+      - pinewood-derby-gems:/usr/local/bundle
+    ports:
+      - "3000:80"
+  mock-sensor:
+    command: bin/mock-sensor
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+    environment:
+      - RAILS_ENV=development
+    volumes:
+      - .:/app:cached
+      - pinewood-derby-tmp-cache:/app/tmp/cache
+      - pinewood-derby-gems:/usr/local/bundle
+
+
+volumes:
+  pinewood-derby-tmp-cache:
+  pinewood-derby-gems:

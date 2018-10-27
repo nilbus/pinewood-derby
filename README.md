@@ -121,6 +121,9 @@ Revisit the login page to log out.
 Running for Testing / Development
 =================================
 
+Running Locally
+---------------
+
 To simulate a track sensor when one is not plugged in, use the mock sensor:
 
     bin/mock-sensor
@@ -138,6 +141,20 @@ In development:
     TRACK_SENSOR_DEVICE=/dev/ttys009 RAILS_ENV=development DEBUG=true sudo -E foreman start   # or rvmsudo if using rvm
 
 Optionally set the environment variable `DEBUG=true` to get more output from the sensor\_watch daemon, including sensor device status and data received.
+
+Running in Docker
+-----------------
+
+### Install dependencies
+
+    docker-compose build
+    docker-compose run --rm app bundle
+
+### Run the app
+
+    docker-compose up
+
+The app will be running locally on port 3000.
 
 Developing
 ==========

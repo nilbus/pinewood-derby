@@ -1,0 +1,6 @@
+FROM ruby:2.2.0
+WORKDIR /app
+RUN apt-get update && apt-get install -y node && rm -rf /var/lib/apt/lists/*
+RUN bundle config --global jobs 24
+CMD ["bundle exec foreman start"]
+EXPOSE 80
