@@ -7,6 +7,10 @@ A web-based race manager and status board application for the Cub Scout [pinewoo
 
 ![screenshot](http://cl.ly/image/1L3b3g0o0R0F/Screen%20shot%202013-02-03%20at%209.18.25%20PM.png)
 
+Join our [project chat][] for support, questions, requests, or just to let me know if you're using it.
+
+[project chat]: https://spectrum.chat/pinewood-derby
+
 Features
 --------
 
