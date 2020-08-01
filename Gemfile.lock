@@ -93,7 +93,7 @@ GEM
     faye-rails (2.0.0)
       eventmachine (~> 1.0.0)
       faye (~> 1.0.1)
-    faye-websocket (0.10.9)
+    faye-websocket (0.11.0)
       eventmachine (>= 0.12.0)
       websocket-driver (>= 0.5.1)
     ffi (1.9.25)
@@ -255,7 +255,7 @@ GEM
     uglifier (2.3.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-    websocket-driver (0.7.1)
+    websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
 
